@@ -1,11 +1,12 @@
-# Website for jomurgel.com
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with a few extras.
+# jomurgel
+
+This is my personal website build on [Next.js](https://nextjs.org/) and bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with a few extras.
 
 ## The Journey
 As of 2021 [jomurgel.com](https://jomurgel.com) was built on [WordPress](https://wordpress.org). I build website at my day job on WordPress and can still honestly say that for most people and most applications it's a pretty decent choice. Checks all the boxes, as it were, for ease of setup, out-of-the-box features, etc.
 
-For me, however, it was overkill. I work with WordPress daily and there are a lot of things about the WordPress CMS that I feel are either not needed, overkill, or clunky.It's also very hard for me to want maintain and didn't lend itself well toward my writing process and feels a little out of date. I started down a path of building a custom React-based PWA and then worked toward the idea of using React and [Next.js](https://nextjs.org/) to build the site to handle a lot of the SSR and resource management that I would have to otherwise build out manually. It was a no-brainer.
+For me, however, it was overkill. I work with WordPress daily and there are a lot of things about the WordPress CMS that I feel are either not needed, overkill, or clunky. It's also very hard for me to want maintain and didn't lend itself well toward my writing process and feels a little out of date. I started down a path of building a custom React-based PWA and then worked toward the idea of using React and [Next.js](https://nextjs.org/) to build the site to handle a lot of the SSR and resource management that I would have to otherwise build out manually. It was a no-brainer.
 
 This change to [Next.js](https://nextjs.org/) ends up improving my process for creating content, provided me an opportunity to really hone my dev process, and removed a lot of the frustration with website management. Specifically I'd ditch the CMS in favor of self-managed markdown files using [IA Writer](https://ia.net/writer).
 
