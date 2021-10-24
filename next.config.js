@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
-export const reactStrictMode = true;
-export const images = {
-  domains: [],
-};
+module.exports = {
+  reactStrictMode: true,
+  images: {
+    domains: [],
+  },
+}
