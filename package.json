@@ -7,7 +7,9 @@
     "deploy": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && git add out/ && git commit -m \"Deploy Next.js to gh-pages\" && git subtree push --prefix out origin gh-pages",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest",
+    "test-all": "yarn lint && yarn type-check && yarn test"
   },
   "dependencies": {
     "@next/mdx": "^11.1.2",
@@ -21,12 +23,19 @@
     "remark-prism": "^1.3.6"
   },
   "devDependencies": {
-    "@types/react": "17.0.31",
+    "@types/jest": "^27.0.2",
+    "@types/react": "^17.0.31",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
     "autoprefixer": "^10.3.7",
     "babel-plugin-inline-react-svg": "^2.0.1",
     "babel-plugin-transform-define": "^2.0.1",
-    "eslint": "^8.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^14.0.1",
     "eslint-config-next": "^11.1.2",
+    "jest": "^27.3.1",
+    "jest-watch-typeahead": "^1.0.0",
     "postcss": "^8.3.11",
     "typescript": "4.4.4"
   }
