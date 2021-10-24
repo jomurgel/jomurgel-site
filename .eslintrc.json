@@ -47,7 +47,9 @@
     "react-hooks/exhaustive-deps": "off",
     "jsx-a11y/no-static-element-interactions": "off",
     "jsx-a11y/click-events-have-key-events": "off",
-    "react/require-default-props": [2, { "ignoreFunctionalComponents": true }]
+    "react/require-default-props": [2, { "ignoreFunctionalComponents": true }],
+    "@typescript-eslint/no-unused-vars": [2, { "argsIgnorePattern": "^_" } ],
+    "no-console": [ 2, { "allow": ["warn", "error"] } ]
   },
   "root": true
 }
