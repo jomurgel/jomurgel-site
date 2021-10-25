@@ -1,6 +1,16 @@
 {
   "parser": "@typescript-eslint/parser",
-  "overrides": [ { "files": ["*.ts", "*.tsx"] } ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": [ "plugin:testing-library/react" ]
+    }
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "impliedStrict": true,
