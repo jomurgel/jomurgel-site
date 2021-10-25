@@ -36,3 +36,10 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+## Support
+This site adds additional support for a few things to make things a little easier for development and better for web use.
+- [next/seo](https://github.com/garmeeh/next-seo)
+- [Google Analytics](https://github.com/vercel/next.js/tree/canary/examples/with-google-analytics)
+- [ESLint](https://github.com/vercel/next.js/tree/canary/examples/with-eslint) + Typescript support
+- [Jest](https://github.com/vercel/next.js/tree/canary/examples/with-jest) testing
+- [Github Pages](https://github.com/vercel/next.js/tree/canary/examples/gh-pages) deployment support
