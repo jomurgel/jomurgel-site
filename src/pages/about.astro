@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import RegMark from '../components/RegMark.astro';
 import { codex } from '../data/codex';
 
 const inks = ['c', 'm', 'y'];
@@ -20,10 +19,13 @@ const inks = ['c', 'm', 'y'];
 
   <section class="about-lead">
     <figure class="about-photo">
-      <div class="photo-placeholder" role="img" aria-label="Portrait of Jo — coming soon">
-        <RegMark size={44} />
-        <span>Portrait — coming soon</span>
-      </div>
+      <img
+        src="/jo.jpg"
+        alt="Jo — in glasses and a maroon hoodie, in front of a wall of framed art prints"
+        width="800"
+        height="1067"
+        loading="lazy"
+      />
     </figure>
     <div class="about-intro">
       <p>
