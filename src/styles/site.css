@@ -1467,7 +1467,19 @@ main > section:last-child { margin-bottom: 0; }
   justify-content: center;
 }
 
-.theme-link { font-size: var(--text-sm); margin-left: var(--space-1); }
+/* The footer sun/moon is the theme toggle — reset the button, nudge on hover. */
+.face-btn {
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  line-height: 0;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+.face-btn:hover { transform: scale(1.08); }
+.face-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* Little face that follows the cursor and smiles when you touch it. */
 .face-wrap {

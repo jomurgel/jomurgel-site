@@ -82,7 +82,8 @@ const path = Astro.url.pathname;
         {faceGone ? (
           <div class="face-gone" role="img" aria-label="An empty, blurred dent where a little face used to be"></div>
         ) : (
-        <svg class="face" viewBox="0 0 100 100" role="img" aria-label="A little face that follows your cursor">
+        <button type="button" class="face-btn" title="Toggle theme" aria-label="Toggle light or dark theme">
+        <svg class="face" viewBox="0 0 100 100" aria-hidden="true">
           <circle class="face-bg" cx="50" cy="50" r="46" />
           <circle class="crater" cx="29" cy="64" r="5" />
           <circle class="crater" cx="72" cy="55" r="3" />
@@ -93,6 +94,7 @@ const path = Astro.url.pathname;
             <path class="mouth" d="M37 56 Q47.5 66 58 58 M58 54.5 L58 62.5" fill="none" stroke="#151513" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
           </g>
         </svg>
+        </button>
         )}
       </div>
 
@@ -109,12 +111,6 @@ const path = Astro.url.pathname;
 
       <p>
         Built by Jo Murgel on <a href="https://github.com/jomurgel/acorn.css">Acorn</a>. © 2026.
-        <button
-          type="button"
-          data-variant="link"
-          class="theme-link"
-          onclick="(function(){const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',t);localStorage.setItem('theme',t);})()"
-        >Toggle theme</button>
       </p>
     </footer>
 
@@ -139,6 +135,21 @@ const path = Astro.url.pathname;
 
     <script is:inline>
       (() => {
+        // Click the sun/moon to flip the theme (and keep aria-pressed in sync).
+        const btn = document.querySelector('.face-btn');
+        if (btn) {
+          const sync = () =>
+            btn.setAttribute('aria-pressed', String(document.documentElement.getAttribute('data-theme') === 'dark'));
+          sync();
+          btn.addEventListener('click', () => {
+            const h = document.documentElement;
+            const next = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            h.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            sync();
+          });
+        }
+
         const face = document.querySelector('.face');
         const feat = face && face.querySelector('.features');
         if (!feat) return;
