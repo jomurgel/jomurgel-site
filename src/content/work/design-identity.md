@@ -26,6 +26,8 @@ I'm working my way back toward design as a bigger part of what I do — the UX b
   <img src="/design/moonshot-3.jpg" alt="Moonshot logo comp" />
   <img src="/design/greater-than.jpg" alt="Greater Than logo" />
   <img src="/design/real-sports.jpg" alt="Real Sports Nutrition logo" />
+  <img src="/design/supcapemay.jpg" alt="SUP Cape May logo — hand-lettered wordmark with a paddle" />
+  <img src="/design/keydesign.jpg" alt="KeyDesign Websites logo — a keyhole-doorway mark" />
   <img src="/design/nimble.jpg" alt="Nimble Games dinosaur icon" />
   <img src="/design/skull.jpg" alt="Skull icon" />
   <img src="/design/philly-powered.jpg" alt="Philly Powered logo" />
