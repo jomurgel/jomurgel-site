@@ -31,34 +31,40 @@ const icons = {
   photo1, photo2, photo3, photo4,
 };
 
-// [iconKey, position, slide-from, size] — positions/sizes vary per group so
-// icons land in different spots each hover (more organic). Size is the square
-// box the icon fits inside; tweak per-icon if one reads too big or small.
+// [iconKey, position, slide-from, scale?] — each icon is sized from its OWN
+// native viewBox (so line weights stay consistent across the set); the
+// optional 4th value is a per-icon multiplier (default 1) for fine-tuning.
 const groups = {
   c: [
-    ['maker1', { left: '2%',  top: '15%' },    'left',   '78px'],
-    ['maker2', { right: '8%', top: '34%' },    'right',  '54px'],
-    ['maker3', { left: '16%', bottom: '6%' },  'bottom', '64px'],
-    ['maker4', { right: '12%', bottom: '22%' }, 'bottom', '58px'],
+    ['maker1', { left: '2%',  top: '15%' },    'left'],
+    ['maker2', { right: '8%', top: '34%' },    'right'],
+    ['maker3', { left: '16%', bottom: '6%' },  'bottom'],
+    ['maker4', { right: '12%', bottom: '22%' }, 'bottom'],
   ],
   m: [
-    ['dev1', { left: '6%',  top: '30%' },    'left',   '70px'],
-    ['dev2', { right: '3%', top: '15%' },    'right',  '60px'],
-    ['dev3', { left: '11%', bottom: '13%' }, 'bottom', '56px'],
-    ['dev4', { right: '16%', bottom: '6%' },  'right',  '74px'],
+    ['dev1', { left: '6%',  top: '30%' },    'left'],
+    ['dev2', { right: '3%', top: '15%' },    'right'],
+    ['dev3', { left: '11%', bottom: '13%' }, 'bottom'],
+    ['dev4', { right: '16%', bottom: '6%' },  'right'],
   ],
   y: [
-    ['art1', { left: '3%',  top: '26%' },   'left',   '66px'],
-    ['art2', { right: '7%', top: '16%' },   'right',  '76px'],
-    ['art3', { left: '17%', bottom: '7%' }, 'bottom', '52px'],
-    ['art4', { right: '11%', bottom: '24%' }, 'bottom', '60px'],
+    ['art1', { left: '3%',  top: '26%' },   'left'],
+    ['art2', { right: '7%', top: '16%' },   'right'],
+    ['art3', { left: '17%', bottom: '7%' }, 'bottom'],
+    ['art4', { right: '11%', bottom: '24%' }, 'bottom'],
   ],
   k: [
-    ['photo1', { left: '5%',  top: '17%' },    'left',   '76px'],
-    ['photo2', { right: '4%', top: '33%' },    'right',  '56px'],
-    ['photo3', { left: '12%', bottom: '15%' }, 'bottom', '64px'],
-    ['photo4', { right: '15%', bottom: '6%' },  'bottom', '56px'],
+    ['photo1', { left: '5%',  top: '17%' },    'left'],
+    ['photo2', { right: '4%', top: '33%' },    'right'],
+    ['photo3', { left: '12%', bottom: '15%' }, 'bottom'],
+    ['photo4', { right: '15%', bottom: '6%' },  'bottom'],
   ],
+};
+
+// Pull width/height out of an SVG's viewBox ("minX minY W H").
+const vbDims = (svg) => {
+  const m = svg.match(/viewBox="\s*[\d.-]+\s+[\d.-]+\s+([\d.]+)\s+([\d.]+)/i);
+  return m ? { w: +m[1], h: +m[2] } : { w: 100, h: 100 };
 };
 
 const fromVars = (dir) =>
@@ -72,9 +78,17 @@ const posStyle = (p) => Object.entries(p).map(([k, v]) => `${k}:${v}`).join(';')
 <div class="trade" aria-hidden="true">
   {Object.entries(groups).map(([ink, list]) => (
     <div class={`ig ig-${ink}`}>
-      {list.map(([name, pos, dir, size]) => (
-        <span class="ficon" style={`${posStyle(pos)};${fromVars(dir)};--w:${size};`} set:html={clean(icons[name])} />
-      ))}
+      {list.map(([name, pos, dir, scale]) => {
+        const svg = clean(icons[name]);
+        const { w, h } = vbDims(svg);
+        return (
+          <span
+            class="ficon"
+            style={`${posStyle(pos)};${fromVars(dir)};--vbw:${w};--vbh:${h};${scale ? `--iscale:${scale};` : ''}`}
+            set:html={svg}
+          />
+        );
+      })}
     </div>
   ))}
 </div>

@@ -339,6 +339,7 @@ button.nav-toggle:active { background: none; border: 0; }
 /* Tools-of-the-trade layer: icons slide in from the slab edges when a
    facet floods. Decorative, behind the content. */
 .trade {
+  --icon-scale: 0.14; /* viewBox-units → px. One knob to size every icon up/down. */
   inset: 0;
   overflow: hidden;
   pointer-events: none;
@@ -347,14 +348,16 @@ button.nav-toggle:active { background: none; border: 0; }
 }
 
 .ficon {
-  aspect-ratio: 1; /* square box; the icon fits inside at its own aspect ratio */
+  /* Sized from the icon's native viewBox so the units→px ratio (and therefore
+     the apparent line weight) is identical across the whole set. */
   color: var(--slab-on, #fff);
   display: block;
+  height: calc(var(--vbh, 100) * var(--icon-scale) * var(--iscale, 1) * 1px);
   opacity: 0;
   position: absolute;
   transform: translate(var(--fx, 0), var(--fy, 0)) rotate(-6deg);
   transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
-  width: var(--w, clamp(40px, 5vw, 80px));
+  width: calc(var(--vbw, 100) * var(--icon-scale) * var(--iscale, 1) * 1px);
 }
 
 /* fill carries these (custom icons are filled paths with no fill attr → inherit). */
