@@ -3,7 +3,7 @@ title: "Drawing again"
 description: "Sketches, a self-portrait, some line work, and a couple Draw-This-In-Your-Style takes."
 date: "2026-06-26"
 tags: ["illustration"]
-draft: true
+draft: false
 ---
 
 _[Intro — your voice. A few lines on getting back into illustration: why now, what
