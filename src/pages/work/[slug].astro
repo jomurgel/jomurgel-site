@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('work', ({ data }) => !data.draft);
+  return items.map((item) => ({ params: { slug: item.id }, props: { item } }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+const d = item.data;
+const hasCover = !!d.coverImage;
+const heroInk = hasCover ? 'k' : d.ink;
+const coverStyle = hasCover
+  ? `--hero-bg: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.62)), url(${d.coverImage}) center / cover`
+  : undefined;
+---
+
+<Base title={d.title} description={d.summary} heroInk={heroInk}>
+  <header class={`color-hero ink-${heroInk} post-hero`} style={coverStyle}>
+    <div class="color-hero-inner">
+      <span class="post-meta">
+        {d.year && <time>{d.year}</time>}
+        <span class="post-kind" data-kind="work">Case study</span>
+      </span>
+      <h1>{d.title}</h1>
+      <p class="lede">{d.summary}</p>
+    </div>
+  </header>
+
+  <article class="post">
+    <div class="post-body">
+      {(d.client || d.role || d.link || d.stack.length > 0) && (
+        <div class="case-facts">
+          <dl class="case-facts-list">
+            {d.client && <div><dt>Client</dt><dd>{d.client}</dd></div>}
+            {d.role && <div><dt>Role</dt><dd>{d.role}</dd></div>}
+            {d.stack.length > 0 && <div><dt>Stack</dt><dd>{d.stack.join(', ')}</dd></div>}
+          </dl>
+          {d.link && (
+            <a class="all-link" href={d.link} target="_blank" rel="noopener noreferrer">{d.linkLabel ?? 'Visit site'}</a>
+          )}
+        </div>
+      )}
+      <Content />
+    </div>
+  </article>
+
+  <hr class="post-end" />
+
+  <p class="post-back"><a class="all-link" href="/work/">← All work</a></p>
+</Base>

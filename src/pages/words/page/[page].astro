@@ -1,0 +1,42 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import PostList from '../../../components/PostList.astro';
+import Pagination from '../../../components/Pagination.astro';
+import TagBand from '../../../components/TagBand.astro';
+import { getCollection } from 'astro:content';
+import { getAllTags } from '../../../lib/words';
+
+export async function getStaticPaths() {
+  const PAGE_SIZE = 6;
+  const all = (await getCollection('words', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  const totalPages = Math.ceil(all.length / PAGE_SIZE);
+  const paths = [];
+  for (let n = 2; n <= totalPages; n++) {
+    paths.push({
+      params: { page: String(n) },
+      props: { posts: all.slice((n - 1) * PAGE_SIZE, n * PAGE_SIZE), page: n, totalPages },
+    });
+  }
+  return paths;
+}
+
+const { posts, page, totalPages } = Astro.props;
+const tags = await getAllTags();
+---
+
+<Base title={`Words & Photos — page ${page}`} heroInk="c">
+  <PageHero
+    ink="c"
+    title="Words & Photos"
+    lede="Dev notes, reflections, and photo studies — whatever I'm thinking about or shooting lately."
+  />
+
+  <section>
+    <TagBand tags={tags} />
+    <PostList posts={posts} />
+    <Pagination currentPage={page} totalPages={totalPages} />
+  </section>
+</Base>

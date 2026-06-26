@@ -1,0 +1,17 @@
+---
+// Full-top colored hero: the CMYK band fills the whole top (nav overlaid,
+// white), flat to the top edge, with a single diagonal cut to white below.
+// Title gets the CMYK offset on its last word (like the homepage "Jo").
+// Use with <Base heroInk="c">. ink = c | m | y | k.
+const { title, lede, ink = 'c' } = Astro.props;
+const parts = title.split(' ');
+const last = parts.pop();
+const lead = parts.join(' ');
+---
+
+<section class={`color-hero ink-${ink}`}>
+  <div class="color-hero-inner">
+    <h1>{lead} <span class="offset">{last}</span>.</h1>
+    {lede && <p class="lede">{lede}</p>}
+  </div>
+</section>

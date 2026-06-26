@@ -1,0 +1,20 @@
+---
+// Latest writing/photo. Renders through PostList so it shares the exact
+// blog item styles — update the blog item and this updates with it.
+import PostList from './PostList.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+// Feature the most recent post that has a cover (image-forward), else the latest.
+const post = posts.find((p) => p.data.coverImage) ?? posts[0];
+---
+
+<section class="latest" aria-labelledby="latest-heading">
+  <div class="latest-head">
+    <h2 id="latest-heading">Latest</h2>
+    <a href="/words/" class="all-link">All words &amp; photos →</a>
+  </div>
+  <PostList posts={[post]} />
+</section>

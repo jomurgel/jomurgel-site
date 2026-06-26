@@ -1,0 +1,349 @@
+---
+// Private style guide — every base HTML element (Acorn-styled) and every
+// custom component/pattern used on the site, in one place. Hidden: noindex,
+// nofollow, and linked from nowhere. Reach it by URL only.
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import PostList from '../components/PostList.astro';
+import LatestPost from '../components/LatestPost.astro';
+import RelatedPosts from '../components/RelatedPosts.astro';
+import Pagination from '../components/Pagination.astro';
+import RegMark from '../components/RegMark.astro';
+import TagBand from '../components/TagBand.astro';
+import { getCollection } from 'astro:content';
+import { getAllTags } from '../lib/words';
+
+const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+// A spread for the post stream: prefer one with a cover, a shorty, and a plain one.
+const withCover = posts.find((p) => p.data.coverImage);
+const shorty = posts.find((p) => p.data.tags.includes('shorty'));
+const plain = posts.find((p) => !p.data.coverImage && !p.data.tags.includes('shorty'));
+const sample = [...new Set([withCover, shorty, plain].filter(Boolean))].slice(0, 3);
+const relatedSource = posts.find((p) => p.data.type !== 'photo') ?? posts[0];
+const tags = await getAllTags();
+---
+
+<Base
+  title="Style Guide"
+  description="Internal reference: every element and component used on jomurgel.com."
+  noindex={true}
+>
+  <header class="post-header">
+    <span class="post-meta"><span class="post-kind" data-kind="work">Internal</span></span>
+    <h1>Style Guide</h1>
+    <p class="section-lede">
+      Every base element (styled by Acorn) and every custom component on the site,
+      in one place. This page is noindex/nofollow and linked from nowhere.
+    </p>
+  </header>
+
+  <hr />
+
+  <article class="post">
+    <div class="post-body">
+
+      <!-- ============ BASE TYPOGRAPHY ============ -->
+      <p class="sg-kicker">Base · Typography</p>
+
+      <h1>Heading 1 — the big one</h1>
+      <h2>Heading 2 — section</h2>
+      <h3>Heading 3 — subsection</h3>
+      <h4>Heading 4</h4>
+      <h5>Heading 5</h5>
+      <h6>Heading 6</h6>
+
+      <p>
+        A normal paragraph with a <a href="/">text link</a>, <strong>bold</strong> and
+        <em>italic</em> emphasis, some <code>inline code</code>, an
+        <abbr title="Abbreviation">abbr</abbr>, <mark>highlighted text</mark>,
+        <del>struck text</del>, <ins>inserted text</ins>, a footnote
+        ref<sup>1</sup>, a chemical sub<sub>2</sub>, and a bit of <small>small print</small>.
+        It runs long enough to wrap so you can read the measure and line-height.
+      </p>
+
+      <blockquote>
+        <p>A blockquote — the sad thing about artificial intelligence is that it lacks artifice and therefore intelligence.</p>
+      </blockquote>
+
+      <p class="sg-kicker">Base · Lists</p>
+
+      <ul>
+        <li>Unordered item one</li>
+        <li>Unordered item two
+          <ul>
+            <li>Nested item</li>
+            <li>Nested item</li>
+          </ul>
+        </li>
+        <li>Unordered item three</li>
+      </ul>
+
+      <ol>
+        <li>Ordered item one</li>
+        <li>Ordered item two</li>
+        <li>Ordered item three</li>
+      </ol>
+
+      <dl>
+        <dt>Description term</dt>
+        <dd>The definition that follows it.</dd>
+        <dt>Another term</dt>
+        <dd>Another definition.</dd>
+      </dl>
+
+      <p class="sg-kicker">Base · Code, tables, media</p>
+
+      <pre><code>{`function greet(name) {
+  return \`Hi, I'm \${name}\`;
+}`}</code></pre>
+
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Company</th><th>Years</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Senior Lead Engineer</td><td>Rehab Media Group</td><td>2025–</td></tr>
+          <tr><td>Principal Engineer</td><td>PMC (Penske)</td><td>2022–2024</td></tr>
+          <tr><td>Principal UX Dev</td><td>Alley</td><td>2019–2022</td></tr>
+        </tbody>
+      </table>
+
+      <figure>
+        <img src="/og.png" alt="Sample image with the share-card art" loading="lazy" />
+        <figcaption>A figure with a caption.</figcaption>
+      </figure>
+
+      <hr />
+
+      <!-- ============ HEROES ============ -->
+      <p class="sg-kicker">Component · Color heroes (PageHero, ink = c · m · y · k · paper)</p>
+    </div>
+  </article>
+
+  <PageHero ink="c" title="Cyan Hero" lede="The full-bleed color hero with the CMYK offset on the last word and a diagonal cut to the page." />
+  <PageHero ink="m" title="Magenta Hero" lede="Same component, magenta plate. Used on Work." />
+  <PageHero ink="y" title="Yellow Hero" lede="Yellow plate. Used on About." />
+  <PageHero ink="k" title="Key Hero" lede="Key (black) plate — white text. Used on Contact and cover posts." />
+  <PageHero ink="paper" title="Paper Hero" lede="The white/paper variant — flows into the slab on the homepage, no diagonal." />
+
+  <article class="post">
+    <div class="post-body">
+
+      <!-- ============ BUTTONS / LINKS / MARKS ============ -->
+      <p class="sg-kicker">Component · Outline link button (.all-link) &amp; registration mark</p>
+      <p>
+        <a class="all-link" href="/words/">All words &amp; photos →</a>
+      </p>
+      <p>
+        Registration marks (the print-shop motif) at a few sizes:
+        <RegMark size={22} /> <RegMark size={34} /> <RegMark size={48} />
+      </p>
+
+      <!-- ============ TAG BUBBLES ============ -->
+      <p class="sg-kicker">Component · Tag bubbles (.post-tag — flood to their rainbow color on hover)</p>
+      <p class="post-tags">
+        {tags.slice(0, 8).map((t) => (
+          <a class="post-tag" href={`/words/tag/${t.slug}/`} style={`--tc:${t.color};--tt:${t.text}`}>#{t.name}</a>
+        ))}
+      </p>
+    </div>
+  </article>
+
+  <!-- ============ POST STREAM ============ -->
+  <section>
+    <div class="post-body"><p class="sg-kicker">Component · Post stream (PostList — cover, shorty, and plain variants)</p></div>
+    <PostList posts={sample} />
+  </section>
+
+  <!-- ============ LATEST CARD ============ -->
+  <section>
+    <div class="post-body"><p class="sg-kicker">Component · Latest card (LatestPost)</p></div>
+    <LatestPost />
+  </section>
+
+  <!-- ============ PAGINATION ============ -->
+  <section>
+    <div class="post-body"><p class="sg-kicker">Component · Pagination</p></div>
+    <Pagination currentPage={2} totalPages={4} />
+  </section>
+
+  <!-- ============ FACET SLAB ============ -->
+  <section class="slab-wrap" aria-label="Facet slab example">
+    <div class="post-body"><p class="sg-kicker">Component · Facet slab (homepage — hover/focus a facet for the trade icons)</p></div>
+    <div class="slab">
+      <div class="slab-inner">
+        <h2 class="slab-title">A few sides of the same person</h2>
+        <article class="facet" data-ink="c" tabindex="0">
+          <span class="facet-num">01</span>
+          <h3 class="facet-title">Maker</h3>
+          <p class="facet-body">I build things out of other things and make a space fit me instead of the other way around.</p>
+        </article>
+        <article class="facet" data-ink="m" tabindex="0">
+          <span class="facet-num">02</span>
+          <h3 class="facet-title">Engineer / Architect</h3>
+          <p class="facet-body">Strongest where it's ambiguous: finding the real problem and setting technical direction.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <article class="post">
+    <div class="post-body">
+
+      <!-- ============ INK CARDS: projects / work / contact ============ -->
+      <p class="sg-kicker">Component · Ink cards (.ink-card — projects, work, contact share the base)</p>
+
+      <div class="projects">
+        <a class="ink-card project" data-ink="c" href="#">
+          <span class="project-status">Shipped · v3</span>
+          <h3>Acorn</h3>
+          <p>A classless CSS baseline — the stylesheet you start with. It's what this site runs on.</p>
+          <span class="project-cta">View on GitHub</span>
+        </a>
+        <a class="ink-card project" data-ink="y" href="#">
+          <span class="project-status">In progress</span>
+          <h3>Seedling CMS</h3>
+          <p>A flat-file CMS with inline editing for small sites. No admin panel.</p>
+          <span class="project-cta">Follow along</span>
+        </a>
+      </div>
+
+      <p class="sg-kicker">Component · Work grid (.work-card)</p>
+      <ul class="work-grid">
+        <li data-span="wide">
+          <a class="ink-card work-card" data-ink="c" href="#">
+            <span class="work-meta">2024 – present · Designer + engineer</span>
+            <h3>Acorn</h3>
+            <p>A classless CSS baseline so a site looks finished before anyone writes a single class.</p>
+            <span class="related-go" aria-hidden="true">→</span>
+          </a>
+        </li>
+        <li>
+          <a class="ink-card work-card" data-ink="m" href="#">
+            <span class="work-meta">2014 – present · Identity</span>
+            <h3>Design &amp; Identity</h3>
+            <p>Marks and identities for ventures I built and clients I've taken on.</p>
+            <span class="related-go" aria-hidden="true">→</span>
+          </a>
+        </li>
+      </ul>
+
+      <p class="sg-kicker">Component · Contact cards (.contact-card)</p>
+      <ul class="contact-grid">
+        <li>
+          <a class="ink-card contact-card" data-ink="c" href="#">
+            <span class="contact-label">Email</span>
+            <span class="contact-value">hello@</span>
+            <span class="contact-note">The fastest way. I actually read it.</span>
+          </a>
+        </li>
+        <li>
+          <a class="ink-card contact-card" data-ink="m" href="#">
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-value">/in/jomurgel</span>
+            <span class="contact-note">The professional paper trail.</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- ============ EXPERIENCE LIST ============ -->
+      <p class="sg-kicker">Component · Experience list (.exp-list)</p>
+      <ul class="exp-list">
+        <li class="exp-item">
+          <div class="exp-when">2025 – present</div>
+          <div class="exp-what">
+            <h3>Senior Lead Full-Stack Engineer <span class="exp-co">· Rehab Media Group</span></h3>
+            <p>Sole engineer and technical owner of a partner dashboard; rebuilt a high-debt codebase.</p>
+          </div>
+        </li>
+        <li class="exp-item">
+          <div class="exp-when">2022 – 2024</div>
+          <div class="exp-what">
+            <h3>Principal Engineer, Tech Lead <span class="exp-co">· PMC</span></h3>
+            <p>Unified the Block Editor across enterprise media brands.</p>
+            <p class="exp-brands">Rolling Stone · Variety · The Hollywood Reporter · Deadline</p>
+          </div>
+        </li>
+      </ul>
+
+      <!-- ============ CASE FACTS ============ -->
+      <p class="sg-kicker">Component · Case facts (case study fact bar)</p>
+      <div class="case-facts">
+        <dl class="case-facts-list">
+          <div><dt>Client</dt><dd>Project Acorn</dd></div>
+          <div><dt>Role</dt><dd>Designer + engineer (solo)</dd></div>
+          <div><dt>Stack</dt><dd>CSS, esbuild, npm</dd></div>
+        </dl>
+        <a class="all-link" href="#">Acorn docs ↗</a>
+      </div>
+
+      <!-- ============ CODEX ============ -->
+      <p class="sg-kicker">Component · Codex grid (.codex-grid — the About list)</p>
+      <div class="codex-grid">
+        <div class="codex-cat" data-ink="c">
+          <h3>Watching</h3>
+          <p class="codex-intro">The stuff on repeat.</p>
+          <ul>
+            <li class="is-done"><a href="#">The Owl House</a><span class="codex-note"> — comfort show</span></li>
+            <li>The Wizard of Speed and Time<span class="codex-note"> — the blueprint</span></li>
+          </ul>
+        </div>
+        <div class="codex-cat" data-ink="m">
+          <h3>Making</h3>
+          <ul>
+            <li>Bathroom remodel<span class="codex-note"> — ongoing</span></li>
+            <li>3D printing<span class="codex-note"> — arguing with it</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ============ BROWSER MOCKUP ============ -->
+      <p class="sg-kicker">Component · Browser mockup (in-content figure)</p>
+      <figure class="browser" data-align="wide">
+        <div class="browser-bar">
+          <span class="browser-dots"><span class="r"></span><span class="y"></span><span class="g"></span></span>
+          <span class="browser-url">jomurgel.com</span>
+        </div>
+        <div class="browser-body">
+          <img src="/og.png" alt="Sample site screenshot in a browser chrome" loading="lazy" />
+        </div>
+      </figure>
+
+      <p class="sg-note">
+        The footer face (cursor-following), the theme toggle, the skip link, and the
+        floating <strong>Tags</strong> button (bottom-right) are all live on this page too.
+      </p>
+    </div>
+  </article>
+
+  <!-- ============ RELATED POSTS ============ -->
+  <section>
+    <div class="post-body"><p class="sg-kicker">Component · Related posts (RelatedPosts)</p></div>
+    <RelatedPosts current={relatedSource} />
+  </section>
+
+  <TagBand tags={tags} />
+</Base>
+
+<style>
+  /* Style-guide-only labels. Small caps kicker above each block so the page
+     reads as a reference, not a real article. */
+  .sg-kicker {
+    border-top: 2px solid var(--black);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-top: var(--space-4);
+    padding-top: var(--space-1);
+    text-transform: uppercase;
+  }
+  .sg-note {
+    border-top: 1px dashed currentColor;
+    margin-top: var(--space-4);
+    opacity: 0.7;
+    padding-top: var(--space-2);
+  }
+</style>

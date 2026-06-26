@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { Content as Resume, frontmatter } from '../../brand/resume.md';
+---
+
+<Base
+  title="Résumé"
+  description="Jo Murgel — senior lead full-stack engineer and software architect. The short version of the story."
+  noindex={frontmatter.noindex}
+>
+  <section class="resume">
+    <div class="resume-actions no-print">
+      <button type="button" class="resume-dl" onclick="window.print()">Download PDF ↓</button>
+    </div>
+    <article class="resume-body post-body">
+      <Resume />
+    </article>
+  </section>
+</Base>

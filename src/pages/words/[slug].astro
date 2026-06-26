@@ -1,0 +1,76 @@
+---
+import Base from '../../layouts/Base.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
+import { getCollection, render } from 'astro:content';
+import { getAllTags } from '../../lib/words';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('words', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const isPhoto = post.data.type === 'photo';
+const hasCover = !!post.data.coverImage;
+const kind = isPhoto ? 'Photos' : 'Writing';
+const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const tagInfo = new Map((await getAllTags()).map((t) => [t.name, t]));
+const cats = post.data.tags.filter((t) => t !== 'shorty');
+
+// Cover posts get the colored-hero treatment with the photo as the fill.
+const coverStyle = hasCover
+  ? `--hero-bg: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.62)), url(${post.data.coverImage}) center / cover`
+  : undefined;
+---
+
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  heroInk={hasCover ? 'k' : undefined}
+  forceTheme={isPhoto ? 'dark' : undefined}
+>
+  {hasCover ? (
+    <header class="color-hero ink-k post-hero" style={coverStyle}>
+      <div class="color-hero-inner">
+        <span class="post-meta">
+          <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+          <span class="post-kind" data-kind={post.data.type}>{kind}</span>
+        </span>
+        <h1>{post.data.title}</h1>
+      </div>
+    </header>
+  ) : (
+    <header class="post-header">
+      <span class="post-meta">
+        <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+        <span class="post-kind" data-kind={post.data.type}>{kind}</span>
+      </span>
+      <h1>{post.data.title}</h1>
+    </header>
+  )}
+
+  {!hasCover && <hr />}
+
+  <article class="post">
+    <div class="post-body">
+      <Content />
+      {cats.length > 0 && (
+        <p class="post-tags">
+          {cats.map((t) => {
+            const info = tagInfo.get(t);
+            return info && (
+              <a class="post-tag" href={`/words/tag/${info.slug}/`} style={`--tc:${info.color};--tt:${info.text}`}>#{t}</a>
+            );
+          })}
+        </p>
+      )}
+    </div>
+  </article>
+
+  <hr class="post-end" />
+
+  <RelatedPosts current={post} />
+</Base>

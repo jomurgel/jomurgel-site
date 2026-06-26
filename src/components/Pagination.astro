@@ -1,0 +1,20 @@
+---
+// Numbered pagination. Page 1 → /words/, page n → /words/page/n/.
+const { currentPage, totalPages } = Astro.props;
+const href = (n) => (n === 1 ? '/words/' : `/words/page/${n}/`);
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+---
+
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="Pagination">
+    {currentPage > 1 && <a class="page-arrow" href={href(currentPage - 1)} rel="prev" aria-label="Previous page">←</a>}
+    {pages.map((n) =>
+      n === currentPage ? (
+        <span class="page-num current" aria-current="page">{n}</span>
+      ) : (
+        <a class="page-num" href={href(n)}>{n}</a>
+      )
+    )}
+    {currentPage < totalPages && <a class="page-arrow" href={href(currentPage + 1)} rel="next" aria-label="Next page">→</a>}
+  </nav>
+)}

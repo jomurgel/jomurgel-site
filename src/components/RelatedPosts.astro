@@ -1,0 +1,53 @@
+---
+// Related posts below a single post. Photo posts relate only to other
+// photos; everything else relates by shared category (tag), padded with
+// recent so it's never empty. Rendered as a compact CMYK-accented card grid.
+import { getCollection } from 'astro:content';
+
+const { current } = Astro.props;
+const all = (await getCollection('words', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const isPhoto = current.data.type === 'photo';
+const cats = new Set(current.data.tags.filter((t) => t !== 'shorty'));
+const others = all.filter((p) => p.id !== current.id);
+
+let related;
+if (isPhoto) {
+  related = others.filter((p) => p.data.type === 'photo');
+} else {
+  related = others.filter((p) => p.data.type !== 'photo' && p.data.tags.some((t) => cats.has(t)));
+  if (related.length < 3) {
+    const have = new Set(related.map((p) => p.id));
+    related = [...related, ...others.filter((p) => p.data.type !== 'photo' && !have.has(p.id))];
+  }
+}
+related = related.slice(0, 3);
+
+const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const inks = ['c', 'm', 'y'];
+---
+
+{related.length > 0 && (
+  <section class="related" aria-labelledby="related-heading">
+    <div class="related-head">
+      <h2 id="related-heading">Related</h2>
+      <a href="/words/" class="all-link">All words &amp; photos →</a>
+    </div>
+    <ul class="related-grid">
+      {related.map((p, i) => (
+        <li class="related-card">
+          <a class="ink-card" data-ink={inks[i % 3]} href={`/words/${p.id}/`}>
+            <span class="related-meta">
+              <time datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
+              <span class="post-kind" data-kind={p.data.type}>{p.data.type === 'photo' ? 'Photos' : 'Writing'}</span>
+            </span>
+            <h3 class="related-title">{p.data.title}</h3>
+            <span class="related-go" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

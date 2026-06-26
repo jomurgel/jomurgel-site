@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+
+const methods = [
+  { label: 'Email', value: 'hello@', href: 'mailto:hello@jomurgel.com', ink: 'c', note: 'The fastest way. I actually read it.' },
+  { label: 'LinkedIn', value: '/in/jomurgel', href: 'https://linkedin.com/in/jomurgel', ink: 'm', note: 'The professional paper trail.' },
+  { label: 'GitHub', value: '/jomurgel', href: 'https://github.com/jomurgel', ink: 'y', note: 'Code — including this site and Acorn.' },
+];
+---
+
+<Base
+  title="Contact"
+  description="Get in touch with Jo Murgel — open to architecture, staff, principal, and lead roles, plus freelance through Darkfound."
+  heroInk="k"
+>
+  <PageHero
+    ink="k"
+    title="Contact"
+    lede="Open to the right architecture, staff, principal, or lead role — and to interesting freelance through Darkfound."
+  />
+
+  <section>
+    <div class="post-body">
+      <p>
+        If you've got something fuzzy that needs someone to find the real problem and point a team at it,
+        that's the stuff I like. My <a href="/resume">résumé</a> is here if you need it, and email is the
+        fastest way to reach me — or grab me wherever you already are.
+      </p>
+    </div>
+  </section>
+
+  <section class="contact-methods" aria-label="Ways to reach me">
+    <ul class="contact-grid">
+      {methods.map((m) => {
+        const external = m.href.startsWith('http');
+        return (
+          <li>
+            <a
+              class="ink-card contact-card"
+              data-ink={m.ink}
+              href={m.href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener noreferrer' : undefined}
+            >
+              <span class="contact-label">{m.label}</span>
+              <span class="contact-value">{m.value}</span>
+              <span class="contact-note">{m.note}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </section>
+</Base>

@@ -1,0 +1,8 @@
+---
+// Registration mark — a crosshair in a CMYK-quartered circle. The
+// signature print-shop motif. Pure CSS, no SVG. Pass a position class
+// (tl/tr/bl/br) to corner-anchor it inside a position:relative parent,
+// or use bare for inline/standalone.
+const { pos = '', size = 26 } = Astro.props;
+---
+<span class={`regmark ${pos}`} style={`--regmark-size:${size}px`} aria-hidden="true"></span>

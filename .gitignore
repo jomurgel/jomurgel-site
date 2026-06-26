@@ -1,0 +1,27 @@
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Local planning + private brand docs (not part of the site).
+# resume.md is the exception — it's the source for the /resume page, so it
+# must be committed for the build to succeed.
+brand/*
+!brand/resume.md
+site-plan.md
+
+# Agent OS / Claude working files — local only, never committed.
+.agent-os/
+.claude/
+**/memory/
+CLAUDE.md
+
+# Env
+.env
+.env.production
+
+# OS / editor
+.DS_Store
+*.log

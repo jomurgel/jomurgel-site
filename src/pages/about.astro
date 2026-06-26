@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import RegMark from '../components/RegMark.astro';
+import { codex } from '../data/codex';
+
+const inks = ['c', 'm', 'y'];
+---
+
+<Base
+  title="About"
+  description="Jo Murgel — trained as an artist, working as an engineer, thinking like an architect. The longer, weirder version."
+  heroInk="y"
+>
+  <PageHero
+    ink="y"
+    title="About"
+    lede="Trained as an artist, working as an engineer, thinking like an architect. Here's the longer, weirder version."
+  />
+
+  <section class="about-lead">
+    <figure class="about-photo">
+      <div class="photo-placeholder" role="img" aria-label="Portrait of Jo — coming soon">
+        <RegMark size={44} />
+        <span>Portrait — coming soon</span>
+      </div>
+    </figure>
+    <div class="about-intro">
+      <p>
+        I came to engineering sideways. Three art degrees first — graphic design, illustration,
+        and photography — then about fifteen years building for the web, from frontend to principal
+        to leading teams. Turns out the art degrees weren't a waste of anyone's money: they're why I
+        care as much about how a thing is <em>designed</em> as whether it ships, and why I'd rather
+        hunt down the actual problem than glue a template over it.
+      </p>
+      <p>
+        The most-watched movie of my childhood was Mike Jitlov's <em><a href="https://wizworld.com" target="_blank">
+        The Wizard of Speed and Time</a></em> — one obsessive artist hand-building impossible effects out of nothing
+        but ingenuity and craft. I didn't clock it at the time, but that was the whole blueprint: make something dazzling, do it
+        yourself, solve the problem in a way nobody else would. Everything since has been a remix of that.
+      </p>
+      <p>
+        These days that shows up as a few overlapping things — maker, engineer, artist, photographer —
+        which are really one instinct wearing different clothes. When I'm not doing the day-job version,
+        I'm doing some lower-stakes one: shooting flowers, gutting a bathroom that never fit me, or
+        arguing with a 3D printer. If you're after the professional version, that lives over on
+        <a href="/work">Work</a>.
+      </p>
+    </div>
+  </section>
+
+  <hr />
+
+  <section class="codex" aria-labelledby="codex-heading">
+    <div class="codex-head">
+      <h2 id="codex-heading">The Codex</h2>
+      <p class="section-lede">All the other stuff that informs who I am — a living, over-long list of things I love.</p>
+    </div>
+    <div class="codex-grid">
+      {codex.map((c, i) => (
+        <div class="codex-cat" data-ink={inks[i % 3]}>
+          <h3>{c.label}</h3>
+          {c.intro && <p class="codex-intro">{c.intro}</p>}
+          <ul>
+            {c.items.map((it) => (
+              <li class:list={[{ 'is-done': it.done }]}>
+                {it.url ? <a href={it.url} target="_blank" rel="noopener noreferrer">{it.name}</a> : it.name}
+                {it.note && <span class="codex-note"> — {it.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <figure class="codex-gif">
+      <img src="/codex/feed.gif" alt="The Owl House — 'And now, we feed.'" loading="lazy" width="600" height="338" />
+      <figcaption>
+        My favorite <a href="https://www.youtube.com/watch?v=bmqy-Sp0txY" target="_blank" rel="noopener noreferrer">ʒaɪf</a>.
+        Yes, that's how it's pronounced — I have receipts.
+      </figcaption>
+    </figure>
+  </section>
+</Base>

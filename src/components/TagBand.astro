@@ -1,0 +1,50 @@
+---
+// Tags: a fixed bottom-right button (CMYK registration cross + "Tags").
+// Click → full-screen blurred overlay with big hashtag pills listed on the
+// right. The cross rotates into an X (colors shrink away) to close.
+// Close via the X, Escape, or backdrop click.
+const { tags, active } = Astro.props;
+---
+
+<button class="tags-fab" type="button" aria-expanded="false" aria-controls="tags-overlay">Tags</button>
+
+<div class="tags-overlay" id="tags-overlay" hidden role="dialog" aria-modal="true" aria-label="Browse by tag">
+  <ul class="tags-list">
+    {tags.map((t) => (
+      <li>
+        <a
+          href={`/words/tag/${t.slug}/`}
+          class:list={['tag-hash', { 'is-active': active === t.slug }]}
+          style={`--tc:${t.color};--tt:${t.text}`}
+        >#{t.name}</a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  const fab = document.querySelector('.tags-fab');
+  const overlay = document.getElementById('tags-overlay');
+  if (fab && overlay) {
+    const isOpen = () => fab.getAttribute('aria-expanded') === 'true';
+    const open = () => {
+      fab.setAttribute('aria-expanded', 'true');
+      fab.textContent = 'Close';
+      overlay.hidden = false;
+      requestAnimationFrame(() => overlay.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+      overlay.querySelector('a')?.focus();
+    };
+    const close = () => {
+      fab.setAttribute('aria-expanded', 'false');
+      fab.textContent = 'Tags';
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      overlay.addEventListener('transitionend', () => { if (!isOpen()) overlay.hidden = true; }, { once: true });
+      fab.focus();
+    };
+    fab.addEventListener('click', () => (isOpen() ? close() : open()));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) close(); });
+  }
+</script>

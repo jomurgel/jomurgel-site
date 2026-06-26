@@ -1,0 +1,75 @@
+---
+// Decorative "tools of the trade" icons that slide in from the slab
+// edges when a facet is hovered. Real Lucide icons (lucide-static),
+// imported as raw SVG — no runtime. One layer for the whole slab,
+// groups keyed to each facet's ink.
+import hammer from 'lucide-static/icons/hammer.svg?raw';
+import wrench from 'lucide-static/icons/wrench.svg?raw';
+import ruler from 'lucide-static/icons/ruler.svg?raw';
+import cog from 'lucide-static/icons/cog.svg?raw';
+import code from 'lucide-static/icons/code.svg?raw';
+import terminal from 'lucide-static/icons/terminal.svg?raw';
+import gitBranch from 'lucide-static/icons/git-branch.svg?raw';
+import cpu from 'lucide-static/icons/cpu.svg?raw';
+import paintbrush from 'lucide-static/icons/paintbrush.svg?raw';
+import palette from 'lucide-static/icons/palette.svg?raw';
+import penTool from 'lucide-static/icons/pen-tool.svg?raw';
+import pencil from 'lucide-static/icons/pencil.svg?raw';
+import camera from 'lucide-static/icons/camera.svg?raw';
+import aperture from 'lucide-static/icons/aperture.svg?raw';
+import film from 'lucide-static/icons/film.svg?raw';
+import image from 'lucide-static/icons/image.svg?raw';
+
+const icons = {
+  hammer, wrench, ruler, cog,
+  code, terminal, gitBranch, cpu,
+  paintbrush, palette, penTool, pencil,
+  camera, aperture, film, image,
+};
+
+// [iconName, position, slide-from, size] — positions/sizes vary per
+// group so icons land in different spots each hover (more organic).
+const groups = {
+  c: [
+    ['ruler',  { left: '2%',  top: '15%' },    'left',   '78px'],
+    ['wrench', { right: '8%', top: '34%' },    'right',  '54px'],
+    ['cog',    { left: '16%', bottom: '6%' },  'bottom', '64px'],
+    ['hammer', { right: '12%', bottom: '22%' }, 'bottom', '58px'],
+  ],
+  m: [
+    ['code',      { left: '6%',  top: '30%' },    'left',   '70px'],
+    ['terminal',  { right: '3%', top: '15%' },    'right',  '60px'],
+    ['gitBranch', { left: '11%', bottom: '13%' }, 'bottom', '56px'],
+    ['cpu',       { right: '16%', bottom: '6%' },  'right',  '74px'],
+  ],
+  y: [
+    ['paintbrush', { left: '3%',  top: '26%' },   'left',   '66px'],
+    ['palette',    { right: '7%', top: '16%' },   'right',  '76px'],
+    ['pencil',     { left: '17%', bottom: '7%' }, 'bottom', '52px'],
+    ['penTool',    { right: '11%', bottom: '24%' }, 'bottom', '60px'],
+  ],
+  k: [
+    ['camera',   { left: '5%',  top: '17%' },    'left',   '76px'],
+    ['aperture', { right: '4%', top: '33%' },    'right',  '56px'],
+    ['film',     { left: '12%', bottom: '15%' }, 'bottom', '64px'],
+    ['image',    { right: '15%', bottom: '6%' },  'bottom', '56px'],
+  ],
+};
+
+const fromVars = (dir) =>
+  dir === 'left' ? '--fx:-200px;--fy:0px;'
+  : dir === 'right' ? '--fx:200px;--fy:0px;'
+  : '--fx:0px;--fy:180px;';
+
+const posStyle = (p) => Object.entries(p).map(([k, v]) => `${k}:${v}`).join(';');
+---
+
+<div class="trade" aria-hidden="true">
+  {Object.entries(groups).map(([ink, list]) => (
+    <div class={`ig ig-${ink}`}>
+      {list.map(([name, pos, dir, size]) => (
+        <span class="ficon" style={`${posStyle(pos)};${fromVars(dir)};--w:${size};`} set:html={icons[name]} />
+      ))}
+    </div>
+  ))}
+</div>

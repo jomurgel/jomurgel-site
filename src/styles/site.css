@@ -1,0 +1,1512 @@
+/* --------------------------------------------------------------
+   jomurgel.com — site layer
+   Acorn styles content (elements, type, color, footnotes). This file
+   adds LAYOUT and the print-shop personality. Pure CSS — no SVG, no JS.
+   -------------------------------------------------------------- */
+
+/* Bright ink values for print effects (decorative; glyph color carries
+   contrast so AA is never at the mercy of a shadow). */
+:root {
+  --ink-cyan: #009fe3;
+  --ink-magenta: #e6177a;
+  --ink-yellow: #ffc400;
+  --display: clamp(2.5rem, 1.2rem + 6.5vw, 6rem);
+
+  /* Soft squircle radius — the site's image/card form factor. */
+  --radius-img: 2.25rem;
+
+  /* CMYK misregistration ghosts. Per-channel vars so a context can swap
+     the ghost that matches its background (e.g. cyan → white on cyan).
+     NOTE: applied inline via the .cmyk-offset mixin pattern, not a single
+     composed var — a composed var would resolve --ghost-* once at :root
+     and ignore per-context overrides. */
+  --ghost-c: var(--ink-cyan);
+  --ghost-m: var(--ink-magenta);
+  --ghost-y: var(--ink-yellow);
+
+  /* Brand palette: magenta primary, cyan secondary (overrides Acorn).
+     Light-mode values are AA-safe for links + white-on-button. */
+  /* Brand link/foreground magenta stays deeper for AA on paper; the
+     bright magenta lives in --accent / --plate-m for fills. */
+  --primary: #cc1f5b;
+  --primary-light: #e6177a;
+  --primary-dark: #a3174b;
+  --secondary: #009fe3;
+  --secondary-light: #5cc8f5;
+  --secondary-dark: #0a6080;
+  --accent: #e6177a;
+  --accent-light: #f4759f;
+  --accent-dark: #b01550;
+
+  /* CMYK facet plates — vivid process inks (set 3), independent of the
+     brand palette. All take BLACK text (cyan included) except key. */
+  --plate-c: #009fe3;
+  --plate-m: #e6177a;
+  --plate-y: #ffc400;
+}
+
+[data-theme="dark"] {
+  --primary: #ff5b8f;
+  --primary-light: #ffb3ce;
+  --primary-dark: #e62e6b;
+  --secondary: #34b0e0;
+  --secondary-light: #5cc8f5;
+  --secondary-dark: #0e80ab;
+}
+
+/* Always-on CMYK split (hero "Jo", section accents). Same effect the
+   facet numbers reveal on hover. */
+.offset {
+  text-shadow:
+    -0.06em 0 0 var(--ghost-c),
+    0.06em 0 0 var(--ghost-m),
+    0 0.06em 0 var(--ghost-y);
+}
+
+/* One content inset for the whole site so every section shares a left
+   edge. We own the horizontal rhythm (not Acorn's body padding), so
+   full-bleed sections can align to contained ones. */
+body { padding-left: 0; padding-right: 0; }
+
+.site-header,
+.site-footer,
+main > section { padding-inline: var(--space-2); }
+
+/* Site header --------------------------------------------------- */
+.site-header {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: space-between;
+  margin: 0 auto var(--space-3);
+  max-width: var(--container-default);
+}
+
+.site-header nav { margin-bottom: 0; }
+.site-header nav ul { gap: var(--space-1); }
+
+.brand {
+  color: var(--black);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.03rem;
+  text-decoration: none;
+}
+
+.brand::after { color: var(--accent); content: "."; transition: opacity 0.3s ease 0.6s; }
+
+/* Easter egg: hover the wordmark and Jo's signature draws itself, dot and all. */
+.brand { align-items: center; display: inline-flex; position: relative; }
+/* Fade-in (on blur) is delayed so the wordmark returns AFTER the line erases;
+   fade-out (on hover) is immediate — see the transition-delay:0 in :hover. */
+.brand-word { transition: opacity 0.3s ease 0.6s; }
+/* Keep the brand black on hover on plain (no-hero) headers — otherwise Acorn's
+   a:hover turns it magenta, and the currentColor signature with it. */
+.site-header:not(.site-header--overlay) .brand:hover { color: var(--black); }
+.brand-sig {
+  /* No container fade — the stroke's own draw/un-draw carries visibility,
+     so the line erases on blur instead of being masked by a fade. */
+  left: -0.25em;
+  pointer-events: none;
+  position: absolute;
+  top: 0.5em; /* anchored just below the wordmark, scrawls down-right into the hero */
+}
+/* Size the svg directly. max-width:none overrides Acorn's global svg cap
+   (which otherwise collapses it inside the auto-width absolute wrapper);
+   overflow:visible lets the scrawl break out past the wordmark + header. */
+.brand-sig svg { display: block; height: 1.5em; max-width: none; overflow: visible; width: auto; }
+.brand-sig .sig-line {
+  fill: none;
+  stroke: currentColor; /* black like the wordmark (adapts to the hero) */
+  stroke-dasharray: 2300;
+  stroke-dashoffset: 2300;
+  stroke-linecap: round;
+  stroke-width: 25px;
+  transition: stroke-dashoffset 0.65s ease; /* eases the draw in AND the un-draw out */
+}
+.brand-sig .sig-dot {
+  fill: var(--accent); /* magenta, like the period after "jomurgel" */
+  opacity: 0;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); /* soft pop */
+}
+.brand:hover .brand-word,
+.brand:hover::after { opacity: 0; transition-delay: 0s; }
+.brand:hover .sig-line { stroke-dashoffset: 0; }
+.brand:hover .sig-dot { opacity: 1; transform: scale(1); transition-delay: 0.45s; } /* dot lands after the line draws */
+@media (prefers-reduced-motion: reduce) {
+  .brand:hover .sig-line { animation: none; stroke-dashoffset: 0; }
+  .brand:hover .sig-dot { animation: none; opacity: 1; transform: scale(1); }
+}
+
+/* Black, minimal nav links (header + footer) — no pills. */
+.site-header nav a,
+.site-footer nav a {
+  background: none;
+  color: var(--black);
+  padding: var(--space-1) var(--space-1);
+}
+
+.site-header nav a:hover,
+.site-footer nav a:hover {
+  background: none;
+  color: var(--accent);
+}
+
+.site-header nav a[aria-current="page"] {
+  background: none;
+  color: var(--black);
+  font-weight: 700;
+}
+
+/* Mobile nav: hamburger (2 bars → X) opens a full-screen overlay menu. */
+.nav-toggle { display: none; }
+/* Never let Acorn's filled button styles (bg on hover/focus/active) show. */
+button.nav-toggle,
+button.nav-toggle:hover,
+button.nav-toggle:focus,
+button.nav-toggle:focus-visible,
+button.nav-toggle:active { background: none; border: 0; }
+
+@media (max-width: 48rem) {
+  .nav-toggle {
+    align-items: center;
+    background: none;
+    border: 0;
+    color: var(--black);
+    cursor: pointer;
+    display: inline-flex;
+    height: 2.5rem;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    width: 2.5rem;
+    z-index: 60;
+  }
+  .nav-bars { display: block; height: 14px; position: relative; width: 26px; }
+  .nav-bars::before,
+  .nav-bars::after {
+    background: currentColor;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    transition: transform 0.3s ease;
+    width: 100%;
+  }
+  .nav-bars::before { top: 0; }
+  .nav-bars::after { bottom: 0; }
+  .nav-toggle[aria-expanded="true"] .nav-bars::before { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-bars::after { transform: translateY(-6px) rotate(-45deg); }
+
+  .site-nav {
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--white) 92%, transparent);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    visibility: hidden;
+    z-index: 50;
+  }
+  .site-nav.open { opacity: 1; pointer-events: auto; visibility: visible; }
+  .site-nav ul {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .site-nav li { margin: 0; }
+  /* Force readable links on the light overlay regardless of hero ink. */
+  .site-nav a,
+  .site-header--overlay .site-nav a {
+    color: var(--black) !important;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    padding: var(--space-1);
+  }
+  .site-nav a[aria-current="page"] { color: var(--accent) !important; }
+}
+
+/* Editorial section index — a print-zine touch (01 / 02 …). */
+.index {
+  color: var(--accent);
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-1);
+}
+
+/* Hero — big, loud, confident (the keeper) ---------------------- */
+.hero {
+  margin: var(--space-5) auto var(--space-3);
+  max-width: var(--container-default);
+}
+
+.hero h1 {
+  font-size: var(--display);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin-bottom: var(--space-3);
+}
+
+.hero .lede {
+  font-size: var(--text-xl);
+  font-weight: 400;
+  max-width: var(--container-narrow);
+}
+
+/* ==============================================================
+   PRESS SHEET — the loud centerpiece. A full-bleed, angled proof
+   sheet: four CMYK plates, registration targets, crop marks. The
+   dynamism is in the artifact, not in animation.
+   ============================================================== */
+
+/* ==============================================================
+   FACET SLAB — a full-bleed black slab, tilted (skewed so content
+   stays readable), holding four numbered facets. Each blooms from
+   black into blurred CMYK chromatic offset on hover. The press
+   reference, made interactive.
+   ============================================================== */
+:root { --slab-tilt: 5deg; }
+
+/* Inset full-bleed positioning context (also anchors the reg mark). */
+.slab-wrap {
+  left: 50%;
+  margin: var(--space-2) calc(-50vw + var(--space-2)) var(--space-4);
+  max-width: none;
+  padding: 0;
+  position: relative;
+  width: calc(100vw - 2 * var(--space-2));
+}
+
+/* Same treatment as the colored hero: inset, rounded, flat-top + diagonal
+   bottom via shape() on a pseudo (so content isn't clipped). The dark fill
+   is a variable the hover floods drive. */
+.slab {
+  --hero-r: 1.5rem;
+  --slab-bg: #141414; /* always dark so the CMYK split reads */
+  border-radius: var(--hero-r);
+  overflow: hidden;
+  /* Top pad clears the clip-path's 5vw tilt on the left edge (where the
+     left-aligned title sits) so the title keeps a space-4 gap at any width. */
+  padding: calc(var(--space-4) + 5vw) 0 calc(var(--space-4) + 4vw);
+  position: relative;
+  width: 100%;
+}
+/* Parallelogram: top-left cut + bottom-right cut (mirrors the old skew),
+   rounded at every corner incl the two diagonal vertices. */
+.slab::before {
+  background: var(--slab-bg);
+  clip-path: shape(
+    from var(--hero-r) 5vw,
+    line to calc(100% - var(--hero-r)) 0,
+    arc to 100% var(--hero-r) of var(--hero-r) cw,
+    line to 100% calc(100% - 5vw - var(--hero-r)),
+    arc to calc(100% - var(--hero-r)) calc(100% - 5vw) of var(--hero-r) cw,
+    line to var(--hero-r) 100%,
+    arc to 0 calc(100% - var(--hero-r)) of var(--hero-r) cw,
+    line to 0 calc(5vw + var(--hero-r)),
+    arc to var(--hero-r) 5vw of var(--hero-r) cw,
+    close
+  );
+  content: "";
+  inset: 0;
+  position: absolute;
+  transition: background-color 0.2s ease;
+  z-index: 0;
+}
+
+[data-theme="dark"] .slab { --slab-bg: #0e0e0e; }
+
+.slab-inner {
+  margin: 0 auto;
+  max-width: var(--container-default);
+  padding: 0 var(--space-3); /* match the colored hero's inner gutter */
+  position: relative;
+  z-index: 1; /* above the trade-icon layer + the fill */
+}
+
+/* Tools-of-the-trade layer: icons slide in from the slab edges when a
+   facet floods. Decorative, behind the content. */
+.trade {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.ficon {
+  color: var(--slab-on, #fff);
+  display: block;
+  opacity: 0;
+  position: absolute;
+  transform: translate(var(--fx, 0), var(--fy, 0)) rotate(-6deg);
+  transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+  width: var(--w, clamp(40px, 5vw, 80px));
+}
+
+.ficon svg { display: block; height: auto; width: 100%; }
+
+/* Stagger each group's pieces. */
+.ig .ficon:nth-child(2) { transition-delay: 0.05s; }
+.ig .ficon:nth-child(3) { transition-delay: 0.1s; }
+.ig .ficon:nth-child(4) { transition-delay: 0.15s; }
+
+/* Reveal the group matching the hovered facet's ink. */
+.slab:has([data-ink="c"]:is(:hover, :focus-within)) .ig-c .ficon,
+.slab:has([data-ink="m"]:is(:hover, :focus-within)) .ig-m .ficon,
+.slab:has([data-ink="y"]:is(:hover, :focus-within)) .ig-y .ficon,
+.slab:has([data-ink="k"]:is(:hover, :focus-within)) .ig-k .ficon {
+  opacity: 0.22;
+  transform: translate(0, 0) rotate(-6deg);
+}
+
+/* Section heading lives inside the slab now — part of the artifact. */
+.slab-title {
+  color: #f5f5f5;
+  margin-bottom: var(--space-4);
+}
+
+.facet {
+  align-items: center;
+  color: #f5f5f5;
+  column-gap: var(--space-3);
+  display: grid;
+  grid-template-columns: 1fr;
+  /* No margin (override Acorn's article margin) so facets touch and the
+     hover flood passes between them without resetting. Padding is the
+     contiguous hit-area + visual spacing. */
+  margin: 0;
+  padding: var(--space-3) 0; /* tighter vertical rhythm between facets */
+  position: relative;
+  row-gap: var(--space-1);
+}
+
+/* Hovering a facet floods the WHOLE slab with that facet's ink.
+   --slab-on = readable text on that ink; --num-dim = the dimmed numbers
+   of the non-hovered facets (tinted by the bg, not flat grey). */
+.slab:has([data-ink="c"]:is(:hover, :focus-within)) {
+  --slab-bg: var(--plate-c); --slab-on: #000; --num-dim: rgba(0, 0, 0, 0.32); --ghost-c: #fff;
+}
+.slab:has([data-ink="m"]:is(:hover, :focus-within)) {
+  --slab-bg: var(--plate-m); --slab-on: #000; --num-dim: rgba(0, 0, 0, 0.3); --ghost-m: #fff;
+}
+.slab:has([data-ink="y"]:is(:hover, :focus-within)) {
+  --slab-bg: var(--plate-y); --slab-on: #000; --num-dim: rgba(0, 0, 0, 0.3); --ghost-y: #fff;
+}
+.slab:has([data-ink="k"]:is(:hover, :focus-within)) {
+  --slab-bg: #000; --slab-on: #fff; --num-dim: rgba(255, 255, 255, 0.25);
+}
+
+/* Inked state: recolor text + dim the non-hovered numbers. */
+.slab:has(.facet:is(:hover, :focus-within)) :is(.slab-title, .facet-title) {
+  color: var(--slab-on);
+}
+.slab:has(.facet:is(:hover, :focus-within)) .facet-num {
+  color: var(--num-dim);
+  text-shadow: none;
+}
+.slab:has(.facet:is(:hover, :focus-within)) .facet-body {
+  color: color-mix(in srgb, var(--slab-on) 55%, transparent);
+}
+
+/* The hovered facet pops to full strength + the CMY number split. */
+.slab:has(.facet:is(:hover, :focus-within)) .facet:is(:hover, :focus-within) .facet-num {
+  color: var(--slab-on);
+  text-shadow:
+    -0.06em 0 0 var(--ghost-c),
+    0.06em 0 0 var(--ghost-m),
+    0 0.06em 0 var(--ghost-y);
+}
+.slab:has(.facet:is(:hover, :focus-within)) .facet:is(:hover, :focus-within) .facet-body {
+  color: var(--slab-on);
+}
+
+.facet-num {
+  color: #5a5a5a;
+  font-size: 4rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  grid-column: 1;
+  line-height: 0.85;
+  transition: color 0.18s ease;
+}
+
+.facet-title {
+  font-size: var(--text-2xl);
+  grid-column: 1;
+  margin: 0;
+}
+
+.facet-body {
+  color: #b8b8b8;
+  grid-column: 1;
+  margin: 0;
+  max-width: var(--container-narrow);
+}
+
+/* Two-column facet (big number beside the text) on wider screens. */
+@media (min-width: 40rem) {
+  .facet { grid-template-columns: auto 1fr; }
+  .facet-num { font-size: clamp(3.5rem, 10vw, 7rem); grid-row: 1 / 3; }
+  .facet-title { align-self: end; grid-column: 2; grid-row: 1; }
+  .facet-body { align-self: start; grid-column: 2; grid-row: 2; }
+}
+
+/* RGB-split, but CMY: the foreground (huge number + title) separates
+   into crisp cyan/magenta/yellow offset copies — misregistered ink.
+   Zero blur = a hard split, not a glow. The giant number dominates, so
+   the whole block reads as pulling apart. */
+.facet-num { transition: text-shadow 0.18s ease, color 0.18s ease; }
+.facet-body { transition: color 0.18s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slab,
+  .facet,
+  .facet-num,
+  .facet-body,
+  .ficon { transition: none; }
+}
+
+/* Mobile: stack the big number above the text instead of squeezing it
+   into a narrow column. */
+
+/* Registration targets — crosshair in a CMYK-quartered circle. */
+.regmark {
+  --regmark-size: 26px;
+  border: 1.5px solid var(--black);
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      var(--ink-cyan) 0 25%,
+      var(--ink-magenta) 0 50%,
+      var(--ink-yellow) 0 75%,
+      var(--black) 0
+    );
+  display: inline-block;
+  height: var(--regmark-size);
+  position: relative; /* base: crosshairs anchor to the mark itself */
+  width: var(--regmark-size);
+}
+
+.regmark::before,
+.regmark::after {
+  background: var(--black);
+  content: "";
+  position: absolute;
+}
+
+.regmark::before { left: 50%; top: -7px; bottom: -7px; width: 1.5px; transform: translateX(-50%); }
+.regmark::after { top: 50%; left: -7px; right: -7px; height: 1.5px; transform: translateY(-50%); }
+
+.regmark.tl,
+.regmark.tr,
+.regmark.bl,
+.regmark.br { position: absolute; }
+.regmark.tl { left: -4px; top: -4px; }
+.regmark.tr { right: -4px; top: -4px; }
+.regmark.bl { left: -4px; bottom: -4px; }
+.regmark.br { right: -4px; bottom: -4px; }
+
+/* Proof labels in the corners. */
+.proof-label {
+  color: var(--gray);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.proof-label.top { top: -2.4rem; left: 2rem; }
+.proof-label.bottom { bottom: -2.4rem; right: 2rem; }
+
+/* What I'm building — projects showcase (calm, editorial) -------- */
+.section-lede {
+  color: var(--gray);
+  font-size: var(--text-lg);
+  max-width: var(--container-narrow);
+}
+
+/* Two-column header: heading left, lede right. */
+.building-head {
+  align-items: start;
+  display: grid;
+  gap: var(--space-2) var(--space-4);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-3);
+}
+@media (min-width: 48rem) {
+  .building-head { grid-template-columns: 1fr 1fr; }
+}
+.building-head h2 { margin: 0; }
+
+/* Even 3-up grid of bordered cards. Each = a 2px CMYK rounded border;
+   on hover the card fills with its ink like liquid rising from below. */
+.projects {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+@media (min-width: 48rem) {
+  .projects { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Shared CMYK card — bordered, per-ink, floods to its plate color on hover.
+   Used by the homepage projects AND the post Related cards. */
+.ink-card {
+  border: 2px solid var(--light-gray);
+  border-radius: var(--radius-img);
+  color: var(--black);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-3);
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+}
+.ink-card[data-ink="c"] { border-color: var(--plate-c); }
+.ink-card[data-ink="m"] { border-color: var(--plate-m); }
+.ink-card[data-ink="y"] { border-color: var(--plate-y); }
+
+/* Hover: background fades to the card's ink; text flips to readable. */
+.ink-card[data-ink="c"]:hover { background: var(--plate-c); color: #000; }
+.ink-card[data-ink="m"]:hover { background: var(--plate-m); color: #000; }
+.ink-card[data-ink="y"]:hover { background: var(--plate-y); color: #000; }
+.ink-card:hover :is(.project-status, .project-cta, p, .related-meta, .post-kind, .related-go, .work-meta, .contact-label, .contact-note) { color: inherit; }
+
+/* Drain the color from the cards you're not hovering. */
+:where(.projects, .related-grid):has(.ink-card:hover) .ink-card:not(:hover) {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-card { transition: background-color 0.3s ease, color 0.3s ease; }
+}
+
+/* Project-card content. */
+.project-status {
+  color: var(--gray);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.project h3 { margin: var(--space-1) 0; }
+.project p {
+  color: var(--gray);
+  flex: 1;
+  margin-bottom: var(--space-2);
+}
+.project-cta { font-weight: 600; }
+.project-cta::after { content: " \2192"; }
+
+.building-foot { margin-top: var(--space-3); }
+
+/* Contact — ways to reach me as CMYK cards (reuse .ink-card). */
+.contact-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 40rem) {
+  .contact-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.contact-grid li { margin: 0; }
+.contact-card::after { content: none !important; } /* suppress Acorn's external ↗ on the card */
+.contact-label {
+  color: var(--gray);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.contact-value { font-size: var(--text-xl); font-weight: 700; margin: var(--space-1) 0; overflow-wrap: anywhere; }
+.contact-note { color: var(--gray); font-size: var(--text-sm); margin-top: auto; padding-top: var(--space-2); }
+
+/* Back-nav when a single page has no related content — centered, content width. */
+.post-back {
+  margin: 0 auto;
+  max-width: var(--container-narrow);
+  text-align: center;
+}
+
+/* Latest — a container-wide cover with the title inset over a shade. */
+.latest-head {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+.latest-head h2 { margin: 0; }
+
+/* Shared "All words & photos →" pill button (homepage Latest + post Related). */
+.all-link {
+  border: 2px solid var(--black);
+  border-radius: 999px;
+  color: var(--black);
+  font-weight: 600;
+  padding: 0.45rem 1.1rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+.all-link:hover { background: var(--black); color: var(--white); }
+/* The card itself reuses .post-item (blog) styles via PostList. */
+
+
+/* Registration mark tucked into the white triangle the slab angle makes,
+   below the black edge. */
+.slab-wrap .regmark.angle {
+  bottom: var(--space-2);
+  position: absolute;
+  right: var(--space-4);
+  z-index: 2;
+}
+
+/* Full-top colored hero — fills the whole top (nav overlaid), flat top,
+   single diagonal cut to white below. The page passes heroInk to Base. */
+body.has-hero { padding-top: 0; } /* let the hero reach the very top */
+
+.site-header--overlay {
+  left: 0;
+  margin: 0 auto;
+  padding-top: var(--space-3);
+  position: absolute;
+  right: 0;
+  z-index: 5;
+}
+/* Overlay nav adapts to the hero ink ("theme"): white on cyan/black,
+   black on magenta/yellow. */
+.site-header--overlay .brand,
+.site-header--overlay nav a { color: #fff; }
+.site-header--overlay nav a:hover { color: rgba(255, 255, 255, 0.72); }
+.site-header--overlay nav a[aria-current="page"] { color: #fff; font-weight: 700; }
+.site-header--overlay .brand::after { color: #fff; }
+
+.site-header--overlay[data-hero-ink="c"] :is(.brand, nav a, .nav-toggle),
+.site-header--overlay[data-hero-ink="m"] :is(.brand, nav a, .nav-toggle),
+.site-header--overlay[data-hero-ink="y"] :is(.brand, nav a, .nav-toggle) { color: #000; }
+.site-header--overlay[data-hero-ink="c"] nav a:hover,
+.site-header--overlay[data-hero-ink="m"] nav a:hover,
+.site-header--overlay[data-hero-ink="y"] nav a:hover { color: rgba(0, 0, 0, 0.6); }
+.site-header--overlay[data-hero-ink="c"] .brand::after,
+.site-header--overlay[data-hero-ink="m"] .brand::after,
+.site-header--overlay[data-hero-ink="y"] .brand::after { color: #000; }
+
+/* Dark (key) hero: white brand → white hamburger to match. */
+.site-header--overlay .nav-toggle { color: #fff; }
+
+/* Paper theme (homepage): light hero, normal dark nav. */
+.site-header--overlay[data-hero-ink="paper"] :is(.brand, nav a, .nav-toggle) { color: var(--black); }
+.site-header--overlay[data-hero-ink="paper"] nav a:hover { color: var(--accent); }
+.site-header--overlay[data-hero-ink="paper"] .brand::after { color: var(--accent); }
+
+/* Header aligns with the hero content (which is inset inside the bleed panel):
+   colored heroes match the content's inner gutter; paper aligns with the page. */
+.site-header--overlay[data-hero-ink="c"],
+.site-header--overlay[data-hero-ink="m"],
+.site-header--overlay[data-hero-ink="y"],
+.site-header--overlay[data-hero-ink="k"] { padding-inline: var(--space-3); }
+.site-header--overlay[data-hero-ink="paper"] { padding-inline: var(--space-2); }
+
+/* Every hero shares ONE inset, rounded, clipped panel — so the nav + title
+   land at the same place on every page. Paper (homepage) fills white;
+   colored pages fill their plate color. Near-full-bleed, inset by a small
+   gutter; content-driven height. */
+.color-hero {
+  --hero-gap: var(--space-4); /* the ONE gap below any hero (colored = margin, paper = padding into the slab) */
+  --hero-r: 1.5rem;
+  border-radius: var(--hero-r);
+  left: 50%;
+  margin: var(--space-2) calc(-50vw + var(--space-2)) var(--hero-gap);
+  max-width: none; /* override Acorn's main-child cap so it can go full-bleed */
+  overflow: hidden;
+  padding: calc(var(--space-5) + var(--space-4) + var(--space-3) - var(--space-2)) 0 calc(var(--space-5) + 5vw);
+  position: relative;
+  width: calc(100vw - 2 * var(--space-2));
+}
+.color-hero.ink-paper {
+  --hero-bg: var(--white);
+  color: var(--black);
+  margin-bottom: 0;
+  padding-bottom: var(--hero-gap); /* white hero flows into the slab; this IS the gap */
+}
+/* Colored fill on a pseudo so it can carry the diagonal cut, while the
+   parent's rounded overflow keeps the corners rounded — the visible shape
+   is the intersection: rounded corners + diagonal bottom. The short flat
+   run at the bottom-left lets that corner round cleanly. */
+.color-hero::before {
+  background: var(--hero-bg);
+  /* Full shape with arcs at every corner — including the diagonal/right-edge
+     vertex that border-radius can't reach. r = 1.5rem, drop = 5vw. */
+  clip-path: shape(
+    from var(--hero-r) 0,
+    line to calc(100% - var(--hero-r)) 0,
+    arc to 100% var(--hero-r) of var(--hero-r) cw,
+    line to 100% calc(100% - 5vw - var(--hero-r)),
+    arc to calc(100% - var(--hero-r)) calc(100% - 5vw) of var(--hero-r) cw,
+    line to var(--hero-r) 100%,
+    arc to 0 calc(100% - var(--hero-r)) of var(--hero-r) cw,
+    line to 0 var(--hero-r),
+    arc to var(--hero-r) 0 of var(--hero-r) cw,
+    close
+  );
+  content: "";
+  inset: 0;
+  position: absolute;
+  z-index: 0;
+}
+.color-hero .color-hero-inner { position: relative; z-index: 1; }
+
+/* Mobile: bigger corner radius, and push the title + nav further down so
+   the rounded top corners have room. */
+@media (max-width: 48rem) {
+  .color-hero {
+    --hero-r: 2.75rem;
+    padding-top: calc(var(--space-5) + var(--space-2));
+    padding-bottom: var(--space-4);
+  }
+  .slab { --hero-r: 2.75rem; }
+  /* Nav sits closer to the top; brand stays clear of the rounded corner. */
+  .site-header--overlay { padding-top: var(--space-3); }
+  /* More breathing room for the brand + hamburger inside the inset hero. */
+  .site-header { padding-inline: var(--space-3); }
+  /* Colored hero: space-3 inner (clears the rounded corner). Content sits at
+     panel-inset(16)+32 = 48, so the header matches at space-2+space-3 = 48.
+     Paper drops to 0 (panel inset = gutter); its header matches at space-2. */
+  .color-hero:not(.ink-paper) .color-hero-inner { padding-inline: var(--space-3); }
+  .color-hero.ink-paper .color-hero-inner { padding-inline: 0; }
+  .site-header--overlay[data-hero-ink="c"],
+  .site-header--overlay[data-hero-ink="m"],
+  .site-header--overlay[data-hero-ink="y"],
+  .site-header--overlay[data-hero-ink="k"] { padding-inline: calc(var(--space-2) + var(--space-3)); }
+  .site-header--overlay[data-hero-ink="paper"] { padding-inline: var(--space-2); }
+}
+
+/* Each colored hero swaps the ghost matching its bg → white (text is black). */
+.color-hero.ink-c { --hero-bg: var(--plate-c); color: #000; --ghost-c: #fff; }
+.color-hero.ink-m { --hero-bg: var(--plate-m); color: #000; --ghost-m: #fff; }
+.color-hero.ink-y { --hero-bg: var(--plate-y); color: #000; --ghost-y: #fff; }
+.color-hero.ink-k { --hero-bg: #141414; color: #fff; }
+
+.color-hero-inner {
+  margin: 0 auto;
+  max-width: var(--container-default);
+  padding: 0 var(--space-2);
+  width: 100%;
+}
+/* Colored panels get more inner gutter (clears the rounded corners); the
+   paper hero matches the page gutter. Desktop only — the mobile media query
+   above sets the mobile values (and must not be overridden by these). */
+@media (min-width: 48.0625rem) {
+  .color-hero:not(.ink-paper) .color-hero-inner { padding-inline: var(--space-3); }
+  .color-hero.ink-paper .color-hero-inner { padding-inline: var(--space-2); }
+}
+.color-hero h1 {
+  font-size: var(--display);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin-bottom: var(--space-3);
+}
+.color-hero .lede {
+  font-size: var(--text-xl);
+  margin: 0;
+  max-width: var(--container-narrow);
+}
+
+/* Words & Photos — post list (whitespace-separated, no divider lines) */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 48rem) {
+  .post-list { gap: var(--space-4); }
+}
+.post-item { margin: 0; }
+
+.post-item a {
+  color: var(--black);
+  display: block;
+  text-decoration: none;
+}
+
+/* Image-forward layout when a post has a cover. */
+.post-item.has-cover a {
+  align-items: center;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 36rem) {
+  .post-item.has-cover a { grid-template-columns: 14rem 1fr; }
+}
+/* Cover sits in a wrapper that skews into a parallelogram on hover (like
+   the facet slab); the image counter-skews + scales so it stays undistorted. */
+.post-thumb-wrap {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-img);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+@media (min-width: 36rem) {
+  .post-thumb-wrap { aspect-ratio: 1; }
+}
+.post-thumb {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  /* Constant slight zoom so the skew has cover to spare — only the skew
+     animates on hover, never the scale (no zoom motion). */
+  transform: scale(1.15);
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+.post-item.has-cover a:hover .post-thumb-wrap { transform: skewY(-4deg); }
+.post-item.has-cover a:hover .post-thumb { transform: skewY(4deg) scale(1.15); }
+
+@media (prefers-reduced-motion: reduce) {
+  .post-thumb-wrap,
+  .post-thumb { transition: none; }
+  .post-item.has-cover a:hover .post-thumb-wrap { transform: none; }
+  .post-item.has-cover a:hover .post-thumb { transform: scale(1.15); }
+}
+
+.post-meta {
+  align-items: center;
+  color: var(--gray);
+  display: flex;
+  font-size: var(--text-sm);
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+.post-kind {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.post-kind[data-kind="photo"] { color: var(--secondary-dark); }
+.post-kind[data-kind="writing"] { color: var(--primary); }
+
+.post-title { margin: 0 0 var(--space-1); }
+.post-item a:hover .post-title { text-decoration: underline; text-underline-offset: 0.12em; }
+.shorty { color: var(--accent); font-style: italic; margin-right: 0.35em; }
+.post-item a p { color: var(--gray); margin: 0; max-width: var(--container-narrow); }
+
+/* Category bubbles — muted grey by default, flood to the tag's rainbow
+   color on post hover (same colors as the Tags overlay). */
+.post-tags { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-3); }
+.post-tag {
+  background: var(--light-gray);
+  border-radius: 999px;
+  color: var(--gray);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0.25em 0.85em;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+/* Flood to the tag's color on post-card hover, or on the bubble itself
+   (single-post links). */
+.post-item a:hover .post-tag,
+a.post-tag:hover,
+a.post-tag:focus-visible { background: var(--tc); color: var(--tt); }
+
+
+/* Tags FAB — fixed bottom-right outline pill, text only ("Tags" / "Close"),
+   styled like .all-link. */
+.tags-fab {
+  background: var(--white);
+  border: 2px solid var(--black);
+  border-radius: 999px;
+  bottom: var(--space-3);
+  color: var(--black);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.45rem 1.1rem;
+  position: fixed;
+  right: var(--space-3);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  z-index: 60;
+}
+button.tags-fab:hover,
+button.tags-fab:focus-visible { background: var(--black); border-color: var(--black); color: var(--white); }
+
+/* Full-screen blurred overlay with big hashtag pills on the right. */
+.tags-overlay {
+  backdrop-filter: blur(10px);
+  background: rgba(245, 245, 245, 0.72);
+  inset: 0;
+  opacity: 0;
+  position: fixed;
+  transition: opacity 0.3s ease;
+  z-index: 50;
+}
+.tags-overlay.open { opacity: 1; }
+[data-theme="dark"] .tags-overlay { background: rgba(18, 18, 18, 0.72); }
+
+.tags-list {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 0 var(--space-4) 0 0; /* no top/bottom padding — let the list scroll fully */
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.tags-list li { margin: 0; }
+.tag-hash {
+  background: var(--tc);
+  border: 2px solid var(--tc);
+  border-radius: 999px;
+  color: var(--tt);
+  display: inline-block;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  padding: 0.12em 0.55em;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+/* Hover/active = outline variant in the same color. */
+.tag-hash:hover,
+.tag-hash:focus-visible,
+.tag-hash.is-active {
+  background: transparent;
+  color: var(--tc);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tags-overlay,
+  .tags-mark-disc,
+  .tags-mark-x,
+  .tags-fab-label { transition: none; }
+}
+
+/* Pagination — numbered. */
+.pagination {
+  align-items: center;
+  display: flex;
+  gap: var(--space-1);
+  justify-content: center;
+  margin-top: var(--space-5);
+}
+.page-num,
+.page-arrow {
+  border-radius: 999px;
+  color: var(--black);
+  font-weight: 600;
+  line-height: 1;
+  min-width: 2.4rem;
+  padding: 0.55rem 0.7rem;
+  text-align: center;
+  text-decoration: none;
+}
+.page-num:hover,
+.page-arrow:hover { background: var(--off-white); color: var(--primary); }
+.page-num.current { background: var(--accent); color: #fff; }
+
+/* Words & Photos — single post ---------------------------------- */
+.post { margin: 0 auto; max-width: var(--container-default); } /* gap above comes from the hero's --hero-gap */
+
+/* Plain header (no cover) — centered to match the body column, with extra
+   room above the title/meta. The divider hr (sibling) provides the spacing
+   below, symmetric with its own top margin. */
+.post-header {
+  margin: var(--space-5) auto 0;
+  max-width: var(--container-narrow);
+}
+.post-header h1 {
+  font-size: var(--display);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin: var(--space-1) 0;
+}
+/* Article right after the title divider — the hr's bottom margin owns the
+   gap (so title→hr and hr→body are equal). */
+hr + .post { margin-top: 0; }
+
+/* Cover post header = the colored-hero panel with the photo as the fill. */
+.post-hero h1 { margin: var(--space-1) 0 0; } /* size inherits --display from .color-hero h1 */
+.post-hero .lede { margin-top: var(--space-2); }
+/* Meta adapts to the hero's text color (white on dark image / black on a plate). */
+.post-hero .post-meta { color: color-mix(in srgb, currentColor 70%, transparent); margin-bottom: var(--space-2); }
+.post-hero .post-kind[data-kind="photo"] { color: var(--plate-c); }
+.post-hero .post-kind[data-kind="writing"] { color: var(--plate-m); }
+.post-hero .post-kind[data-kind="work"] { color: inherit; }
+
+/* Body — larger reading size, centered column. */
+.post-body {
+  font-size: 1.125rem; /* 18px */
+  margin: 0 auto;
+  max-width: var(--container-narrow);
+  padding-inline: var(--space-2);
+}
+/* Content columns that aren't `main > section` still need the side gutter. */
+.post-header,
+.post-back,
+.post-footer { padding-inline: var(--space-2); }
+.post-body :is(img, video) { border-radius: var(--radius-img); }
+/* Raw block media (<video>, <iframe>, <figure>) doesn't inherit Acorn's
+   paragraph margins, so it crowds adjacent headings/text. Give it its own
+   vertical rhythm — margins collapse with neighbors, so no double gaps. */
+.post-body :is(video, iframe, figure) { margin-block: var(--space-4); }
+.post-body :is(video, iframe)[data-align="center"] { display: block; margin-inline: auto; }
+
+/* Galleries: flex row-wrap (like the old site) so images stay in order —
+   2 per row on desktop, 1 on mobile, natural aspect (no crop), each row
+   vertically centered. Sits at the "wide" width via Acorn's data-align. */
+.post-body [data-gallery] {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--space-2);
+}
+.post-body [data-gallery] img {
+  aspect-ratio: auto;
+  height: auto;
+  margin: 0;
+  object-fit: fill;
+  width: 100%;
+}
+@media (min-width: 40rem) {
+  .post-body [data-gallery] img { width: calc(50% - var(--space-2) / 2); }
+}
+/* Standalone wide figures: the image fills the full wide width. */
+.post-body figure img { display: block; width: 100%; }
+
+.related { margin: var(--space-5) auto 0; max-width: var(--container-narrow); }
+/* Related header — heading left, "all words" button right. */
+.related-head {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+.related-head h2 { margin: 0; }
+
+/* Compact CMYK card grid — each card floods to a plate color on hover. */
+.related-grid {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.related-card { margin: 0; }
+/* Chrome comes from .ink-card; below is just related content. */
+.related-card .ink-card { gap: var(--space-1); }
+.related-meta {
+  align-items: flex-start;
+  color: var(--gray);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--text-xs);
+  gap: 0.25em;
+}
+.related-title {
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0;
+}
+.related-go {
+  color: var(--gray);
+  font-weight: 700;
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+/* Work — case-study cards (reuse .ink-card) + experience list. */
+.work-cases > h2,
+.work-exp > h2 { margin-bottom: var(--space-3); }
+.work-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 48rem) {
+  .work-grid { grid-auto-flow: dense; grid-template-columns: repeat(3, 1fr); }
+  /* Variable widths: span:2 cards fill 2/3 so rows pack tight (dense backfills). */
+  .work-grid li[data-span="2"] { grid-column: span 2; }
+}
+.work-grid li { margin: 0; }
+/* Card eyebrow — same treatment as the homepage project cards (.project-status). */
+.work-meta {
+  color: var(--gray);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.work-card h3 { font-size: var(--text-xl); margin: var(--space-1) 0; }
+.work-card p { color: var(--gray); flex: 1; margin: 0; }
+
+/* macOS-style browser frame for showing web work in the body (no shadow). */
+.browser {
+  border: 1px solid var(--light-gray);
+  border-radius: 12px;
+  margin: var(--space-4) auto;
+  overflow: hidden;
+}
+.browser-bar {
+  align-items: center;
+  background: var(--off-white);
+  border-bottom: 1px solid var(--light-gray);
+  display: flex;
+  gap: var(--space-2);
+  padding: 0.65rem 0.85rem;
+}
+.browser-dots { display: flex; flex-shrink: 0; gap: 0.45rem; }
+.browser-dots span { border-radius: 50%; height: 0.75rem; width: 0.75rem; }
+.browser-dots .r { background: #ff5f57; }
+.browser-dots .y { background: #febc2e; }
+.browser-dots .g { background: #28c840; }
+.browser-url {
+  background: var(--white);
+  border-radius: 6px;
+  color: var(--gray);
+  flex: 1;
+  font-size: var(--text-xs);
+  overflow: hidden;
+  padding: 0.3rem 0.7rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.browser-body { aspect-ratio: 16 / 10; overflow: hidden; }
+.browser-body img { border-radius: 0; display: block; height: 100%; margin: 0; object-fit: cover; object-position: top center; width: 100%; }
+
+/* Résumé page — renders brand/resume.md; "Download" = clean print-to-PDF. */
+.resume { margin-top: var(--space-4); }
+.resume-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto var(--space-2);
+  max-width: var(--container-narrow);
+  padding-inline: var(--space-2);
+}
+button.resume-dl {
+  background: none;
+  border: 2px solid var(--black);
+  border-radius: var(--button-radius);
+  color: var(--black);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  padding: var(--space-1) var(--space-3);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+button.resume-dl:hover,
+button.resume-dl:focus-visible { background: var(--black); border-color: var(--black); color: var(--white); }
+
+/* Screen pizazz on the rendered résumé (print resets these below). */
+.resume-body { counter-reset: resume-section; }
+.resume-body h1 {
+  font-size: clamp(3rem, 2.1rem + 4.2vw, 5.5rem);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin-bottom: var(--space-2);
+  text-shadow: -0.04em 0 0 var(--ghost-c), 0.04em 0 0 var(--ghost-m), 0 0.04em 0 var(--ghost-y);
+}
+/* Subtitle (bold line under the name) → accent eyebrow. */
+.resume-body h1 + p {
+  color: var(--accent);
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-1); /* close the gap to the contact line */
+  text-transform: uppercase;
+}
+.resume-body h1 + p strong { color: inherit; }
+/* Contact line → quiet. Phone hidden on screen, shown only in print/PDF. */
+.resume-body h1 + p + p { color: var(--gray); font-size: var(--text-sm); }
+.phone-print { display: none; }
+/* Numbered section headings — editorial 01 / 02 … */
+.resume-body h2 { counter-increment: resume-section; }
+.resume-body h2::before {
+  color: var(--accent);
+  content: counter(resume-section, decimal-leading-zero) "  ";
+  font-variant-numeric: tabular-nums;
+}
+.resume-body h3 { color: var(--primary); margin-bottom: var(--space-1); } /* company — role; tight to its date */
+.resume-body :is(p, li) > strong:first-child { color: var(--accent); } /* Results: + skill categories */
+.resume-body hr { margin-block: var(--space-3); }
+
+/* Print: strip site chrome, keep the document clean (esp. the résumé). */
+@page { margin: 0.6in 0.5in 0.5in; } /* roomier top margin on the PDF */
+@media print {
+  .site-header,
+  .site-footer,
+  .no-print { display: none !important; }
+  .resume { margin-top: 0; }
+  .resume-body { font-size: 10.5pt; margin: 0; max-width: none; padding: 0; }
+  .resume-body a { color: #000 !important; text-decoration: none; }
+  .resume-body a[href^="http"]::after,
+  .resume-body a[target="_blank"]::after { content: none !important; } /* URLs are written out already */
+  .resume-body hr { display: none; } /* squiggle dividers carry 8rem margins — drop in print */
+  /* Masthead on paper: bigger, bolder, CMYK offset back (override Acorn's print text-shadow:none). */
+  .resume-body h1 {
+    font-size: 34pt;
+    font-weight: 800;
+    text-shadow: -0.045em 0 0 var(--ghost-c), 0.045em 0 0 var(--ghost-m), 0 0.045em 0 var(--ghost-y) !important;
+  }
+  .resume-body h1 + p { font-size: 10pt; } /* smaller subtitle */
+  .resume-body h2 { font-size: 14pt; margin-bottom: var(--space-1); } /* smaller section headers on paper */
+  .resume-body h3 { font-size: 11.5pt; } /* smaller job titles */
+  .resume-body h3 + p { margin-bottom: var(--space-1); } /* tighten date → bullets */
+  .phone-print { display: inline; } /* phone appears only on the printed/PDF résumé */
+  /* Keep a touch of brand on paper — override Acorn's blanket print-black. */
+  .resume-body h2::before,
+  .resume-body :is(p, li) > strong:first-child,
+  .resume-body h1 + p + p,
+  .resume-body h1 + p + p a { color: var(--accent) !important; }
+  .resume-body :is(h1, h2, h3) { break-after: avoid; }
+  .resume-body :is(li, h3, blockquote) { break-inside: avoid; }
+}
+
+.work-exp { margin-top: var(--space-5); }
+.exp-list { display: flex; flex-direction: column; gap: var(--space-4); list-style: none; margin: 0; padding: 0; }
+.exp-item {
+  align-items: start;
+  display: grid;
+  gap: var(--space-1) var(--space-4);
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+@media (min-width: 40rem) {
+  .exp-item { grid-template-columns: 12rem 1fr; }
+}
+.exp-when { color: var(--gray); font-size: var(--text-sm); font-weight: 600; }
+.exp-what h3 { font-size: var(--text-lg); margin: 0 0 var(--space-1); }
+.exp-co { color: var(--gray); font-weight: 400; }
+.exp-what p { margin: 0; }
+.exp-brands { color: var(--primary); font-size: var(--text-sm); font-weight: 600; margin-top: var(--space-1); }
+
+/* Case study — facts bar above the body. */
+.case-facts {
+  align-items: flex-start;
+  border-bottom: 2px solid var(--light-gray);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+}
+.case-facts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+.case-facts dt { color: var(--gray); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; }
+.case-facts dd { font-weight: 600; margin: 0; }
+
+/* About — portrait + intro prose side by side, then the Codex. */
+.about-lead {
+  align-items: start;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 40rem) {
+  .about-lead { grid-template-columns: minmax(11rem, 16rem) 1fr; }
+}
+.about-photo { margin: 0; }
+.photo-placeholder {
+  align-items: center;
+  aspect-ratio: 3 / 4;
+  background: color-mix(in srgb, var(--light-gray) 40%, transparent);
+  border: 2px dashed var(--light-gray);
+  border-radius: var(--radius-img);
+  color: var(--gray);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  gap: var(--space-2);
+  justify-content: center;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+.about-intro p { font-size: 1.125rem; margin-bottom: var(--space-3); }
+.about-intro p:last-child { margin-bottom: 0; }
+
+.codex { margin-top: var(--space-5); }
+.codex-head { margin-bottom: var(--space-4); }
+.codex-head h2 { margin: 0 0 var(--space-1); }
+.codex-grid {
+  display: grid;
+  gap: var(--space-4) var(--space-3);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 30rem) { .codex-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 48rem) { .codex-grid { grid-template-columns: repeat(3, 1fr); } }
+/* Each category gets a CMYK keyline under its heading — a print-zine touch. */
+.codex-cat h3 {
+  border-bottom: 2px solid var(--light-gray);
+  font-size: var(--text-base);
+  margin: 0 0 var(--space-2);
+  padding-bottom: var(--space-1);
+}
+.codex-cat[data-ink="c"] h3 { border-color: var(--plate-c); }
+.codex-cat[data-ink="m"] h3 { border-color: var(--plate-m); }
+.codex-cat[data-ink="y"] h3 { border-color: var(--plate-y); }
+.codex-intro { color: var(--gray); font-size: var(--text-sm); margin: 0 0 var(--space-2); }
+.codex-cat ul { list-style: none; margin: 0; padding: 0; }
+.codex-cat li {
+  color: var(--gray);
+  font-size: var(--text-sm);
+  margin: 0;
+  padding: var(--space-1) 0;
+}
+.codex-cat li.is-done { opacity: 0.55; text-decoration: line-through; }
+.codex-cat li a { color: var(--gray); text-decoration: none; }
+.codex-cat li a:hover { color: var(--primary); text-decoration: underline; }
+.codex-note { font-style: italic; opacity: 0.8; }
+
+/* Favorite GIF — playful codex sign-off. */
+.codex-gif {
+  margin: var(--space-5) auto 0;
+  max-width: 28rem;
+  text-align: center;
+}
+.codex-gif img {
+  border-radius: var(--radius-img);
+  height: auto;
+  width: 100%;
+}
+.codex-gif figcaption {
+  color: var(--gray);
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+}
+
+/* Animated squiggle divider (from jomurgel.com) — a tileable wave that
+   flows left via background-position. Short + centered by default. */
+hr {
+  background: none;
+  border: 0;
+  height: 4px;
+  margin: var(--space-5) auto;
+  max-width: var(--container-narrow);
+  overflow: hidden;
+  padding-inline: var(--space-2); /* match the body gutter so the squiggle never butts the edge */
+  width: 100%;
+}
+/* The squiggle itself is a fixed 125px, centered by default. */
+hr::after {
+  animation: squiggle 1.2s linear infinite;
+  background: url(/separator.svg) repeat-x;
+  background-size: 20px 4px;
+  content: "";
+  display: block;
+  height: 4px;
+  margin: 0 auto;
+  width: 125px;
+}
+/* The title divider (right after the header) is left-aligned to the content. */
+.post-header + hr::after { margin-left: 0; }
+@keyframes squiggle { to { background-position-x: -20px; } }
+@media (prefers-reduced-motion: reduce) { hr::after { animation: none; } }
+
+/* Footer -------------------------------------------------------- */
+.site-footer {
+  color: var(--gray);
+  font-size: var(--text-sm);
+  margin: 0 auto;
+  max-width: var(--container-default);
+  padding-top: var(--space-4);
+  text-align: center;
+}
+
+/* Last section runs straight into the footer — no gap, no divider. */
+main > section:last-child { margin-bottom: 0; }
+
+.site-footer nav ul {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.theme-link { font-size: var(--text-sm); margin-left: var(--space-1); }
+
+/* Little face that follows the cursor and smiles when you touch it. */
+.face-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+}
+
+.face {
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+}
+/* 404: the little face is gone — just a soft, blurred dent where he sat. */
+.face-gone {
+  aspect-ratio: 1;
+  background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--gray) 55%, transparent), transparent 68%);
+  border-radius: 50%;
+  filter: blur(5px);
+  height: 52px;
+  width: 52px;
+}
+
+.face .features { transition: transform 0.1s linear; }
+
+.face .mouth {
+  transform: translate(1px, 2px) rotate(-4deg);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Sun by day, moon by night. */
+.face-bg { fill: #ffd24a; transition: fill 0.3s ease; }
+.crater { fill: rgba(0, 0, 0, 0.13); opacity: 0; transition: opacity 0.3s ease; }
+[data-theme="dark"] .face-bg { fill: #5fa8e0; }
+[data-theme="dark"] .crater { opacity: 1; }
+
+/* Section rhythm ------------------------------------------------ */
+main > section {
+  margin: 0 auto var(--space-5);
+  max-width: var(--container-default);
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jomurgel.com/sitemap-index.xml

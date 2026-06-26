@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<Base title="404" description="Page not found." heroInk="k" faceGone>
+  <PageHero
+    ink="k"
+    title="404"
+    lede="This one didn't make it through the press. The page moved, got cut, or never existed."
+  />
+
+  <section>
+    <div class="post-body">
+      <p>
+        Nothing to see at this URL. Try the <a href="/">homepage</a>, the
+        <a href="/words">words &amp; photos</a>, my <a href="/work">work</a>, or
+        <a href="/contact">get in touch</a>.
+      </p>
+    </div>
+  </section>
+</Base>

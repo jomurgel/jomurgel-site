@@ -1,0 +1,37 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import PostList from '../../../components/PostList.astro';
+import TagBand from '../../../components/TagBand.astro';
+import { getCollection } from 'astro:content';
+import { getAllTags, tagSlug } from '../../../lib/words';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  const bySlug = new Map();
+  posts.forEach((p) =>
+    p.data.tags.forEach((t) => {
+      const slug = tagSlug(t);
+      if (!bySlug.has(slug)) bySlug.set(slug, { name: t, posts: [] });
+      bySlug.get(slug).posts.push(p);
+    })
+  );
+  return [...bySlug].map(([slug, { name, posts }]) => ({ params: { tag: slug }, props: { name, posts } }));
+}
+
+const { name, posts } = Astro.props;
+const tags = await getAllTags();
+const activeSlug = tagSlug(name);
+---
+
+<Base title={`Tagged: ${name}`} heroInk="c">
+  <PageHero ink="c" title={`Tagged ${name}`} lede={`${posts.length} ${posts.length === 1 ? 'post' : 'posts'} tagged "${name}".`} />
+
+  <section>
+    <TagBand tags={tags} active={activeSlug} />
+    <PostList posts={posts} />
+    <p class="building-foot"><a href="/words/">← All words &amp; photos</a></p>
+  </section>
+</Base>

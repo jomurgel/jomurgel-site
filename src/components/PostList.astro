@@ -1,0 +1,46 @@
+---
+// The Words & Photos post stream. Posts with a cover image get an
+// image-forward layout; the rest are text-only. Shorties get a prefix.
+// Tags render as bubbles that flood to their rainbow color on hover.
+import { getAllTags } from '../lib/words';
+
+const { posts } = Astro.props;
+const fmt = (d) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const isShorty = (p) => p.data.tags.includes('shorty');
+const tagInfo = new Map((await getAllTags()).map((t) => [t.name, t]));
+const cats = (p) => p.data.tags.filter((t) => t !== 'shorty');
+---
+
+<ul class="post-list">
+  {posts.map((p) => (
+    <li class={`post-item${p.data.coverImage ? ' has-cover' : ''}`}>
+      <a href={`/words/${p.id}/`}>
+        {p.data.coverImage && (
+          <div class="post-thumb-wrap">
+            <img class="post-thumb" src={p.data.coverImage} alt={p.data.coverAlt ?? ''} loading="lazy" />
+          </div>
+        )}
+        <div class="post-text">
+          <span class="post-meta">
+            <time datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
+            <span class="post-kind" data-kind={p.data.type}>{p.data.type === 'photo' ? 'Photos' : 'Writing'}</span>
+          </span>
+          <h2 class="post-title">
+            {isShorty(p) && <span class="shorty">Shorty:</span>}
+            {p.data.title}
+          </h2>
+          {p.data.description && <p>{p.data.description}</p>}
+          {cats(p).length > 0 && (
+            <span class="post-tags">
+              {cats(p).map((t) => {
+                const info = tagInfo.get(t);
+                return info && <span class="post-tag" style={`--tc:${info.color};--tt:${info.text}`}>#{t}</span>;
+              })}
+            </span>
+          )}
+        </div>
+      </a>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCollection } from 'astro:content';
+import { experience } from '../../data/experience';
+
+const studies = (await getCollection('work', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base
+  title="Work"
+  description="Selected case studies and experience — Jo Murgel, software architect and engineering lead."
+  heroInk="m"
+>
+  <PageHero
+    ink="m"
+    title="Work"
+    lede="The work I can show, and the work I can talk about. Most of the rest is behind logins and NDAs — which is the nature of building things that matter."
+  />
+
+  {studies.length > 0 && (
+    <section class="work-cases" aria-labelledby="cases-heading">
+      <h2 id="cases-heading">Case studies</h2>
+      <ul class="work-grid">
+        {studies.map((s) => (
+          <li data-span={s.data.span}>
+            <a class="ink-card work-card" data-ink={s.data.ink} href={`/work/${s.id}/`}>
+              <span class="work-meta">{[s.data.year, s.data.role].filter(Boolean).join(' · ')}</span>
+              <h3>{s.data.title}</h3>
+              <p>{s.data.summary}</p>
+              <span class="related-go" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="work-exp" aria-labelledby="exp-heading">
+    <h2 id="exp-heading">Selected experience</h2>
+    <ul class="exp-list">
+      {experience.map((e) => (
+        <li class="exp-item">
+          <div class="exp-when">{e.period}</div>
+          <div class="exp-what">
+            <h3>{e.role} <span class="exp-co">· {e.company}</span></h3>
+            <p>{e.impact}</p>
+            {e.brands && e.brands.length > 0 && (
+              <p class="exp-brands">{e.brands.join(' · ')}</p>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <p class="building-foot">
+      Want the <a href="/resume">full résumé</a> or to talk about a role? <a href="/contact">Get in touch</a>.
+    </p>
+  </section>
+</Base>

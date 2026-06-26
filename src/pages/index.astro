@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import TradeIcons from '../components/TradeIcons.astro';
+import LatestPost from '../components/LatestPost.astro';
+
+const facets = [
+  {
+    num: '01',
+    ink: 'c',
+    title: 'Maker',
+    body: 'I build things out of other things and make a space fit me instead of the other way around. Code, plywood, tile, plastic — the material changes, the instinct doesn\'t.',
+  },
+  {
+    num: '02',
+    ink: 'm',
+    title: 'Engineer / Architect',
+    body: 'Strongest where it\'s ambiguous: finding the real problem, setting technical direction, and building a custom solution from a sensible base.',
+  },
+  {
+    num: '03',
+    ink: 'y',
+    title: 'Artist',
+    body: 'Trained, not dabbling. Three degrees — graphic design, illustration, photography. Design and craft aren\'t afterthoughts.',
+  },
+  {
+    num: '04',
+    ink: 'k',
+    title: 'Photographer',
+    body: 'Art photography — flowers, nature, and portrait work. The eye that came before the code.',
+  },
+];
+
+const projects = [
+  {
+    num: '01',
+    ink: 'c',
+    name: 'Acorn',
+    statusLabel: 'Shipped · v3',
+    body: 'A classless CSS baseline — the stylesheet you start with. It styles semantic HTML out of the box, and it\'s what this site runs on.',
+    href: 'https://github.com/jomurgel/acorn.css',
+    cta: 'View on GitHub',
+  },
+  {
+    num: '02',
+    ink: 'y',
+    name: 'Seedling CMS',
+    statusLabel: 'In progress',
+    body: 'A flat-file CMS with inline editing for small sites. Markdown and YAML under the hood, no admin panel — what you edit is what you see.',
+    href: 'https://projectacorn.space',
+    cta: 'Follow along',
+  },
+  {
+    num: '03',
+    ink: 'm',
+    name: 'Project Acorn',
+    statusLabel: 'The lab',
+    body: 'My long-running testing ground for ideas that don\'t have a home yet — where experiments live before they become real.',
+    href: 'https://projectacorn.space',
+    cta: 'Visit the lab',
+  },
+];
+---
+
+<Base heroInk="paper">
+  <PageHero
+    ink="paper"
+    title="Hi, I'm Jo"
+    lede="Trained as an artist, working as an engineer, thinking like an architect. I build custom software and lead the teams behind it — because I've never believed there's a one-size-fits-all solution to anything."
+  />
+
+  <section class="slab-wrap" aria-labelledby="facets-heading">
+    <div class="slab">
+      <TradeIcons />
+      <div class="slab-inner">
+        <h2 id="facets-heading" class="slab-title">A few sides of the same person</h2>
+        {facets.map((f) => (
+          <article class="facet" data-ink={f.ink} tabindex="0">
+            <span class="facet-num">{f.num}</span>
+            <h3 class="facet-title">{f.title}</h3>
+            <p class="facet-body">{f.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="building-heading">
+    <div class="building-head">
+      <h2 id="building-heading">What I'm building</h2>
+      <p class="section-lede">Tools and experiments — some shipped, some in progress, all built to scratch an itch.</p>
+    </div>
+
+    <div class="projects">
+      {projects.map((p) => (
+        <a class="ink-card project" data-ink={p.ink} href={p.href}>
+          <span class="project-status">{p.statusLabel}</span>
+          <h3>{p.name}</h3>
+          <p>{p.body}</p>
+          <span class="project-cta">{p.cta}</span>
+        </a>
+      ))}
+    </div>
+
+    <p class="building-foot">
+      Want to work together? <a href="/work">See the work</a> or
+      <a href="/contact">get in touch</a>.
+    </p>
+  </section>
+
+  <LatestPost />
+</Base>

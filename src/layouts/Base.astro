@@ -1,0 +1,158 @@
+---
+// Base layout — wraps every page. Pulls in Acorn (content styling) and
+// the site layer (layout), renders the shared header + footer.
+import 'acorn.css';
+import '../styles/site.css';
+import signatureSvg from '../assets/signature.svg?raw';
+
+const { title, description = "Jo Murgel — software architect and engineering lead. Trained as an artist.", heroInk, forceTheme, image, faceGone, noindex } = Astro.props;
+const pageTitle = title ? `${title} · Jo Murgel` : 'Jo Murgel';
+
+// Absolute URLs for canonical + social cards (Astro.site = https://jomurgel.com).
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image ?? '/og.png', Astro.site).href;
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/work', label: 'Work' },
+  { href: '/words', label: 'Words & Photos' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Open Graph / social cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Jo Murgel" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script is:inline define:vars={{ forceTheme }}>
+      // Set theme before paint to avoid a flash. Photo posts force dark.
+      const theme = forceTheme || localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+  <body class:list={[heroInk && 'has-hero']}>
+    <a href="#main" data-skip-link>Skip to content</a>
+
+    <header class:list={['site-header', heroInk && 'site-header--overlay']} data-hero-ink={heroInk}>
+      <a href="/" class="brand" aria-label="Jo Murgel — home">
+        <span class="brand-word">jomurgel</span>
+        <span class="brand-sig" aria-hidden="true" set:html={signatureSvg}></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span class="nav-bars" aria-hidden="true"></span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <ul>
+          {nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="face-wrap">
+        {faceGone ? (
+          <div class="face-gone" role="img" aria-label="An empty, blurred dent where a little face used to be"></div>
+        ) : (
+        <svg class="face" viewBox="0 0 100 100" role="img" aria-label="A little face that follows your cursor">
+          <circle class="face-bg" cx="50" cy="50" r="46" />
+          <circle class="crater" cx="29" cy="64" r="5" />
+          <circle class="crater" cx="72" cy="55" r="3" />
+          <circle class="crater" cx="58" cy="29" r="2.5" />
+          <g class="features">
+            <circle cx="38" cy="46" r="4" fill="#151513" />
+            <circle cx="62" cy="46" r="4" fill="#151513" />
+            <path class="mouth" d="M37 56 Q47.5 66 58 58 M58 54.5 L58 62.5" fill="none" stroke="#151513" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </svg>
+        )}
+      </div>
+
+      <nav aria-label="Elsewhere">
+        <ul>
+          <li><a href="https://darkfound.com">Darkfound</a></li>
+          <li><a href="https://projectacorn.space">Project Acorn</a></li>
+          <li><a href="https://thereforephotography.com">Therefore Photography</a></li>
+          <li><a href="https://instagram.com/jomurgel">Instagram</a></li>
+          <li><a href="https://github.com/jomurgel">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/jomurgel">LinkedIn</a></li>
+        </ul>
+      </nav>
+
+      <p>
+        Built by Jo Murgel on <a href="https://github.com/jomurgel/acorn.css">Acorn</a>. © 2026.
+        <button
+          type="button"
+          data-variant="link"
+          class="theme-link"
+          onclick="(function(){const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',t);localStorage.setItem('theme',t);})()"
+        >Toggle theme</button>
+      </p>
+    </footer>
+
+    <script is:inline>
+      (() => {
+        const toggle = document.querySelector('.nav-toggle');
+        const nav = document.getElementById('site-nav');
+        if (!toggle || !nav) return;
+        const set = (open) => {
+          toggle.setAttribute('aria-expanded', String(open));
+          toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+          nav.classList.toggle('open', open);
+          document.body.style.overflow = open ? 'hidden' : '';
+        };
+        toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
+        nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') set(false);
+        });
+      })();
+    </script>
+
+    <script is:inline>
+      (() => {
+        const face = document.querySelector('.face');
+        const feat = face && face.querySelector('.features');
+        if (!feat) return;
+
+        // Features follow the cursor (whole face turns).
+        window.addEventListener('mousemove', (e) => {
+          const r = face.getBoundingClientRect();
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          const a = Math.atan2(e.clientY - cy, e.clientX - cx);
+          const d = Math.min(5, Math.hypot(e.clientX - cx, e.clientY - cy) / 30);
+          feat.setAttribute('transform', `translate(${Math.cos(a) * d} ${Math.sin(a) * d})`);
+        }, { passive: true });
+      })();
+    </script>
+  </body>
+</html>
