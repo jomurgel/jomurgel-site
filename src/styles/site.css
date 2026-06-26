@@ -1027,6 +1027,9 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   justify-content: center;
   margin-top: var(--space-5);
 }
+
+.words-rss { font-size: var(--text-sm); margin-top: var(--space-4); text-align: center; }
+.words-rss a { color: var(--gray); }
 .page-num,
 .page-arrow {
   border-radius: 999px;
