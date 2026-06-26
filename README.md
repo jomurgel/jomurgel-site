@@ -11,7 +11,7 @@ misregistered-ink offset on headline accents.
 
 ## Stack
 
-- **Astro 5** — static output, content collections, zero JS by default
+- **Astro 7** — static output, content collections, zero JS by default
 - **Acorn CSS 3** — classless base styling; everything custom lives in `src/styles/site.css`
 - **lucide-static** — raw SVG icons, imported at build time
 - **@astrojs/sitemap** — sitemap generation (hidden pages filtered out)
