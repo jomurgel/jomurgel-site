@@ -11,7 +11,7 @@ export const codex: CodexCategory[] = [
     items: [
       { name: 'After Dark — Essenger', url: 'https://open.spotify.com/album/7dszm1dxmXo1Tgw97QOPeA' },
       { name: 'Arrival (soundtrack)', url: 'https://open.spotify.com/album/1woCvthHJakakroP6dXNxs' },
-      { name: 'Goosebumps The Musical: Phantom of the Auditorium' },
+      { name: 'Goosebumps The Musical: Phantom of the Auditorium', url: 'https://open.spotify.com/track/5T9Lwj0JikgBDvUHZbYEZW' },
       { name: 'In Search of the Antidote — Fletcher', url: 'https://open.spotify.com/album/1ZXvAPiGoqDXWsLHd3oZ8Q' },
       { name: 'Kintsugi — Death Cab for Cutie', url: 'https://open.spotify.com/album/6BK3muExDOuk0VnyMn9NVw' },
       { name: 'MCMLXXXV — Rufio', url: 'https://open.spotify.com/album/2LX1PiZLgicEHaFxyYoaKJ' },
