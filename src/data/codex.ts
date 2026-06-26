@@ -1,4 +1,4 @@
-// The Codex — everything from jomurgel.com/codex. Living, over-long list of
+// The Codex — everything from jomurgel.com/codex. Living, overly-long list of
 // things Jo loves. Structured so it's easy to restyle later.
 export type CodexItem = { name: string; url?: string; note?: string; done?: boolean };
 export type CodexCategory = { label: string; intro?: string; items: CodexItem[] };
@@ -11,10 +11,12 @@ export const codex: CodexCategory[] = [
     items: [
       { name: 'After Dark — Essenger', url: 'https://open.spotify.com/album/7dszm1dxmXo1Tgw97QOPeA' },
       { name: 'Arrival (soundtrack)', url: 'https://open.spotify.com/album/1woCvthHJakakroP6dXNxs' },
-      { name: 'Goosebumps The Musical: Phantom of the Auditorium', url: 'https://open.spotify.com/album/1ZXvAPiGoqDXWsLHd3oZ8Q' },
-      { name: 'In Search of the Antidote — Fletcher' },
+      { name: 'Goosebumps The Musical: Phantom of the Auditorium' },
+      { name: 'In Search of the Antidote — Fletcher', url: 'https://open.spotify.com/album/1ZXvAPiGoqDXWsLHd3oZ8Q' },
       { name: 'Kintsugi — Death Cab for Cutie', url: 'https://open.spotify.com/album/6BK3muExDOuk0VnyMn9NVw' },
+      { name: 'MCMLXXXV — Rufio', url: 'https://open.spotify.com/album/2LX1PiZLgicEHaFxyYoaKJ' },
       { name: 'Once Upon A Time — Feeling Left Out' },
+      { name: 'Petty Fights — Pretty Pity', url: 'https://open.spotify.com/album/42e4aAtvGRj5CuihPbyBVJ' },
       { name: 'Question Bedtime — MC Frontalot', url: 'https://open.spotify.com/album/2hdF4ENcOo16q4RNIp6EDz' },
       { name: 'Sticks and Stones — New Found Glory', url: 'https://open.spotify.com/album/29rNv6X8yQsCMiIOqkHud8' },
       { name: 'Wicked — Original Broadway Cast' },
@@ -23,51 +25,61 @@ export const codex: CodexCategory[] = [
   {
     label: 'Songs',
     items: [
-      { name: 'Calvin Klein — No More Kings', url: 'https://open.spotify.com/track/07vCTKCa4UvgtX7IeNjiw3' },
+      { name: '99 Boys — EMELINE', url: 'https://open.spotify.com/track/0GqWXMhLivLWNWdCl1nbDo' },
+      { name: 'Burn the Width — Peggy', url: 'https://open.spotify.com/track/15kyuCM5xLyafRa1CIA23M' },
+      { name: 'Feminine Rage — Peggy', url: 'https://open.spotify.com/track/2ahPoa4ECPPlZ1QJ7oSRok' },
       { name: 'Healing — Fletcher', url: 'https://open.spotify.com/track/2jgq1RlYLt4FZldm4KAfj2' },
-      { name: 'Please Please Please — Sabrina Carpenter', url: 'https://open.spotify.com/track/2tHwzyyOLoWSFqYNjeVMzj' },
+      { name: 'Reptile Guy — Wolves of Glendale', url: 'https://open.spotify.com/track/7mX0jUA7FIdd8a8wc0SRTV' },
+      { name: 'Umbrella — No More Kings', url: 'https://open.spotify.com/track/4j3i83Ni7efM2e3PFSQZhf' },
     ],
   },
   {
     label: 'Books',
     intro: "Currently the Lady Janies series, because I'm a teenage girl. They're quite fun.",
     items: [
-      { name: 'My Lady Jane', done: true },
-      { name: 'My Plain Jane', done: true },
-      { name: 'My Calamity Jane (in progress)' },
-      { name: 'My Imaginary Mary' },
-      { name: 'My Contrary Mary' },
-      { name: 'My Salty Mary' },
+      { name: 'Dungeon Crawler Carl Series — Matt Dinniman' },
+      { name: 'Project Hail Mary — Andy Weir' },
       { name: 'Ready Player One — Ernest Cline' },
       { name: 'Ready Player Two — Ernest Cline' },
       { name: 'Snow Crash — Neal Stephenson' },
-      { name: 'The Girl With the Dragon Tattoo series — Stieg Larsson' },
-      { name: 'The Harry Potter books' },
-      { name: 'The Hell Divers series — Nicholas Sansbury Smith' },
+      { name: 'The Girl With the Dragon Tattoo Series — Stieg Larsson' },
+      { name: 'The Harry Potter Series', note: 'despite the author' },
+      { name: 'The Hell Divers Series — Nicholas Sansbury Smith' },
+      { name: 'The Lady Janies Series — Cynthia Hand, Brodi Ashton, Jodi Meadows' },
       { name: 'The Martian — Andy Weir' },
+      { name: 'The Off-Campus Series — Elle Kennedy' },
+      { name: 'The Tenth Planet Trilogy — Dean Wesley Smith & Kristine Kathryn Rusch' },
       { name: 'Wicked — Gregory Maguire' },
     ],
   },
   {
     label: 'Movies',
     intro: 'Favorite is Wicked (2024) as of November 2024. Arrival falls to number two.',
-    items: plain([
-      'Arrival', 'Atomic Blonde', 'Attack the Block', 'Baby Driver', 'Back to the Future Trilogy',
-      'Cashback', 'Definitely, Maybe', 'Dungeons & Dragons: Honor Among Thieves', 'Edge of Tomorrow',
-      'Employee of the Month', 'Everything Everywhere All at Once', 'Goonies', 'Happy Death Day',
-      'Happy Death Day 2 U', 'Mad Max: Fury Road', 'Mimic', 'Premium Rush', 'Rare Exports',
-      'Ready Player One', 'Ready or Not', 'Resurrect Dead: The Mystery of the Toynbee Tiles',
-      'Safety Not Guaranteed', 'Scott Pilgrim vs. the World', 'Slither', 'The Conjuring',
-      'The Italian Job (2003)', 'The John Wick movies', 'The Relic', 'The Wizard of Speed and Time',
-      'Top Gun: Maverick', 'Tremors', 'Tremors 2', 'Wicked', 'Yesterday',
-    ]),
+    items: [
+      ...plain([
+        'Arrival', 'Atomic Blonde', 'Attack the Block', 'Baby Driver', 'Back to the Future Trilogy',
+        'Cashback', 'Definitely, Maybe', 'Dungeons & Dragons: Honor Among Thieves', 'Edge of Tomorrow',
+        'Employee of the Month', 'Everything Everywhere All at Once', 'Goonies', 'Happy Death Day',
+        'Happy Death Day 2 U', 'Mad Max: Fury Road', 'Mimic', 'Premium Rush', 'Rare Exports',
+        'Ready Player One', 'Ready or Not', 'Resurrect Dead: The Mystery of the Toynbee Tiles',
+        'Running Man (2025)', 'Safety Not Guaranteed', 'Scott Pilgrim vs. the World', 'Slither',
+        'The Conjuring',
+      ]),
+      { name: 'The Girl With the Dragon Tattoo', note: 'US and Swedish' },
+      ...plain([
+        'The Italian Job (2003)', 'The John Wick movies', 'The Relic', 'The Wizard of Speed and Time',
+        'Top Gun: Maverick', 'Tremors', 'Tremors 2', 'Wicked', 'Yesterday',
+      ]),
+    ],
   },
   {
     label: 'Television',
     items: plain([
-      'Brooklyn Nine-Nine', 'Fringe', 'From', 'How I Met Your Mother', 'Loki', 'Mythic Quest',
-      'Psych', 'Severance', 'Silicon Valley', 'Silo', 'Ted Lasso', 'The Big Bang Theory',
-      'The Curse of Oak Island', 'The Magicians', 'Watchmen', 'Westworld',
+      'Alien: Earth', "Bob's Burgers", 'Bridgerton', 'Brooklyn Nine-Nine', 'Firefly', 'Fringe', 'From',
+      'Ghosts', 'High Potential', 'How I Met Your Mother', 'Loki', 'Love, Death & Robots', 'Mythic Quest',
+      'Poker Face', 'Psych', 'Reacher', 'Rooster', 'Scrubs', 'Severance', 'Shrinking', 'Silicon Valley',
+      'Silo', 'Star Trek', 'Ted Lasso', 'The Big Bang Theory', 'The Curse of Oak Island', 'The Great North',
+      'The Magicians', 'The Rookie', 'Upload', 'Watchmen', 'Westworld', 'Widows Bay',
     ]),
   },
   {
@@ -123,18 +135,19 @@ export const codex: CodexCategory[] = [
   },
   {
     label: 'Podcasts',
-    intro: 'I use PocketCasts and regularly listen to the following in no particular order:',
     items: [
       { name: 'Brad and Will Made a Tech Pod', url: 'https://techpod.content.town/' },
       { name: 'Decoder', url: 'https://www.theverge.com/decoder-podcast-with-nilay-patel' },
       { name: 'Dungeons & Daddies', url: 'https://www.dungeonsanddaddies.com/' },
       { name: 'Endless Thread', url: 'https://www.wbur.org/podcasts/endlessthread/' },
+      { name: "Girls Who Don't D&D", url: 'https://girlswhodontdnd.com/' },
       { name: 'Hey Riddle Riddle', url: 'https://www.heyriddleriddle.com/' },
+      { name: 'Last Podcast on the Left', url: 'https://www.lastpodcastontheleft.com/' },
       { name: 'Smalltown Murder', url: 'https://shutupandgivememurder.com/' },
       { name: 'Smashing Security', url: 'https://www.smashingsecurity.com/' },
       { name: 'The Vergecast', url: 'https://www.theverge.com/the-vergecast/' },
       { name: 'Twenty Thousand Hertz', url: 'https://20k.org/' },
-      { name: 'Under Understood', url: 'https://underunderstood.com/podcast/' },
+      { name: 'Version History', url: 'https://www.theverge.com/version-history-podcast' },
     ],
   },
   {
@@ -142,6 +155,7 @@ export const codex: CodexCategory[] = [
     items: [
       { name: "Adam Savage's Tested", url: 'https://www.youtube.com/channel/UCiDJtJKMICpb9B1qf7qjEOA' },
       { name: 'Corridor Crew', url: 'https://youtube.com/@corridorcrew' },
+      { name: 'Mythical Kitchen', url: 'https://www.youtube.com/mythicalkitchen' },
       { name: 'PBS Idea Channel (defunct)', url: 'https://www.youtube.com/channel/UC3LqW4ijMoENQ2Wv17ZrFJA' },
       { name: 'The Verge', url: 'https://www.youtube.com/@TheVerge' },
     ],
