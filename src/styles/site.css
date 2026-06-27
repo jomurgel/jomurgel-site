@@ -1040,10 +1040,18 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   transform: translateY(-50%);
 }
 .tags-list li { margin: 0; }
-/* Tags fly in from off-screen right, one by one, and ease back out on close. */
+/* Tags fly in from off-screen right, one by one. A keyframe (not a transition)
+   so the entrance never flashes when the overlay un-hides. On close nothing
+   reverses — the items rest in place and the whole overlay just fades out. */
 @media (prefers-reduced-motion: no-preference) {
-  .tags-list li { transform: translateX(100vw); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-  .tags-overlay.open .tags-list li { transform: translateX(0); transition-delay: calc(var(--i, 0) * 0.04s); }
+  @keyframes tag-in {
+    from { opacity: 0; transform: translateX(60vw); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .tags-overlay.open .tags-list li {
+    animation: tag-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 0.05s);
+  }
 }
 .tag-hash {
   background: var(--tc);
