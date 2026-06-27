@@ -3,6 +3,7 @@ title: "Drawing again"
 description: "Sketches, a self-portrait, some line work, and a couple Draw-This-In-Your-Style takes."
 date: "2025-01-27"
 tags: ["illustration","dtiys"]
+coverImage: "/illustration/muze-dtiys.jpg"
 draft: false
 ---
 
