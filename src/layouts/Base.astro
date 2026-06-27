@@ -12,6 +12,11 @@ const pageTitle = title ? `${title} · Jo Murgel` : 'Jo Murgel';
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image ?? '/og.png', Astro.site).href;
 
+// Google Analytics 4. Put the real measurement ID here to switch it on; it
+// only loads in production builds (never in dev), and stays off until set.
+const GA_ID = 'G-XXXXXXXXXX';
+const analyticsOn = import.meta.env.PROD && /^G-[A-Z0-9]+$/.test(GA_ID) && !GA_ID.includes('XXX');
+
 const nav = [
   { href: '/', label: 'Home' },
   { href: '/work', label: 'Work' },
@@ -51,6 +56,18 @@ const path = Astro.url.pathname;
       const theme = forceTheme || localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
     </script>
+
+    {analyticsOn && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+        <script is:inline define:vars={{ GA_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){ dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        </script>
+      </>
+    )}
   </head>
   <body class:list={[heroInk && 'has-hero']}>
     <a href="#main" data-skip-link>Skip to content</a>
