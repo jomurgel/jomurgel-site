@@ -782,6 +782,18 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
 }
 .color-hero .color-hero-inner { position: relative; z-index: 1; }
 
+/* Above-the-fold entrance: the hero's meta/title/lede rise in on load, lightly
+   staggered. Motion-safe only — no movement for prefers-reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(1rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .color-hero-inner > * { animation: hero-rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .color-hero-inner > :nth-child(2) { animation-delay: 0.08s; }
+  .color-hero-inner > :nth-child(3) { animation-delay: 0.16s; }
+}
+
 /* Mobile: bigger corner radius, and push the title + nav further down so
    the rounded top corners have room. */
 @media (max-width: 48rem) {
