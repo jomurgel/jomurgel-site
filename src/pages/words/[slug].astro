@@ -31,6 +31,7 @@ const coverStyle = hasCover
   description={post.data.description}
   heroInk={hasCover ? 'k' : undefined}
   forceTheme={isPhoto ? 'dark' : undefined}
+  image={post.data.coverImage}
 >
   {hasCover ? (
     <header class="color-hero ink-k post-hero" style={coverStyle}>
