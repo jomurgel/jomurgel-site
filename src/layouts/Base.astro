@@ -37,7 +37,11 @@ const path = Astro.url.pathname;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="alternate" type="application/rss+xml" title="Jo Murgel — Words & Photos" href="/rss.xml" />
 
     <!-- Open Graph / social cards -->
@@ -55,6 +59,8 @@ const path = Astro.url.pathname;
       // Set theme before paint to avoid a flash. Photo posts force dark.
       const theme = forceTheme || localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
+      // Mark JS-on so content blocks can start hidden for the scroll reveal.
+      document.documentElement.classList.add('reveal-on');
     </script>
 
     {analyticsOn && (
@@ -82,8 +88,8 @@ const path = Astro.url.pathname;
       </button>
       <nav id="site-nav" class="site-nav">
         <ul>
-          {nav.map((item) => (
-            <li>
+          {nav.map((item, i) => (
+            <li style={`--i:${i}`}>
               <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
             </li>
           ))}
@@ -181,6 +187,30 @@ const path = Astro.url.pathname;
           const d = Math.min(5, Math.hypot(e.clientX - cx, e.clientY - cy) / 30);
           feat.setAttribute('transform', `translate(${Math.cos(a) * d} ${Math.sin(a) * d})`);
         }, { passive: true });
+      })();
+    </script>
+
+    <script is:inline>
+      // Reveal content blocks as they scroll into view. The hero keeps its own
+      // load animation; everything else (sections, articles, post headers) fades
+      // up. Blocks start hidden via .reveal-on (set pre-paint); JS reveals them.
+      (() => {
+        const sel = 'main > section:not(.color-hero), main > article, main > header:not(.color-hero)';
+        const reveal = (el) => el.classList.add('is-in');
+        try {
+          if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll(sel).forEach(reveal);
+            return;
+          }
+          const els = document.querySelectorAll(sel);
+          if (!('IntersectionObserver' in window)) { els.forEach(reveal); return; }
+          const io = new IntersectionObserver((entries, obs) => {
+            entries.forEach((e) => { if (e.isIntersecting) { reveal(e.target); obs.unobserve(e.target); } });
+          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+          els.forEach((el) => io.observe(el));
+        } catch (e) {
+          document.querySelectorAll(sel).forEach(reveal);
+        }
       })();
     </script>
   </body>

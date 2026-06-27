@@ -10,8 +10,8 @@ const { tags, active } = Astro.props;
 
 <div class="tags-overlay" id="tags-overlay" hidden role="dialog" aria-modal="true" aria-label="Browse by tag">
   <ul class="tags-list">
-    {tags.map((t) => (
-      <li>
+    {tags.map((t, i) => (
+      <li style={`--i:${i}`}>
         <a
           href={`/words/tag/${t.slug}/`}
           class:list={['tag-hash', { 'is-active': active === t.slug }]}

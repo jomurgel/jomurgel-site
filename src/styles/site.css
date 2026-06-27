@@ -220,8 +220,8 @@ button.nav-toggle:active { background: none; border: 0; }
   .site-nav.open { opacity: 1; pointer-events: auto; visibility: visible; }
   /* Links slide up as the menu opens (motion-safe; backdrop still just fades). */
   @media (prefers-reduced-motion: no-preference) {
-    .site-nav li { transform: translateY(1.25rem); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .site-nav.open li { transform: translateY(0); }
+    .site-nav li { transform: translateX(1.75rem); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .site-nav.open li { transform: translateX(0); transition-delay: calc(var(--i, 0) * 0.05s); }
   }
   .site-nav ul {
     align-items: center;
@@ -807,8 +807,22 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
   .nav-toggle { animation: header-pop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 }
 @media (prefers-reduced-motion: no-preference) and (min-width: 48.0625rem) {
-  /* Desktop nav links pop in too (the mobile nav is the slide-in overlay). */
-  .site-header nav { animation: header-pop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  /* Desktop nav links drop in top-down, one by one (mobile nav is the overlay). */
+  .site-header nav li { animation: header-pop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: calc((var(--i, 0) + 1) * 0.05s); }
+}
+
+/* Scroll reveal: every content block (not the hero) fades up as it enters view.
+   Hidden only when JS is on (.reveal-on, set pre-paint) so no-JS stays visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-on :is(main > section:not(.color-hero), main > article, main > header:not(.color-hero)) {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal-on :is(main > section:not(.color-hero), main > article, main > header:not(.color-hero)).is-in {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Mobile: bigger corner radius, and push the title + nav further down so
@@ -1023,8 +1037,8 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
 .tags-list li { margin: 0; }
 /* Tags slide up as the overlay opens — same behavior as the mobile nav. */
 @media (prefers-reduced-motion: no-preference) {
-  .tags-list li { transform: translateY(1.25rem); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
-  .tags-overlay.open .tags-list li { transform: translateY(0); }
+  .tags-list li { transform: translateX(1.75rem); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .tags-overlay.open .tags-list li { transform: translateX(0); transition-delay: calc(var(--i, 0) * 0.035s); }
 }
 .tag-hash {
   background: var(--tc);
