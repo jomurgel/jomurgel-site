@@ -59,8 +59,12 @@ const path = Astro.url.pathname;
       // Set theme before paint to avoid a flash. Photo posts force dark.
       const theme = forceTheme || localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
-      // Mark JS-on so content blocks can start hidden for the scroll reveal.
-      document.documentElement.classList.add('reveal-on');
+      // Entrance animations + scroll reveal play once per session (the first
+      // page). Later page-to-page navigations just cross-fade — no re-popping.
+      if (!sessionStorage.getItem('jm-seen')) {
+        document.documentElement.classList.add('entrance', 'reveal-on');
+        sessionStorage.setItem('jm-seen', '1');
+      }
     </script>
 
     {analyticsOn && (
@@ -195,6 +199,9 @@ const path = Astro.url.pathname;
       // load animation; everything else (sections, articles, post headers) fades
       // up. Blocks start hidden via .reveal-on (set pre-paint); JS reveals them.
       (() => {
+        // Only the first page of a session reveals on scroll; later navigations
+        // cross-fade with content already in place (no .reveal-on → nothing hidden).
+        if (!document.documentElement.classList.contains('reveal-on')) return;
         const sel = 'main > section:not(.color-hero), main > article, main > header:not(.color-hero)';
         const reveal = (el) => el.classList.add('is-in');
         try {
