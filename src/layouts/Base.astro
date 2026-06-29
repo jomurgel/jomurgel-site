@@ -64,7 +64,7 @@ const path = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#e6177a" />
-    <ClientRouter />
+    <ClientRouter fallback="none" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Jo Murgel" />
@@ -93,12 +93,9 @@ const path = Astro.url.pathname;
       // Set theme before paint to avoid a flash. Photo posts force dark.
       const theme = forceTheme || localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
-      // Entrance animations + scroll reveal play once per session (the first
-      // page). Later page-to-page navigations just cross-fade — no re-popping.
-      if (!sessionStorage.getItem('jm-seen')) {
-        document.documentElement.classList.add('entrance', 'reveal-on');
-        sessionStorage.setItem('jm-seen', '1');
-      }
+      // Content starts hidden (only when JS is on) so the entrance + scroll-reveal
+      // animations can play — on first load and on every client-side navigation.
+      document.documentElement.classList.add('entrance', 'reveal-on');
     </script>
 
     {analyticsOn && (
@@ -233,8 +230,8 @@ const path = Astro.url.pathname;
               sync();
             });
           }
-          // Scroll reveal — first page of the session only (later navs just cross-fade).
-          if (first && document.documentElement.classList.contains('reveal-on')
+          // Scroll reveal — runs on every page (initial load and each navigation).
+          if (document.documentElement.classList.contains('reveal-on')
               && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
             const sel = 'main > section:not(.color-hero), main > article, main > header:not(.color-hero)';
             const io = new IntersectionObserver((entries, obs) => {
@@ -249,10 +246,9 @@ const path = Astro.url.pathname;
           first = false;
         });
 
-        // On each navigation: drop the one-time entrance/reveal classes (content stays
-        // in place, no re-popping) and re-apply the theme (honor per-page forceTheme).
+        // Re-apply the theme on each navigation (honors per-page forceTheme). The
+        // entrance + reveal classes stay on so every new page animates itself in.
         document.addEventListener('astro:after-swap', () => {
-          document.documentElement.classList.remove('entrance', 'reveal-on');
           const force = document.body.dataset.forceTheme;
           document.documentElement.setAttribute('data-theme', force || localStorage.getItem('theme') || 'light');
         });

@@ -68,6 +68,12 @@
    full-bleed sections can align to contained ones. */
 body { padding-left: 0; padding-right: 0; }
 
+/* The router swaps pages instantly (no cross-fade snapshot), so each page's own
+   entrance + scroll-reveal animations are the transition and replay on every
+   navigation — no white flash, no empty frame. */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; }
+
 .site-header,
 .site-footer,
 main > section { padding-inline: var(--space-2); }
