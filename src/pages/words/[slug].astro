@@ -24,6 +24,18 @@ const cats = post.data.tags.filter((t) => t !== 'shorty');
 const coverStyle = hasCover
   ? `--hero-bg: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.62)), url(${post.data.coverImage}) center / cover`
   : undefined;
+
+const postUrl = new URL(Astro.url.pathname, Astro.site).href;
+const blogPosting = {
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  author: { '@id': new URL('#person', Astro.site).href },
+  image: post.data.coverImage ? new URL(post.data.coverImage, Astro.site).href : undefined,
+  mainEntityOfPage: postUrl,
+  url: postUrl,
+};
 ---
 
 <Base
@@ -32,6 +44,7 @@ const coverStyle = hasCover
   heroInk={hasCover ? 'k' : undefined}
   forceTheme={isPhoto ? 'dark' : undefined}
   image={post.data.coverImage}
+  schema={blogPosting}
 >
   {hasCover ? (
     <header class="color-hero ink-k post-hero" style={coverStyle}>

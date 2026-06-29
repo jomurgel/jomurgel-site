@@ -15,9 +15,21 @@ const heroInk = hasCover ? 'k' : d.ink;
 const coverStyle = hasCover
   ? `--hero-bg: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.62)), url(${d.coverImage}) center / cover`
   : undefined;
+
+const workUrl = new URL(Astro.url.pathname, Astro.site).href;
+const articleSchema = {
+  '@type': 'Article',
+  headline: d.title,
+  description: d.summary,
+  author: { '@id': new URL('#person', Astro.site).href },
+  image: d.coverImage ? new URL(d.coverImage, Astro.site).href : undefined,
+  datePublished: d.year ? String(d.year) : undefined,
+  mainEntityOfPage: workUrl,
+  url: workUrl,
+};
 ---
 
-<Base title={d.title} description={d.summary} heroInk={heroInk} image={d.coverImage}>
+<Base title={d.title} description={d.summary} heroInk={heroInk} image={d.coverImage} schema={articleSchema}>
   <header class={`color-hero ink-${heroInk} post-hero`} style={coverStyle}>
     <div class="color-hero-inner">
       <span class="post-meta">

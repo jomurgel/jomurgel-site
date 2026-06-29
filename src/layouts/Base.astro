@@ -6,12 +6,41 @@ import '../styles/site.css';
 import { ClientRouter } from 'astro:transitions';
 import signatureSvg from '../assets/signature.svg?raw';
 
-const { title, description = "Jo Murgel — software architect and engineering lead. Trained as an artist.", heroInk, forceTheme, image, faceGone, noindex } = Astro.props;
+const { title, description = "Jo Murgel — software architect and engineering lead. Trained as an artist.", heroInk, forceTheme, image, faceGone, noindex, schema } = Astro.props;
 const pageTitle = title ? `${title} · Jo Murgel` : 'Jo Murgel';
 
 // Absolute URLs for canonical + social cards (Astro.site = https://jomurgel.com).
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image ?? '/og.png', Astro.site).href;
+
+// Structured data: a sitewide Person + WebSite graph, plus any page-specific node
+// (e.g. a BlogPosting on a post) passed in via the `schema` prop. Person is the
+// @id everything references so crawlers tie it all to one identity.
+const personId = new URL('#person', Astro.site).href;
+const graph = [
+  {
+    '@type': 'Person',
+    '@id': personId,
+    name: 'Jo Murgel',
+    url: Astro.site.href,
+    image: new URL('/jo.jpg', Astro.site).href,
+    jobTitle: 'Software architect and engineering lead',
+    sameAs: [
+      'https://github.com/jomurgel',
+      'https://www.linkedin.com/in/jomurgel',
+      'https://instagram.com/jomurgel',
+    ],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': new URL('#website', Astro.site).href,
+    name: 'Jo Murgel',
+    url: Astro.site.href,
+    publisher: { '@id': personId },
+  },
+  ...(schema ? (Array.isArray(schema) ? schema : [schema]) : []),
+];
+const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 
 // Google Analytics 4. Put the real measurement ID here to switch it on; it
 // only loads in production builds (never in dev), and stays off until set.
@@ -34,9 +63,11 @@ const path = Astro.url.pathname;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#e6177a" />
     <ClientRouter />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Jo Murgel" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -57,6 +88,7 @@ const path = Astro.url.pathname;
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
     <script is:inline define:vars={{ forceTheme }}>
       // Set theme before paint to avoid a flash. Photo posts force dark.
       const theme = forceTheme || localStorage.getItem('theme') || 'light';
