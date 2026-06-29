@@ -730,13 +730,9 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
 .site-header--overlay[data-hero-ink="paper"] nav a:hover { color: var(--accent); }
 .site-header--overlay[data-hero-ink="paper"] .brand::after { color: var(--accent); }
 
-/* Header aligns with the hero content (which is inset inside the bleed panel):
-   colored heroes match the content's inner gutter; paper aligns with the page. */
-.site-header--overlay[data-hero-ink="c"],
-.site-header--overlay[data-hero-ink="m"],
-.site-header--overlay[data-hero-ink="y"],
-.site-header--overlay[data-hero-ink="k"] { padding-inline: var(--space-3); }
-.site-header--overlay[data-hero-ink="paper"] { padding-inline: var(--space-2); }
+/* The overlay header shares the page gutter (space-2, set on .site-header above) on
+   desktop so it lines up with the hero content; the mobile query below bumps the
+   colored headers to clear the bigger rounded corners. */
 
 /* Every hero shares ONE inset, rounded, clipped panel — so the nav + title
    land at the same place on every page. Paper (homepage) fills white;
