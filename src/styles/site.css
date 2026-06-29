@@ -15,6 +15,9 @@
   /* Soft squircle radius — the site's image/card form factor. */
   --radius-img: 2.25rem;
 
+  /* Hero/slab panel corner radius (bigger on mobile — see the 48rem query). */
+  --hero-r: 1.5rem;
+
   /* CMYK misregistration ghosts. Per-channel vars so a context can swap
      the ghost that matches its background (e.g. cyan → white on cyan).
      NOTE: applied inline via the .cmyk-offset mixin pattern, not a single
@@ -62,6 +65,21 @@
     0.06em 0 0 var(--ghost-m),
     0 0.06em 0 var(--ghost-y);
 }
+
+/* One ink var per CMYK plate, driven by [data-ink], so components reference
+   var(--ink) instead of repeating the c/m/y → plate mapping. */
+[data-ink="c"] { --ink: var(--plate-c); }
+[data-ink="m"] { --ink: var(--plate-m); }
+[data-ink="y"] { --ink: var(--plate-y); }
+
+/* Shared eyebrow/kicker label — card meta lines + post kind share this treatment. */
+.project-status, .work-meta, .contact-label, .post-kind {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.project-status, .work-meta, .contact-label { color: var(--gray); }
 
 /* One content inset for the whole site so every section shares a left
    edge. We own the horizontal rhythm (not Acorn's body padding), so
@@ -304,7 +322,6 @@ button.nav-toggle:active { background: none; border: 0; }
    bottom via shape() on a pseudo (so content isn't clipped). The dark fill
    is a variable the hover floods drive. */
 .slab {
-  --hero-r: 1.5rem;
   --slab-bg: #141414; /* always dark so the CMYK split reads */
   border-radius: var(--hero-r);
   overflow: hidden;
@@ -535,19 +552,6 @@ button.nav-toggle:active { background: none; border: 0; }
 .regmark.bl { left: -4px; bottom: -4px; }
 .regmark.br { right: -4px; bottom: -4px; }
 
-/* Proof labels in the corners. */
-.proof-label {
-  color: var(--gray);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  position: absolute;
-  text-transform: uppercase;
-}
-
-.proof-label.top { top: -2.4rem; left: 2rem; }
-.proof-label.bottom { bottom: -2.4rem; right: 2rem; }
-
 /* What I'm building — projects showcase (calm, editorial) -------- */
 .section-lede {
   color: var(--gray);
@@ -593,14 +597,10 @@ button.nav-toggle:active { background: none; border: 0; }
   text-decoration: none;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
 }
-.ink-card[data-ink="c"] { border-color: var(--plate-c); }
-.ink-card[data-ink="m"] { border-color: var(--plate-m); }
-.ink-card[data-ink="y"] { border-color: var(--plate-y); }
+.ink-card[data-ink] { border-color: var(--ink, var(--light-gray)); }
 
 /* Hover: background fades to the card's ink; text flips to readable. */
-.ink-card[data-ink="c"]:hover { background: var(--plate-c); color: #000; }
-.ink-card[data-ink="m"]:hover { background: var(--plate-m); color: #000; }
-.ink-card[data-ink="y"]:hover { background: var(--plate-y); color: #000; }
+.ink-card[data-ink]:hover { background: var(--ink); color: #000; }
 .ink-card:hover :is(.project-status, .project-cta, p, .related-meta, .post-kind, .related-go, .work-meta, .contact-label, .contact-note) { color: inherit; }
 
 /* Drain the color from the cards you're not hovering. */
@@ -614,13 +614,6 @@ button.nav-toggle:active { background: none; border: 0; }
 }
 
 /* Project-card content. */
-.project-status {
-  color: var(--gray);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
 .project h3 { margin: var(--space-1) 0; }
 .project p {
   color: var(--gray);
@@ -646,13 +639,6 @@ button.nav-toggle:active { background: none; border: 0; }
 }
 .contact-grid li { margin: 0; }
 .contact-card::after { content: none !important; } /* suppress Acorn's external ↗ on the card */
-.contact-label {
-  color: var(--gray);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
 .contact-value { font-size: var(--text-xl); font-weight: 700; margin: var(--space-1) 0; overflow-wrap: anywhere; }
 .contact-note { color: var(--gray); font-size: var(--text-sm); margin-top: auto; padding-top: var(--space-2); }
 
@@ -746,7 +732,6 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
    gutter; content-driven height. */
 .color-hero {
   --hero-gap: var(--space-4); /* the ONE gap below any hero (colored = margin, paper = padding into the slab) */
-  --hero-r: 1.5rem;
   border-radius: var(--hero-r);
   left: 50%;
   margin: var(--space-2) calc(-50vw + var(--space-2)) var(--hero-gap);
@@ -840,12 +825,11 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
 /* Mobile: bigger corner radius, and push the title + nav further down so
    the rounded top corners have room. */
 @media (max-width: 48rem) {
+  :root { --hero-r: 2.75rem; } /* bigger panel corners on mobile */
   .color-hero {
-    --hero-r: 2.75rem;
     padding-top: calc(var(--space-5) + var(--space-2));
     padding-bottom: var(--space-4);
   }
-  .slab { --hero-r: 2.75rem; }
   .slab-inner { padding-inline: var(--space-3); } /* clears the bigger mobile corners */
   /* Nav sits closer to the top; brand stays clear of the rounded corner. */
   .site-header--overlay { padding-top: var(--space-3); }
@@ -902,9 +886,6 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
   list-style: none;
   margin: 0;
   padding: 0;
-}
-@media (max-width: 48rem) {
-  .post-list { gap: var(--space-4); }
 }
 .post-item { margin: 0; }
 
@@ -963,12 +944,6 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
   font-size: var(--text-sm);
   gap: var(--space-2);
   margin-bottom: var(--space-1);
-}
-.post-kind {
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 .post-kind[data-kind="photo"] { color: var(--secondary-dark); }
 .post-kind[data-kind="writing"] { color: var(--primary); }
@@ -1083,10 +1058,7 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tags-overlay,
-  .tags-mark-disc,
-  .tags-mark-x,
-  .tags-fab-label { transition: none; }
+  .tags-overlay { transition: none; }
 }
 
 /* Pagination — numbered. */
@@ -1246,14 +1218,6 @@ hr + .post { margin-top: 0; }
   .work-grid li[data-span="2"] { grid-column: span 2; }
 }
 .work-grid li { margin: 0; }
-/* Card eyebrow — same treatment as the homepage project cards (.project-status). */
-.work-meta {
-  color: var(--gray);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
 .work-card h3 { font-size: var(--text-xl); margin: var(--space-1) 0; }
 .work-card p { color: var(--gray); flex: 1; margin: 0; }
 
@@ -1475,9 +1439,7 @@ button.resume-dl:focus-visible { background: var(--black); border-color: var(--b
   margin: 0 0 var(--space-2);
   padding-bottom: var(--space-1);
 }
-.codex-cat[data-ink="c"] h3 { border-color: var(--plate-c); }
-.codex-cat[data-ink="m"] h3 { border-color: var(--plate-m); }
-.codex-cat[data-ink="y"] h3 { border-color: var(--plate-y); }
+.codex-cat[data-ink] h3 { border-color: var(--ink, var(--light-gray)); }
 .codex-intro { color: var(--gray); font-size: var(--text-sm); margin: 0 0 var(--space-2); }
 .codex-cat ul { list-style: none; margin: 0; padding: 0; }
 .codex-cat li {
