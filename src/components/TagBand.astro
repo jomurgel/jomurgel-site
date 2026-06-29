@@ -23,46 +23,65 @@ const { tags, active } = Astro.props;
 </div>
 
 <script data-astro-rerun>
-  // data-astro-rerun + IIFE: re-binds the fab/overlay on each ClientRouter
-  // navigation to a words page (the DOM is fresh each time).
+  // Tags modal: re-binds on each ClientRouter navigation to a words page (fresh DOM).
+  // It's a real dialog — focus is trapped across the fab (close) + tag links, the rest
+  // of the page is inert while open, and Escape / backdrop / a tag click all close it.
   (() => {
     const fab = document.querySelector('.tags-fab');
     const overlay = document.getElementById('tags-overlay');
     if (!fab || !overlay) return;
     const isOpen = () => fab.getAttribute('aria-expanded') === 'true';
+    // The fab (visually "Close", sitting over the overlay) is part of the trap cycle.
+    const focusables = () => [fab, ...overlay.querySelectorAll('a[href]')];
+    let inerted = [];
+
+    const onKeydown = (e) => {
+      if (!overlay.isConnected) { document.removeEventListener('keydown', onKeydown, true); return; }
+      if (!isOpen()) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key !== 'Tab') return;
+      const f = focusables();
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+
     const open = () => {
       fab.setAttribute('aria-expanded', 'true');
       fab.textContent = 'Close';
       overlay.hidden = false;
       requestAnimationFrame(() => overlay.classList.add('open'));
       document.body.style.overflow = 'hidden';
+      // Inert everything except the fab + overlay (by identity, so nesting doesn't matter).
+      const section = overlay.parentElement;
+      const main = document.getElementById('main');
+      inerted = [
+        document.querySelector('header'),
+        document.querySelector('footer'),
+        ...(main ? [...main.children].filter((el) => el !== section) : []),
+        ...(section ? [...section.children].filter((el) => el !== fab && el !== overlay) : []),
+      ].filter(Boolean);
+      inerted.forEach((el) => el.setAttribute('inert', ''));
+      document.addEventListener('keydown', onKeydown, true);
       overlay.querySelector('a')?.focus();
     };
-    const close = () => {
+
+    function close() {
       fab.setAttribute('aria-expanded', 'false');
       fab.textContent = 'Tags';
       overlay.classList.remove('open');
       document.body.style.overflow = '';
+      inerted.forEach((el) => el.removeAttribute('inert'));
+      inerted = [];
+      document.removeEventListener('keydown', onKeydown, true);
       overlay.addEventListener('transitionend', () => { if (!isOpen()) overlay.hidden = true; }, { once: true });
       fab.focus();
-    };
+    }
+
     fab.addEventListener('click', () => (isOpen() ? close() : open()));
     overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-    // Escape — bound once on document; re-queries the live overlay.
-    if (!window.__tagsEsc) {
-      window.__tagsEsc = true;
-      document.addEventListener('keydown', (e) => {
-        if (e.key !== 'Escape') return;
-        const f = document.querySelector('.tags-fab');
-        const o = document.getElementById('tags-overlay');
-        if (f && o && f.getAttribute('aria-expanded') === 'true') {
-          f.setAttribute('aria-expanded', 'false');
-          f.textContent = 'Tags';
-          o.classList.remove('open');
-          document.body.style.overflow = '';
-          o.addEventListener('transitionend', () => { if (f.getAttribute('aria-expanded') !== 'true') o.hidden = true; }, { once: true });
-        }
-      });
-    }
+    // Clean up scroll-lock + inert before a tag link navigates away.
+    overlay.querySelectorAll('a[href]').forEach((a) => a.addEventListener('click', () => { if (isOpen()) close(); }));
   })();
 </script>

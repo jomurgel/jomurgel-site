@@ -177,18 +177,7 @@ const path = Astro.url.pathname;
     <script is:inline>
       (() => {
         // Globals — bound once; they survive client-side (ClientRouter) navigation.
-        // Escape closes the mobile nav.
-        document.addEventListener('keydown', (e) => {
-          if (e.key !== 'Escape') return;
-          const toggle = document.querySelector('.nav-toggle');
-          const nav = document.getElementById('site-nav');
-          if (toggle && nav && toggle.getAttribute('aria-expanded') === 'true') {
-            toggle.setAttribute('aria-expanded', 'false');
-            toggle.setAttribute('aria-label', 'Open menu');
-            nav.classList.remove('open');
-            document.body.style.overflow = '';
-          }
-        });
+        // (The mobile nav's Escape + focus trap are wired per-page below, in its toggle setup.)
         // Footer face follows the cursor (re-queries the live face each move).
         window.addEventListener('mousemove', (e) => {
           const face = document.querySelector('.face');
@@ -204,16 +193,47 @@ const path = Astro.url.pathname;
         // Per-page wiring — runs on first load and after every navigation.
         let first = true;
         document.addEventListener('astro:page-load', () => {
-          // Mobile nav toggle.
+          // Mobile nav toggle — opens a full-screen overlay menu, managed as a dialog:
+          // move focus in, trap it across the toggle + links, inert the rest, restore on close.
           const toggle = document.querySelector('.nav-toggle');
           const navEl = document.getElementById('site-nav');
           if (toggle && navEl) {
-            const set = (open) => {
+            let navInert = [];
+            const navFocusables = () => [toggle, ...navEl.querySelectorAll('a[href]')];
+            const onNavKey = (e) => {
+              if (!navEl.isConnected) { document.removeEventListener('keydown', onNavKey, true); return; }
+              if (toggle.getAttribute('aria-expanded') !== 'true') return;
+              if (e.key === 'Escape') { e.preventDefault(); set(false); return; }
+              if (e.key !== 'Tab') return;
+              const f = navFocusables();
+              const firstEl = f[0], lastEl = f[f.length - 1];
+              if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
+              else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
+            };
+            function set(open) {
               toggle.setAttribute('aria-expanded', String(open));
               toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
               navEl.classList.toggle('open', open);
               document.body.style.overflow = open ? 'hidden' : '';
-            };
+              if (open) {
+                const header = toggle.closest('header');
+                navInert = [
+                  document.getElementById('main'),
+                  document.querySelector('footer'),
+                  ...(header ? [...header.children].filter((el) => el !== toggle && el !== navEl) : []),
+                ].filter(Boolean);
+                navInert.forEach((el) => el.setAttribute('inert', ''));
+                document.addEventListener('keydown', onNavKey, true);
+                // The menu transitions visibility:hidden→visible; wait two frames so it's
+                // actually focusable (one rAF still runs before that frame's style recalc).
+                requestAnimationFrame(() => requestAnimationFrame(() => navEl.querySelector('a')?.focus()));
+              } else {
+                navInert.forEach((el) => el.removeAttribute('inert'));
+                navInert = [];
+                document.removeEventListener('keydown', onNavKey, true);
+                toggle.focus();
+              }
+            }
             toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
             navEl.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
           }
