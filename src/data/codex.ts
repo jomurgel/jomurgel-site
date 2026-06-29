@@ -1,5 +1,5 @@
 // The Codex — everything from jomurgel.com/codex. Living, overly-long list of
-// things Jo loves. Structured so it's easy to restyle later.
+// things I love. Structured so it's easy to restyle later.
 export type CodexItem = { name: string; url?: string; note?: string; done?: boolean };
 export type CodexCategory = { label: string; intro?: string; items: CodexItem[] };
 

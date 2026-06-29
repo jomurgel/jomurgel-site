@@ -33,7 +33,7 @@ In attempting to remove the need for classes and relying more on data attributes
 
 While I still find that class names are helpful and, at times, organizationally better, a site should be nearly functional without ever needing to add one. It should be styled quickly before implementing any custom layouts or fancy features.
 
-<a href="https://github.com/jomurgel/acorn.css" target="_blank">GitHub Repo</a> | <a href="https://jomurgel.github.io/acorn.css/" target="_blank">Demo</a>
+<a href="https://github.com/jomurgel/acorn.css" target="_blank" rel="noopener noreferrer">GitHub Repo</a> | <a href="https://jomurgel.github.io/acorn.css/" target="_blank" rel="noopener noreferrer">Demo</a>
 
 I always love feedback. If you have ideas about how to make this more compact, address cross-browser issues, or make it compatible with your project, open an [issue](https://github.com/jomurgel/acorn.css/issues), and let's get to work.
 

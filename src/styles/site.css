@@ -450,7 +450,7 @@ button.nav-toggle:active { background: none; border: 0; }
 }
 
 .facet-num {
-  color: #5a5a5a;
+  color: #6e6e6e; /* >=3:1 on the #141414 slab for large text (a11y) */
   font-size: 4rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
