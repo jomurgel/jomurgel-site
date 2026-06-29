@@ -24,9 +24,12 @@ const tags = await getAllTags();
   />
 
   <section>
-    <TagBand tags={tags} />
     <PostList posts={posts} />
     <Pagination currentPage={1} totalPages={totalPages} />
     <p class="words-rss"><a href="/rss.xml">Subscribe via RSS</a></p>
   </section>
+
+  {/* Outside the section: it's a fixed FAB, and the section's scroll-reveal
+      transform would otherwise trap its position (below the content). */}
+  <TagBand tags={tags} />
 </Base>

@@ -86,6 +86,14 @@
    full-bleed sections can align to contained ones. */
 body { padding-left: 0; padding-right: 0; }
 
+/* The skip link focuses <main> (tabindex=-1) so keyboard/AT users land in the
+   content — it's a programmatic target, not interactive, so no visible focus ring. */
+#main:focus { outline: none; }
+
+/* Facets signal focus through their own ink flood + color shift (their visible focus
+   indicator), so the default outline is redundant — drop it. */
+.facet:focus { outline: none; }
+
 /* The router swaps pages instantly (no cross-fade snapshot), so each page's own
    entrance + scroll-reveal animations are the transition and replay on every
    navigation — no white flash, no empty frame. */

@@ -75,7 +75,7 @@ const projects = [
       <div class="slab-inner">
         <h2 id="facets-heading" class="slab-title">A few sides of the same person</h2>
         {facets.map((f, i) => (
-          <article class="facet" data-ink={f.ink} style={`--i:${i}`}>
+          <article class="facet" data-ink={f.ink} style={`--i:${i}`} tabindex="0">
             <span class="facet-num">{f.num}</span>
             <h3 class="facet-title">{f.title}</h3>
             <p class="facet-body">{f.body}</p>
