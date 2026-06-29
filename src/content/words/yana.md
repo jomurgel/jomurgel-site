@@ -16,59 +16,59 @@ sizable hiatus from photography I took this as a sign and opportunity to get bac
 
 
 <div data-gallery data-align="wide">
-  <img src="/yana/22.jpg" alt="yana 1" />
-  <img src="/yana/31.jpg" alt="yana 1" />
-  <img src="/yana/28.jpg" alt="yana 1" />
-  <img src="/yana/36.jpg" alt="yana 1" />
-  <img src="/yana/16.jpg" alt="yana 1" />
-  <img src="/yana/10.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/22.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/31.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/28.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/36.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/16.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/10.jpg" alt="yana 1" />
 </div>
 
 <figure>
-  <img src="/yana/44.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/44.jpg" alt="yana 1" />
 </figure>
 
 <div data-gallery data-align="wide">
-  <img src="/yana/1.jpg" alt="yana 1" />
-  <img src="/yana/43.jpg" alt="yana 1" />
-  <img src="/yana/45.jpg" alt="yana 1" />
-  <img src="/yana/46.jpg" alt="yana 1" />
-  <img src="/yana/9.jpg" alt="yana 1" />
-  <img src="/yana/11.jpg" alt="yana 1" />
-  <img src="/yana/12.jpg" alt="yana 1" />
-  <img src="/yana/13.jpg" alt="yana 1" />
-  <img src="/yana/14.jpg" alt="yana 1" />
-  <img src="/yana/15.jpg" alt="yana 1" />
-  <img src="/yana/17.jpg" alt="yana 1" />
-  <img src="/yana/18.jpg" alt="yana 1" />
-  <img src="/yana/19.jpg" alt="yana 1" />
-  <img src="/yana/20.jpg" alt="yana 1" />
-  <img src="/yana/21.jpg" alt="yana 1" />
-  <img src="/yana/23.jpg" alt="yana 1" />
-  <img src="/yana/24.jpg" alt="yana 1" />
-  <img src="/yana/25.jpg" alt="yana 1" />
-  <img src="/yana/26.jpg" alt="yana 1" />
-  <img src="/yana/29.jpg" alt="yana 1" />
-  <img src="/yana/30.jpg" alt="yana 1" />
-  <img src="/yana/32.jpg" alt="yana 1" />
-  <img src="/yana/33.jpg" alt="yana 1" />
-  <img src="/yana/34.jpg" alt="yana 1" />
-  <img src="/yana/35.jpg" alt="yana 1" />
-  <img src="/yana/37.jpg" alt="yana 1" />
-  <img src="/yana/38.jpg" alt="yana 1" />
-  <img src="/yana/39.jpg" alt="yana 1" />
-  <img src="/yana/40.jpg" alt="yana 1" />
-  <img src="/yana/27.jpg" alt="yana 1" />
-  <img src="/yana/41.jpg" alt="yana 1" />
-  <img src="/yana/42.jpg" alt="yana 1" />
-  <img src="/yana/47.jpg" alt="yana 1" />
-  <img src="/yana/2.jpg" alt="yana 1" />
-  <img src="/yana/3.jpg" alt="yana 1" />
-  <img src="/yana/4.jpg" alt="yana 1" />
-  <img src="/yana/5.jpg" alt="yana 1" />
-  <img src="/yana/6.jpg" alt="yana 1" />
-  <img src="/yana/7.jpg" alt="yana 1" />
-  <img src="/yana/8.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/1.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/43.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/45.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/46.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/9.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/11.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/12.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/13.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/14.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/15.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/17.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/18.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/19.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/20.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/21.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/23.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/24.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/25.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/26.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/29.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/30.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/32.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/33.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/34.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/35.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/37.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/38.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/39.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/40.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/27.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/41.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/42.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/47.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/2.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/3.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/4.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/5.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/6.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/7.jpg" alt="yana 1" />
+  <img loading="lazy" decoding="async" src="/yana/8.jpg" alt="yana 1" />
 </div>
 
 <hr />

@@ -19,7 +19,7 @@ Simshot trains people to shoot, and to think while they do it — a state-of-the
     <span class="browser-url">simshot.com</span>
   </div>
   <div class="browser-body">
-    <img src="/work/simshot.jpg" alt="The Simshot homepage" />
+    <img loading="lazy" decoding="async" src="/work/simshot.jpg" alt="The Simshot homepage" />
   </div>
 </figure>
 

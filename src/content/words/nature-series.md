@@ -18,42 +18,42 @@ and white, but when color is part of the equation I feel uncertain.
 I tried to challenge myself.
 
 <div data-gallery data-align="wide">
-  <img alt="Day 1" src="/nature-series/1.jpg" />
-  <img alt="Day 3" src="/nature-series/3.jpg" />
-  <img alt="Day 4" src="/nature-series/4.jpg" />
-  <img alt="Day 6" src="/nature-series/6.jpg" />
-  <img alt="Day 9" src="/nature-series/9.jpg" />
-  <img alt="Day 5" src="/nature-series/5.jpg" />
-  <img alt="Day 7" src="/nature-series/7.jpg" />
-  <img alt="Day 2" src="/nature-series/2.jpg" />
-  <img alt="Day 8" src="/nature-series/8.jpg" />
-  <img alt="Day 10" src="/nature-series/10.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 1" src="/nature-series/1.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 3" src="/nature-series/3.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 4" src="/nature-series/4.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 6" src="/nature-series/6.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 9" src="/nature-series/9.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 5" src="/nature-series/5.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 7" src="/nature-series/7.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 2" src="/nature-series/2.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 8" src="/nature-series/8.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 10" src="/nature-series/10.jpg" />
 </div>
 
 <figure data-align="wide">
-  <img alt="Day 12" src="/nature-series/12.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 12" src="/nature-series/12.jpg" />
 </figure>
 
 <div data-gallery data-align="wide">
-  <img alt="Day 11" src="/nature-series/11.jpg" />
-  <img alt="Day 31" src="/nature-series/31.jpg" />
-  <img alt="Day 14" src="/nature-series/14.jpg" />
-  <img alt="Day 17" src="/nature-series/17.jpg" />
-  <img alt="Day 15" src="/nature-series/15.jpg" />
-  <img alt="Day 16" src="/nature-series/16.jpg" />
-  <img alt="Day 13" src="/nature-series/13.jpg" />
-  <img alt="Day 18" src="/nature-series/18.jpg" />
-  <img alt="Day 19" src="/nature-series/19.jpg" />
-  <img alt="Day 20" src="/nature-series/20.jpg" />
-  <img alt="Day 21" src="/nature-series/21.jpg" />
-  <img alt="Day 22" src="/nature-series/22.jpg" />
-  <img alt="Day 24" src="/nature-series/24.jpg" />
-  <img alt="Day 25" src="/nature-series/25.jpg" />
-  <img alt="Day 23" src="/nature-series/23.jpg" />
-  <img alt="Day 26" src="/nature-series/26.jpg" />
-  <img alt="Day 27" src="/nature-series/27.jpg" />
-  <img alt="Day 28" src="/nature-series/28.jpg" />
-  <img alt="Day 29" src="/nature-series/29.jpg" />
-  <img alt="Day 30" src="/nature-series/30.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 11" src="/nature-series/11.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 31" src="/nature-series/31.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 14" src="/nature-series/14.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 17" src="/nature-series/17.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 15" src="/nature-series/15.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 16" src="/nature-series/16.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 13" src="/nature-series/13.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 18" src="/nature-series/18.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 19" src="/nature-series/19.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 20" src="/nature-series/20.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 21" src="/nature-series/21.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 22" src="/nature-series/22.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 24" src="/nature-series/24.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 25" src="/nature-series/25.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 23" src="/nature-series/23.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 26" src="/nature-series/26.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 27" src="/nature-series/27.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 28" src="/nature-series/28.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 29" src="/nature-series/29.jpg" />
+  <img loading="lazy" decoding="async" alt="Day 30" src="/nature-series/30.jpg" />
 </div>
 
