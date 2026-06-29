@@ -68,15 +68,6 @@
    full-bleed sections can align to contained ones. */
 body { padding-left: 0; padding-right: 0; }
 
-/* Smooth cross-fade between page navigations (native cross-document view
-   transitions). Multi-page app stays intact; unsupported browsers just load
-   normally, and reduced-motion gets an instant swap. */
-@view-transition { navigation: auto; }
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) { animation: none; }
-}
-
 .site-header,
 .site-footer,
 main > section { padding-inline: var(--space-2); }

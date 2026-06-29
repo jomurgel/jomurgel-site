@@ -3,6 +3,7 @@
 // the site layer (layout), renders the shared header + footer.
 import 'acorn.css';
 import '../styles/site.css';
+import { ClientRouter } from 'astro:transitions';
 import signatureSvg from '../assets/signature.svg?raw';
 
 const { title, description = "Jo Murgel — software architect and engineering lead. Trained as an artist.", heroInk, forceTheme, image, faceGone, noindex } = Astro.props;
@@ -33,6 +34,7 @@ const path = Astro.url.pathname;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
+    <ClientRouter />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -74,12 +76,13 @@ const path = Astro.url.pathname;
           window.dataLayer = window.dataLayer || [];
           function gtag(){ dataLayer.push(arguments); }
           gtag('js', new Date());
-          gtag('config', GA_ID);
+          // Only count the live site, never local preview builds.
+          if (location.hostname === 'jomurgel.com') gtag('config', GA_ID);
         </script>
       </>
     )}
   </head>
-  <body class:list={[heroInk && 'has-hero']}>
+  <body class:list={[heroInk && 'has-hero']} data-force-theme={forceTheme}>
     <a href="#main" data-skip-link>Skip to content</a>
 
     <header class:list={['site-header', heroInk && 'site-header--overlay']} data-hero-ink={heroInk}>
@@ -144,80 +147,83 @@ const path = Astro.url.pathname;
 
     <script is:inline>
       (() => {
-        const toggle = document.querySelector('.nav-toggle');
-        const nav = document.getElementById('site-nav');
-        if (!toggle || !nav) return;
-        const set = (open) => {
-          toggle.setAttribute('aria-expanded', String(open));
-          toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-          nav.classList.toggle('open', open);
-          document.body.style.overflow = open ? 'hidden' : '';
-        };
-        toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
-        nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
+        // Globals — bound once; they survive client-side (ClientRouter) navigation.
+        // Escape closes the mobile nav.
         document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') set(false);
+          if (e.key !== 'Escape') return;
+          const toggle = document.querySelector('.nav-toggle');
+          const nav = document.getElementById('site-nav');
+          if (toggle && nav && toggle.getAttribute('aria-expanded') === 'true') {
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('aria-label', 'Open menu');
+            nav.classList.remove('open');
+            document.body.style.overflow = '';
+          }
         });
-      })();
-    </script>
-
-    <script is:inline>
-      (() => {
-        // Click the sun/moon to flip the theme (and keep aria-pressed in sync).
-        const btn = document.querySelector('.face-btn');
-        if (btn) {
-          const sync = () =>
-            btn.setAttribute('aria-pressed', String(document.documentElement.getAttribute('data-theme') === 'dark'));
-          sync();
-          btn.addEventListener('click', () => {
-            const h = document.documentElement;
-            const next = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            h.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            sync();
-          });
-        }
-
-        const face = document.querySelector('.face');
-        const feat = face && face.querySelector('.features');
-        if (!feat) return;
-
-        // Features follow the cursor (whole face turns).
+        // Footer face follows the cursor (re-queries the live face each move).
         window.addEventListener('mousemove', (e) => {
+          const face = document.querySelector('.face');
+          const feat = face && face.querySelector('.features');
+          if (!feat) return;
           const r = face.getBoundingClientRect();
-          const cx = r.left + r.width / 2;
-          const cy = r.top + r.height / 2;
+          const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
           const a = Math.atan2(e.clientY - cy, e.clientX - cx);
           const d = Math.min(5, Math.hypot(e.clientX - cx, e.clientY - cy) / 30);
           feat.setAttribute('transform', `translate(${Math.cos(a) * d} ${Math.sin(a) * d})`);
         }, { passive: true });
-      })();
-    </script>
 
-    <script is:inline>
-      // Reveal content blocks as they scroll into view. The hero keeps its own
-      // load animation; everything else (sections, articles, post headers) fades
-      // up. Blocks start hidden via .reveal-on (set pre-paint); JS reveals them.
-      (() => {
-        // Only the first page of a session reveals on scroll; later navigations
-        // cross-fade with content already in place (no .reveal-on → nothing hidden).
-        if (!document.documentElement.classList.contains('reveal-on')) return;
-        const sel = 'main > section:not(.color-hero), main > article, main > header:not(.color-hero)';
-        const reveal = (el) => el.classList.add('is-in');
-        try {
-          if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            document.querySelectorAll(sel).forEach(reveal);
-            return;
+        // Per-page wiring — runs on first load and after every navigation.
+        let first = true;
+        document.addEventListener('astro:page-load', () => {
+          // Mobile nav toggle.
+          const toggle = document.querySelector('.nav-toggle');
+          const navEl = document.getElementById('site-nav');
+          if (toggle && navEl) {
+            const set = (open) => {
+              toggle.setAttribute('aria-expanded', String(open));
+              toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+              navEl.classList.toggle('open', open);
+              document.body.style.overflow = open ? 'hidden' : '';
+            };
+            toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
+            navEl.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
           }
-          const els = document.querySelectorAll(sel);
-          if (!('IntersectionObserver' in window)) { els.forEach(reveal); return; }
-          const io = new IntersectionObserver((entries, obs) => {
-            entries.forEach((e) => { if (e.isIntersecting) { reveal(e.target); obs.unobserve(e.target); } });
-          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-          els.forEach((el) => io.observe(el));
-        } catch (e) {
-          document.querySelectorAll(sel).forEach(reveal);
-        }
+          // Footer face: theme toggle.
+          const btn = document.querySelector('.face-btn');
+          if (btn) {
+            const sync = () => btn.setAttribute('aria-pressed', String(document.documentElement.getAttribute('data-theme') === 'dark'));
+            sync();
+            btn.addEventListener('click', () => {
+              const h = document.documentElement;
+              const next = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+              h.setAttribute('data-theme', next);
+              localStorage.setItem('theme', next);
+              sync();
+            });
+          }
+          // Scroll reveal — first page of the session only (later navs just cross-fade).
+          if (first && document.documentElement.classList.contains('reveal-on')
+              && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+            const sel = 'main > section:not(.color-hero), main > article, main > header:not(.color-hero)';
+            const io = new IntersectionObserver((entries, obs) => {
+              entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); obs.unobserve(e.target); } });
+            }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+            document.querySelectorAll(sel).forEach((el) => io.observe(el));
+          }
+          // GA: send a page_view on client-side navigations (config sends the first).
+          if (!first && window.gtag && location.hostname === 'jomurgel.com') {
+            gtag('event', 'page_view', { page_path: location.pathname + location.search, page_title: document.title });
+          }
+          first = false;
+        });
+
+        // On each navigation: drop the one-time entrance/reveal classes (content stays
+        // in place, no re-popping) and re-apply the theme (honor per-page forceTheme).
+        document.addEventListener('astro:after-swap', () => {
+          document.documentElement.classList.remove('entrance', 'reveal-on');
+          const force = document.body.dataset.forceTheme;
+          document.documentElement.setAttribute('data-theme', force || localStorage.getItem('theme') || 'light');
+        });
       })();
     </script>
   </body>

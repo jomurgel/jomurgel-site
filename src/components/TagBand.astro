@@ -22,10 +22,13 @@ const { tags, active } = Astro.props;
   </ul>
 </div>
 
-<script>
-  const fab = document.querySelector('.tags-fab');
-  const overlay = document.getElementById('tags-overlay');
-  if (fab && overlay) {
+<script data-astro-rerun>
+  // data-astro-rerun + IIFE: re-binds the fab/overlay on each ClientRouter
+  // navigation to a words page (the DOM is fresh each time).
+  (() => {
+    const fab = document.querySelector('.tags-fab');
+    const overlay = document.getElementById('tags-overlay');
+    if (!fab || !overlay) return;
     const isOpen = () => fab.getAttribute('aria-expanded') === 'true';
     const open = () => {
       fab.setAttribute('aria-expanded', 'true');
@@ -45,6 +48,21 @@ const { tags, active } = Astro.props;
     };
     fab.addEventListener('click', () => (isOpen() ? close() : open()));
     overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) close(); });
-  }
+    // Escape — bound once on document; re-queries the live overlay.
+    if (!window.__tagsEsc) {
+      window.__tagsEsc = true;
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        const f = document.querySelector('.tags-fab');
+        const o = document.getElementById('tags-overlay');
+        if (f && o && f.getAttribute('aria-expanded') === 'true') {
+          f.setAttribute('aria-expanded', 'false');
+          f.textContent = 'Tags';
+          o.classList.remove('open');
+          document.body.style.overflow = '';
+          o.addEventListener('transitionend', () => { if (f.getAttribute('aria-expanded') !== 'true') o.hidden = true; }, { once: true });
+        }
+      });
+    }
+  })();
 </script>
