@@ -30,8 +30,10 @@ const activeSlug = tagSlug(name);
   <PageHero ink="c" title={`Tagged ${name}`} lede={`${posts.length} ${posts.length === 1 ? 'post' : 'posts'} tagged "${name}".`} />
 
   <section>
-    <TagBand tags={tags} active={activeSlug} />
     <PostList posts={posts} />
     <p class="building-foot"><a href="/words/">← All words &amp; photos</a></p>
   </section>
+
+  {/* Fixed FAB — kept out of the scroll-revealed section (transform would trap it). */}
+  <TagBand tags={tags} active={activeSlug} />
 </Base>

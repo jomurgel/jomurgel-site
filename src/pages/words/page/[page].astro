@@ -35,8 +35,10 @@ const tags = await getAllTags();
   />
 
   <section>
-    <TagBand tags={tags} />
     <PostList posts={posts} />
     <Pagination currentPage={page} totalPages={totalPages} />
   </section>
+
+  {/* Fixed FAB — kept out of the scroll-revealed section (transform would trap it). */}
+  <TagBand tags={tags} />
 </Base>
