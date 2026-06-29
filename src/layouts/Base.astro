@@ -246,15 +246,17 @@ const path = Astro.url.pathname;
           first = false;
         });
 
-        // Runs after each navigation's DOM swap, before the new page paints.
+        // Runs after each navigation's DOM swap, before the new page paints. The swap
+        // resets <html> to the server markup, dropping the runtime classes/attrs we set,
+        // so re-apply all of them here (pre-paint, so the new page never flashes wrong).
         document.addEventListener('astro:after-swap', () => {
           const html = document.documentElement;
-          // Re-apply the theme (honors per-page forceTheme).
+          // Theme (honors per-page forceTheme).
           const force = document.body.dataset.forceTheme;
           html.setAttribute('data-theme', force || localStorage.getItem('theme') || 'light');
-          // A view-transition swap doesn't restart CSS keyframe animations, so re-trigger
-          // the entrance (hero rise, header pop). Doing it here — pre-paint — means the new
-          // page never flashes its finished state first. Toggle + reflow restarts them.
+          // Re-hide content so the scroll-reveal can play again on the new page.
+          html.classList.add('reveal-on');
+          // Restart the entrance keyframes (a swap doesn't replay them) — toggle + reflow.
           html.classList.remove('entrance');
           void html.offsetWidth;
           html.classList.add('entrance');
