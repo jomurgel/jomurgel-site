@@ -24,7 +24,7 @@ So this one started from zero, which I prefer. A full design and build on WordPr
     <span class="browser-url">hxccomms.com</span>
   </div>
   <div class="browser-body">
-    <img src="/work/hxc.jpg" alt="The HXC Comms homepage — 'Fight. Move. Communicate.'" />
+    <img loading="lazy" decoding="async" src="/work/hxc.jpg" alt="The HXC Comms homepage — 'Fight. Move. Communicate.'" />
   </div>
 </figure>
 
