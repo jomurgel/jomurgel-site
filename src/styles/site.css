@@ -816,19 +816,25 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
 /* Scroll reveal: every content block (not the hero) fades up as it enters view.
    Hidden only when JS is on (.reveal-on, set pre-paint) so no-JS stays visible. */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal-on :is(main > section:not(.color-hero):not(.slab-wrap), main > article, main > header:not(.color-hero)) {
-    opacity: 0;
-    transform: translateY(1.5rem);
-    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Keyframes, not transitions, so the reveal replays reliably after a client-side
+     swap: the observer adds .is-in to the live element and the animation runs from 0%
+     (a transition would need the hidden state painted first, which a swap skips). */
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(1.5rem); }
+    to { opacity: 1; transform: none; }
   }
+  @keyframes facet-up {
+    from { opacity: 0; transform: translateY(0.75rem); }
+    to { opacity: 1; transform: none; }
+  }
+  .reveal-on :is(main > section:not(.color-hero):not(.slab-wrap), main > article, main > header:not(.color-hero)) { opacity: 0; }
   .reveal-on :is(main > section:not(.color-hero):not(.slab-wrap), main > article, main > header:not(.color-hero)).is-in {
-    opacity: 1;
-    transform: none;
+    animation: reveal-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
 
   /* The 4 homepage facets fade in one at a time when the slab scrolls into view. */
-  .reveal-on .slab-wrap .facet { opacity: 0; transform: translateY(0.75rem); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
-  .reveal-on .slab-wrap.is-in .facet { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 0.12s); }
+  .reveal-on .slab-wrap .facet { opacity: 0; }
+  .reveal-on .slab-wrap.is-in .facet { animation: facet-up 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 0.12s); }
 }
 
 /* Mobile: bigger corner radius, and push the title + nav further down so
