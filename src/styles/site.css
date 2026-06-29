@@ -336,7 +336,7 @@ button.nav-toggle:active { background: none; border: 0; }
 .slab-inner {
   margin: 0 auto;
   max-width: var(--container-default);
-  padding: 0 var(--space-3); /* match the colored hero's inner gutter */
+  padding: 0 var(--space-2); /* aligns to the shared page gutter on desktop; mobile bumps to space-3 below */
   position: relative;
   z-index: 1; /* above the trade-icon layer + the fill */
 }
@@ -838,6 +838,7 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
     padding-bottom: var(--space-4);
   }
   .slab { --hero-r: 2.75rem; }
+  .slab-inner { padding-inline: var(--space-3); } /* clears the bigger mobile corners */
   /* Nav sits closer to the top; brand stays clear of the rounded corner. */
   .site-header--overlay { padding-top: var(--space-3); }
   /* More breathing room for the brand + hamburger inside the inset hero. */
@@ -866,12 +867,12 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
   padding: 0 var(--space-2);
   width: 100%;
 }
-/* Colored panels get more inner gutter (clears the rounded corners); the
-   paper hero matches the page gutter. Desktop only — the mobile media query
-   above sets the mobile values (and must not be overridden by these). */
+/* On desktop every hero's inner content aligns to the shared page gutter
+   (space-2) — there's room outside the 60rem container, so the extra gutter
+   that clears the big mobile corners isn't needed. The mobile query above keeps
+   space-3 (colored) / 0 (paper) for the tighter inset layout. */
 @media (min-width: 48.0625rem) {
-  .color-hero:not(.ink-paper) .color-hero-inner { padding-inline: var(--space-3); }
-  .color-hero.ink-paper .color-hero-inner { padding-inline: var(--space-2); }
+  .color-hero .color-hero-inner { padding-inline: var(--space-2); }
 }
 .color-hero h1 {
   font-size: var(--display);
