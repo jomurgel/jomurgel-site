@@ -54,7 +54,11 @@ const nav = [
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
-const path = Astro.url.pathname;
+// Astro serves these pages at "/work/" etc., so normalize the trailing slash
+// before matching. A nav item is current on its own page or anything beneath it
+// (e.g. /work/simshot highlights Work); Home only matches exactly.
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path.startsWith(href + '/'));
 ---
 
 <!doctype html>
@@ -126,7 +130,7 @@ const path = Astro.url.pathname;
         <ul>
           {nav.map((item, i) => (
             <li style={`--i:${i}`}>
-              <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
             </li>
           ))}
         </ul>
