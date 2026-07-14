@@ -1191,21 +1191,24 @@ hr + .post { margin-top: 0; }
 /* Galleries: flex row-wrap (like the old site) so images stay in order —
    2 per row on desktop, 1 on mobile, natural aspect (no crop), each row
    vertically centered. Sits at the "wide" width via Acorn's data-align. */
+/* In-post galleries: two columns at native aspect ratios — never cropped, so
+   portraits stay portrait and landscapes stay landscape. Masonry columns pack
+   them without row gaps; mixing orientations leaves the column bottoms a touch
+   uneven, which is the honest trade-off for not cropping the photos. */
 .post-body [data-gallery] {
-  align-items: center;
-  display: flex;
-  flex-flow: row wrap;
-  gap: var(--space-2);
+  display: block;
+  columns: 1;
+  column-gap: var(--space-2);
 }
 .post-body [data-gallery] img {
   aspect-ratio: auto;
   height: auto;
-  margin: 0;
-  object-fit: fill;
   width: 100%;
+  margin: 0 0 var(--space-2);
+  break-inside: avoid;
 }
 @media (min-width: 40rem) {
-  .post-body [data-gallery] img { width: calc(50% - var(--space-2) / 2); }
+  .post-body [data-gallery] { columns: 2; }
 }
 /* Standalone wide figures: the image fills the full wide width. */
 .post-body figure img { display: block; width: 100%; }
