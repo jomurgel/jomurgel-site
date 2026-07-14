@@ -7,7 +7,7 @@ year: "2026"
 link: "https://hxccomms.com"
 linkLabel: "Visit HXC Comms"
 stack: ["WordPress"]
-ink: "c"
+ink: "y"
 span: 2
 order: 4
 ---
