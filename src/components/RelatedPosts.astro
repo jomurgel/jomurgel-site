@@ -3,6 +3,7 @@
 // photos; everything else relates by shared category (tag), padded with
 // recent so it's never empty. Rendered as a compact CMYK-accented card grid.
 import { getCollection } from 'astro:content';
+import { postUrl } from '../lib/words';
 
 const { current } = Astro.props;
 const all = (await getCollection('words', ({ data }) => !data.draft)).sort(
@@ -33,12 +34,12 @@ const inks = ['c', 'm', 'y'];
   <section class="related" aria-labelledby="related-heading">
     <div class="related-head">
       <h2 id="related-heading">Related</h2>
-      <a href="/words/" class="all-link">All words &amp; photos →</a>
+      <a href={isPhoto ? '/photos/' : '/words/'} class="all-link">{isPhoto ? 'All photos →' : 'All words →'}</a>
     </div>
     <ul class="related-grid">
       {related.map((p, i) => (
         <li class="related-card">
-          <a class="ink-card" data-ink={inks[i % 3]} href={`/words/${p.id}/`}>
+          <a class="ink-card" data-ink={inks[i % 3]} href={postUrl(p)}>
             <span class="related-meta">
               <time datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
               <span class="post-kind" data-kind={p.data.type}>{p.data.type === 'photo' ? 'Photos' : 'Writing'}</span>

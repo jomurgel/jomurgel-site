@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import { postUrl } from '../lib/words';
 
 // /rss.xml — the Words & Photos feed. Newest first, drafts excluded.
 export async function GET(context) {
@@ -15,7 +16,7 @@ export async function GET(context) {
       title: p.data.title,
       description: p.data.description ?? '',
       pubDate: p.data.date,
-      link: `/words/${p.id}/`,
+      link: postUrl(p),
     })),
   });
 }

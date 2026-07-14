@@ -1,6 +1,11 @@
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 
 export const tagSlug = (t: string) => t.replace(/\s+/g, '-').toLowerCase();
+
+// Route a post to its section by type: photos live at /photos, writing at /words.
+export const postUrl = (p: CollectionEntry<'words'>) =>
+  `/${p.data.type === 'photo' ? 'photos' : 'words'}/${p.id}/`;
 
 // Vivid hand-picked rainbow stops (red → violet → pink). Tags are spread
 // evenly across these so the set always spans the full rainbow.
