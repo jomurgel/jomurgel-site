@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
+import { getCollection } from 'astro:content';
+
+const photos = (await getCollection('words', ({ data }) => !data.draft && data.type === 'photo')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base
+  title="Photos"
+  description="Photography by Jo Murgel — nature, portraits, and art studies."
+  heroInk="k"
+  forceTheme="dark"
+>
+  <PageHero
+    ink="k"
+    title="Photos"
+    lede="Series and studies — nature, portraits, and whatever's caught my eye lately. More coming."
+  />
+
+  <section>
+    <PhotoGallery photos={photos} />
+  </section>
+</Base>

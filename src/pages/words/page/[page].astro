@@ -9,7 +9,7 @@ import { getAllTags } from '../../../lib/words';
 
 export async function getStaticPaths() {
   const PAGE_SIZE = 6;
-  const all = (await getCollection('words', ({ data }) => !data.draft)).sort(
+  const all = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
   );
   const totalPages = Math.ceil(all.length / PAGE_SIZE);
@@ -27,11 +27,11 @@ const { posts, page, totalPages } = Astro.props;
 const tags = await getAllTags();
 ---
 
-<Base title={`Words & Photos — page ${page}`} heroInk="c">
+<Base title={`Words — page ${page}`} heroInk="c">
   <PageHero
     ink="c"
-    title="Words & Photos"
-    lede="Dev notes, reflections, and photo studies — whatever I'm thinking about or shooting lately."
+    title="Words"
+    lede="Dev notes, reflections, and whatever I'm thinking about lately."
   />
 
   <section>

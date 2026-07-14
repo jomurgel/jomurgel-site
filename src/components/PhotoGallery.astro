@@ -1,0 +1,16 @@
+---
+// The /photos wall — a masonry grid of series covers, each linking into its series.
+import { postUrl } from '../lib/words';
+const { photos } = Astro.props;
+---
+
+<ul class="photo-gallery">
+  {photos.map((p) => (
+    <li class="photo-item">
+      <a href={postUrl(p)}>
+        <img src={p.data.coverImage} alt={p.data.coverAlt ?? p.data.title} loading="lazy" decoding="async" />
+        <span class="photo-cap">{p.data.title}</span>
+      </a>
+    </li>
+  ))}
+</ul>

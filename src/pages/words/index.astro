@@ -8,7 +8,7 @@ import { getCollection } from 'astro:content';
 import { getAllTags } from '../../lib/words';
 
 const PAGE_SIZE = 6;
-const all = (await getCollection('words', ({ data }) => !data.draft)).sort(
+const all = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 const posts = all.slice(0, PAGE_SIZE);
@@ -16,11 +16,11 @@ const totalPages = Math.ceil(all.length / PAGE_SIZE);
 const tags = await getAllTags();
 ---
 
-<Base title="Words & Photos" description="Writing and photography by Jo Murgel — dev notes, reflections, and art studies." heroInk="c">
+<Base title="Words" description="Writing by Jo Murgel — dev notes, reflections, and musings." heroInk="c">
   <PageHero
     ink="c"
-    title="Words & Photos"
-    lede="Dev notes, reflections, and photo studies — whatever I'm thinking about or shooting lately."
+    title="Words"
+    lede="Dev notes, reflections, and whatever I'm thinking about lately."
   />
 
   <section>
