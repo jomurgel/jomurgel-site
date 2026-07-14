@@ -1093,7 +1093,10 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
 .words-rss { font-size: var(--text-sm); margin-top: var(--space-4); text-align: center; }
 .words-rss a { color: var(--gray); }
 
-/* Photos — gallery wall (masonry via CSS columns; lives on the dark /photos page) */
+/* Photos — gallery wall (masonry via CSS columns; the dark /photos page). Each
+   cover skews into a parallelogram on hover (like the post covers); the image
+   counter-skews so it stays undistorted, and a centered title overlay fades in.
+   On touch / no-hover the title sits under a bottom gradient instead. */
 .photo-gallery {
   list-style: none;
   margin: 0;
@@ -1106,24 +1109,65 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   margin-bottom: var(--space-2);
 }
 .photo-item a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+.photo-frame {
   position: relative;
   display: block;
   overflow: hidden;
   border-radius: var(--radius-img);
-  color: #fff;
+  transition: transform 0.3s ease;
 }
-.photo-item img {
+.photo-img {
   display: block;
   width: 100%;
   height: auto;
+  transition: transform 0.3s ease;
 }
+/* Mobile / no-hover: title always shown, centered, under a bottom-up gradient. */
 .photo-cap {
   position: absolute;
   inset: auto 0 0 0;
   padding: var(--space-4) var(--space-2) var(--space-2);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
   font-weight: 700;
+  text-align: center;
+  color: #fff;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
+}
+.photo-cap-t { display: block; }
+/* Hover-capable pointers (desktop): hide the label, then reveal it centered over a
+   translucent overlay as the cover skews. */
+@media (hover: hover) {
+  .photo-cap {
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: var(--space-3);
+    font-size: var(--text-2xl);
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .photo-item a:hover .photo-frame,
+  .photo-item a:focus-visible .photo-frame { transform: skewY(-4deg); }
+  .photo-item a:hover .photo-img,
+  .photo-item a:focus-visible .photo-img { transform: skewY(4deg) scale(1.15); }
+  .photo-item a:hover .photo-cap,
+  .photo-item a:focus-visible .photo-cap { opacity: 1; }
+  .photo-item a:hover .photo-cap-t,
+  .photo-item a:focus-visible .photo-cap-t { transform: skewY(4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-frame, .photo-img, .photo-cap-t { transition: none; }
+  .photo-item a:hover .photo-frame,
+  .photo-item a:focus-visible .photo-frame,
+  .photo-item a:hover .photo-img,
+  .photo-item a:focus-visible .photo-img,
+  .photo-item a:hover .photo-cap-t,
+  .photo-item a:focus-visible .photo-cap-t { transform: none; }
 }
 @media (min-width: 40rem) { .photo-gallery { columns: 2; } }
 .page-num,
