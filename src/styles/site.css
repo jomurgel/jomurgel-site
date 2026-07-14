@@ -192,6 +192,11 @@ main > section { padding-inline: var(--space-2); }
   background: none;
   color: var(--black);
   font-weight: 700;
+  /* Underline the current item so it's clear on any hero color (bold alone reads
+     subtle, especially on the dark /photos hero). Inherits the readable text color. */
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 
 /* Mobile nav: hamburger (2 bars → X) opens a full-screen overlay menu. */
@@ -1086,7 +1091,7 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   list-style: none;
   margin: 0;
   padding: 0;
-  columns: 1;
+  columns: 2;
   column-gap: var(--space-2);
 }
 .photo-item {
@@ -1113,7 +1118,6 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   font-weight: 700;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
 }
-@media (min-width: 40rem) { .photo-gallery { columns: 2; } }
 @media (min-width: 64rem) { .photo-gallery { columns: 3; } }
 .page-num,
 .page-arrow {
