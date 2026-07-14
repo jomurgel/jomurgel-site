@@ -197,7 +197,14 @@ main > section { padding-inline: var(--space-2); }
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
+  /* Acorn's classless baseline sets pointer-events:none on the current item.
+     Re-enable it so you can click a section (Words / Photos / Work) to get back
+     to its index from inside a child post. */
+  pointer-events: auto;
+  cursor: pointer;
 }
+/* It's a live link, so react to hover (opacity works on every hero color). */
+.site-header nav a[aria-current="page"]:hover { opacity: 0.7; }
 
 /* Mobile nav: hamburger (2 bars → X) opens a full-screen overlay menu. */
 .nav-toggle { display: none; }
