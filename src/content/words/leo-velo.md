@@ -1,10 +1,11 @@
 ---
 type: "photo"
-title: "Leo Velo (NSFW)"
+title: "Leo Velo"
 description: "A chroma and wilderness photo series. Working with Leo."
 date: "2020-02-22"
 updated: "2026-07-14"
 coverImage: "/leo/cover.jpg"
+nsfw: true
 tags: [
   "photography",
   "art nude",

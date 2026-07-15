@@ -15,6 +15,7 @@ const words = defineCollection({
     type: z.enum(['writing', 'photo']).default('writing'),
     coverImage: z.string().optional(),
     coverAlt: z.string().optional(),
+    nsfw: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
 });

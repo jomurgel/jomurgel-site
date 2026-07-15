@@ -10,11 +10,12 @@ const { photos } = Astro.props;
 <ul class="photo-gallery">
   {photos.map((p) => (
     <li class="photo-item">
-      <a href={postUrl(p)} aria-label={p.data.title}>
+      <a href={postUrl(p)} aria-label={p.data.nsfw ? `${p.data.title} (NSFW)` : p.data.title}>
         <span class="photo-frame">
           <img class="photo-img" src={p.data.coverImage} alt={p.data.coverAlt ?? p.data.title} loading="lazy" decoding="async" />
           <span class="photo-cap" aria-hidden="true"><span class="photo-cap-t">{p.data.title}</span></span>
         </span>
+        {p.data.nsfw && <span class="photo-badge nsfw-badge" aria-hidden="true">NSFW</span>}
       </a>
     </li>
   ))}

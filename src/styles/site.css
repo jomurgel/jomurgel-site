@@ -969,6 +969,13 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
 .post-kind[data-kind="writing"] { color: var(--primary); }
 .post-updated { font-style: italic; }
 .post-updated::before { content: "·"; margin-right: var(--space-2); font-style: normal; }
+.nsfw-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--gray);
+  font-size: var(--text-sm);
+}
 
 .post-title { margin: 0 0 var(--space-1); }
 .post-item a:hover .post-title { text-decoration: underline; text-underline-offset: 0.12em; }
@@ -1111,6 +1118,7 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   margin-bottom: var(--space-2);
 }
 .photo-item a {
+  position: relative;
   display: block;
   color: #fff;
   text-decoration: none;
@@ -1142,6 +1150,25 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
 }
 .photo-cap-t { display: block; }
+/* Content-warning pill, shared by the /photos wall and the top of a post. */
+.nsfw-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.15em 0.5em;
+  border-radius: 0.25rem;
+}
+/* On the wall the pill floats in the top-left corner, above the skewing frame. */
+.photo-badge {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 1;
+}
 /* Hover-capable pointers (desktop): hide the label, then reveal it centered over a
    translucent overlay as the cover skews. */
 @media (hover: hover) {
@@ -1155,6 +1182,9 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
     opacity: 0;
     transition: opacity 0.3s ease;
   }
+  .photo-badge { opacity: 0; transition: opacity 0.3s ease; }
+  .photo-item a:hover .photo-badge,
+  .photo-item a:focus-visible .photo-badge { opacity: 1; }
   .photo-item a:hover .photo-frame,
   .photo-item a:focus-visible .photo-frame { transform: skewY(-4deg); }
   .photo-item a:hover .photo-img,
