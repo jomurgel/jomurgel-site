@@ -1,27 +1,15 @@
 ---
-// The /photos wall — masonry grid of series covers. Each cover skews on hover
+// The /photos wall — grid of series covers. Each cover skews on hover
 // (matching the post covers) with a centered title overlay; on touch the title
-// sits under a bottom gradient instead. Covers are cropped to a consistent 4:3
-// (landscape) or 3:4 (portrait) by orientation, read from the file at build time.
+// sits under a bottom gradient instead. Covers are cropped to a square frame.
 import { postUrl } from '../lib/words';
-import { imageSize } from 'image-size';
-import { readFileSync } from 'node:fs';
 
 const { photos } = Astro.props;
-
-const items = photos.map((p) => {
-  let portrait = true;
-  try {
-    const { width = 0, height = 0 } = imageSize(readFileSync(`public${p.data.coverImage}`));
-    portrait = height >= width;
-  } catch { /* fall back to portrait if the cover can't be measured */ }
-  return { p, portrait };
-});
 ---
 
 <ul class="photo-gallery">
-  {items.map(({ p, portrait }) => (
-    <li class:list={['photo-item', { 'is-portrait': portrait }]}>
+  {photos.map((p) => (
+    <li class="photo-item">
       <a href={postUrl(p)} aria-label={p.data.title}>
         <span class="photo-frame">
           <img class="photo-img" src={p.data.coverImage} alt={p.data.coverAlt ?? p.data.title} loading="lazy" decoding="async" />
