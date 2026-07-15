@@ -11,11 +11,9 @@ import Pagination from '../components/Pagination.astro';
 import RegMark from '../components/RegMark.astro';
 import TagBand from '../components/TagBand.astro';
 import { getCollection } from 'astro:content';
-import { getAllTags } from '../lib/words';
+import { getAllTags, byNewest } from '../lib/words';
 
-const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(byNewest);
 // A spread for the post stream: prefer one with a cover, a shorty, and a plain one.
 const withCover = posts.find((p) => p.data.coverImage);
 const shorty = posts.find((p) => p.data.tags.includes('shorty'));

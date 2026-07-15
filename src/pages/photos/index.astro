@@ -3,10 +3,9 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import PhotoGallery from '../../components/PhotoGallery.astro';
 import { getCollection } from 'astro:content';
+import { byNewest } from '../../lib/words';
 
-const photos = (await getCollection('words', ({ data }) => !data.draft && data.type === 'photo')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const photos = (await getCollection('words', ({ data }) => !data.draft && data.type === 'photo')).sort(byNewest);
 ---
 
 <Base

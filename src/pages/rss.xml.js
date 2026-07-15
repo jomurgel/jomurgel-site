@@ -1,12 +1,10 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
-import { postUrl } from '../lib/words';
+import { postUrl, byNewest } from '../lib/words';
 
 // /rss.xml — the Words & Photos feed. Newest first, drafts excluded.
 export async function GET(context) {
-  const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  );
+  const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(byNewest);
 
   return rss({
     title: 'Jo Murgel — Words & Photos',

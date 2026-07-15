@@ -3,6 +3,13 @@ import type { CollectionEntry } from 'astro:content';
 
 export const tagSlug = (t: string) => t.replace(/\s+/g, '-').toLowerCase();
 
+// The date a post sorts by: its last-updated date if set, else when published.
+export const sortDate = (p: CollectionEntry<'words'>) => p.data.updated ?? p.data.date;
+
+// Newest-first comparator, shared by every listing so an edited post floats up.
+export const byNewest = (a: CollectionEntry<'words'>, b: CollectionEntry<'words'>) =>
+  sortDate(b).valueOf() - sortDate(a).valueOf();
+
 // Route a post to its section by type: photos live at /photos, writing at /words.
 export const postUrl = (p: CollectionEntry<'words'>) =>
   `/${p.data.type === 'photo' ? 'photos' : 'words'}/${p.id}/`;

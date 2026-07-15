@@ -967,6 +967,8 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
 }
 .post-kind[data-kind="photo"] { color: var(--secondary-dark); }
 .post-kind[data-kind="writing"] { color: var(--primary); }
+.post-updated { font-style: italic; }
+.post-updated::before { content: "·"; margin-right: var(--space-2); font-style: normal; }
 
 .post-title { margin: 0 0 var(--space-1); }
 .post-item a:hover .post-title { text-decoration: underline; text-underline-offset: 0.12em; }

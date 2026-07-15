@@ -4,12 +4,10 @@ import PageHero from '../../../components/PageHero.astro';
 import PostList from '../../../components/PostList.astro';
 import TagBand from '../../../components/TagBand.astro';
 import { getCollection } from 'astro:content';
-import { getAllTags, tagSlug } from '../../../lib/words';
+import { getAllTags, tagSlug, byNewest } from '../../../lib/words';
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  );
+  const posts = (await getCollection('words', ({ data }) => !data.draft)).sort(byNewest);
   const bySlug = new Map();
   posts.forEach((p) =>
     p.data.tags.forEach((t) => {

@@ -10,6 +10,7 @@ const words = defineCollection({
     title: z.string(),
     description: z.string().optional(),
     date: z.coerce.date(),
+    updated: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     type: z.enum(['writing', 'photo']).default('writing'),
     coverImage: z.string().optional(),

@@ -4,10 +4,9 @@
 // own gallery at /photos.)
 import PostList from './PostList.astro';
 import { getCollection } from 'astro:content';
+import { byNewest } from '../lib/words';
 
-const posts = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const posts = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(byNewest);
 // Feature the most recent post that has a cover (image-forward), else the latest.
 const post = posts.find((p) => p.data.coverImage) ?? posts[0];
 ---

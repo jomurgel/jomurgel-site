@@ -6,7 +6,7 @@ import { getAllTags, postUrl } from '../lib/words';
 
 const { posts } = Astro.props;
 const fmt = (d) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 const isShorty = (p) => p.data.tags.includes('shorty');
 const tagInfo = new Map((await getAllTags()).map((t) => [t.name, t]));
 const cats = (p) => p.data.tags.filter((t) => t !== 'shorty');

@@ -3,12 +3,10 @@
 // photos; everything else relates by shared category (tag), padded with
 // recent so it's never empty. Rendered as a compact CMYK-accented card grid.
 import { getCollection } from 'astro:content';
-import { postUrl } from '../lib/words';
+import { postUrl, byNewest } from '../lib/words';
 
 const { current } = Astro.props;
-const all = (await getCollection('words', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const all = (await getCollection('words', ({ data }) => !data.draft)).sort(byNewest);
 
 const isPhoto = current.data.type === 'photo';
 const cats = new Set(current.data.tags.filter((t) => t !== 'shorty'));
@@ -26,7 +24,7 @@ if (isPhoto) {
 }
 related = related.slice(0, 3);
 
-const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 const inks = ['c', 'm', 'y'];
 ---
 

@@ -5,13 +5,11 @@ import PostList from '../../../components/PostList.astro';
 import Pagination from '../../../components/Pagination.astro';
 import TagBand from '../../../components/TagBand.astro';
 import { getCollection } from 'astro:content';
-import { getAllTags } from '../../../lib/words';
+import { getAllTags, byNewest } from '../../../lib/words';
 
 export async function getStaticPaths() {
   const PAGE_SIZE = 6;
-  const all = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-  );
+  const all = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(byNewest);
   const totalPages = Math.ceil(all.length / PAGE_SIZE);
   const paths = [];
   for (let n = 2; n <= totalPages; n++) {
