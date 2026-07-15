@@ -1118,12 +1118,15 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   display: block;
   overflow: hidden;
   border-radius: var(--radius-img);
+  aspect-ratio: 1; /* landscape covers */
   transition: transform 0.3s ease;
 }
+.photo-item.is-portrait .photo-frame { aspect-ratio: 1; } /* portrait covers */
 .photo-img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 /* Mobile / no-hover: title always shown, centered, under a bottom-up gradient. */
