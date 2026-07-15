@@ -3,15 +3,17 @@ type: "photo"
 title: "Revisit: Temporal"
 description: "Redeveloped frames from my 2007 Temporal thesis — some never released."
 date: "2026-07-14"
-coverImage: "/revisit-temporal/photo-4.jpg"
-coverAlt: "Figure study with a red cloth draped behind, in low light"
+coverImage: "/revisit-temporal/photo-11.jpg"
+coverAlt: "Reclining figure on white fabric, in low light"
 tags: [
   "photography",
   "art study"
 ]
 ---
 
-The original [*Temporal*](/photos/temporal-thesis-set/) was shot in 2007 for my thesis. Rebuilding my photo portfolio for the modern era, I went back and redeveloped several of these frames — a few never released — collected below.
+The original [*Temporal*](/photos/temporal-thesis-set/) was shot in 2007 for my thesis. Shot on film, scanned nearly 10 years later and presented almost exactly as they were scanned. No color grading, retouching, or processing of any kind. What I thought was the *natural* look of the photos.
+
+As I started to revisit older photography to rebuild my online photo portfolio for the modern era, I found the original color prints I made and realized the color was much different; the quality was much different. So I went back and redeveloped several of these frames — a few never released — collected below with a new eye and appreciation for the art of my past.
 
 <img loading="lazy" decoding="async" src="/revisit-temporal/photo-6.jpg" alt="Figure fully veiled in sheer white fabric" data-align="wide" />
 
