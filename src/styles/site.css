@@ -941,20 +941,18 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
   display: block;
   height: 100%;
   object-fit: cover;
-  /* Constant slight zoom so the skew has cover to spare — only the skew
-     animates on hover, never the scale (no zoom motion). */
-  transform: scale(1.15);
   transition: transform 0.3s ease;
   width: 100%;
 }
-.post-item.has-cover a:hover .post-thumb-wrap { transform: skewY(-4deg); }
-.post-item.has-cover a:hover .post-thumb { transform: skewY(4deg) scale(1.15); }
+/* Hover: the cover lifts and the image zooms a touch — vertical motion, no tilt. */
+.post-item.has-cover a:hover .post-thumb-wrap { transform: translateY(-6px); }
+.post-item.has-cover a:hover .post-thumb { transform: scale(1.05); }
 
 @media (prefers-reduced-motion: reduce) {
   .post-thumb-wrap,
   .post-thumb { transition: none; }
   .post-item.has-cover a:hover .post-thumb-wrap { transform: none; }
-  .post-item.has-cover a:hover .post-thumb { transform: scale(1.15); }
+  .post-item.has-cover a:hover .post-thumb { transform: none; }
 }
 
 .post-meta {
@@ -1103,10 +1101,10 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
 .words-rss a { color: var(--gray); }
 
 /* Photos — gallery wall (square-tile grid; the dark /photos page). A CSS grid so
-   covers read newest-first left-to-right, top-to-bottom. Each cover skews into a
-   parallelogram on hover (like the post covers); the image counter-skews so it
-   stays undistorted, and a centered title overlay fades in. On touch / no-hover
-   the title sits under a bottom gradient instead. */
+   covers read newest-first left-to-right, top-to-bottom. On hover (like the post
+   covers) each cover lifts and the image zooms a touch, and a centered title
+   overlay fades in. On touch / no-hover the title sits under a bottom gradient
+   instead. */
 .photo-gallery {
   list-style: none;
   margin: 0;
@@ -1166,7 +1164,7 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
 /* On the wall the pill sits centered just above the title inside the caption. */
 .photo-cap-badge { margin-bottom: var(--space-2); }
 /* Hover-capable pointers (desktop): hide the label, then reveal it centered over a
-   translucent overlay as the cover skews. */
+   translucent overlay as the cover lifts. */
 @media (hover: hover) {
   .photo-cap {
     inset: 0;
@@ -1181,26 +1179,18 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
     transition: opacity 0.3s ease;
   }
   .photo-item a:hover .photo-frame,
-  .photo-item a:focus-visible .photo-frame { transform: skewY(-4deg); }
+  .photo-item a:focus-visible .photo-frame { transform: translateY(-6px); }
   .photo-item a:hover .photo-img,
-  .photo-item a:focus-visible .photo-img { transform: skewY(4deg) scale(1.15); }
+  .photo-item a:focus-visible .photo-img { transform: scale(1.05); }
   .photo-item a:hover .photo-cap,
   .photo-item a:focus-visible .photo-cap { opacity: 1; }
-  .photo-item a:hover .photo-cap-t,
-  .photo-item a:focus-visible .photo-cap-t,
-  .photo-item a:hover .photo-cap-badge,
-  .photo-item a:focus-visible .photo-cap-badge { transform: skewY(4deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .photo-frame, .photo-img, .photo-cap-t { transition: none; }
+  .photo-frame, .photo-img { transition: none; }
   .photo-item a:hover .photo-frame,
   .photo-item a:focus-visible .photo-frame,
   .photo-item a:hover .photo-img,
-  .photo-item a:focus-visible .photo-img,
-  .photo-item a:hover .photo-cap-t,
-  .photo-item a:focus-visible .photo-cap-t,
-  .photo-item a:hover .photo-cap-badge,
-  .photo-item a:focus-visible .photo-cap-badge { transform: none; }
+  .photo-item a:focus-visible .photo-img { transform: none; }
 }
 @media (min-width: 40rem) { .photo-gallery { grid-template-columns: 1fr 1fr; } }
 .page-num,
