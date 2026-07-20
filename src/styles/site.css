@@ -1144,6 +1144,7 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   padding: var(--space-4) var(--space-2) var(--space-2);
   font-size: var(--text-lg);
   font-weight: 700;
+  line-height: 1.125;
   text-align: center;
   color: #fff;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
