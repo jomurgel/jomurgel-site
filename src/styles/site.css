@@ -1102,20 +1102,21 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
 .words-rss { font-size: var(--text-sm); margin-top: var(--space-4); text-align: center; }
 .words-rss a { color: var(--gray); }
 
-/* Photos — gallery wall (masonry via CSS columns; the dark /photos page). Each
-   cover skews into a parallelogram on hover (like the post covers); the image
-   counter-skews so it stays undistorted, and a centered title overlay fades in.
-   On touch / no-hover the title sits under a bottom gradient instead. */
+/* Photos — gallery wall (square-tile grid; the dark /photos page). A CSS grid so
+   covers read newest-first left-to-right, top-to-bottom. Each cover skews into a
+   parallelogram on hover (like the post covers); the image counter-skews so it
+   stays undistorted, and a centered title overlay fades in. On touch / no-hover
+   the title sits under a bottom gradient instead. */
 .photo-gallery {
   list-style: none;
   margin: 0;
   padding: 0;
-  columns: 1;
-  column-gap: var(--space-2);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
 }
 .photo-item {
-  break-inside: avoid;
-  margin-bottom: var(--space-2);
+  min-width: 0;
 }
 .photo-item a {
   position: relative;
@@ -1201,7 +1202,7 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   .photo-item a:hover .photo-cap-badge,
   .photo-item a:focus-visible .photo-cap-badge { transform: none; }
 }
-@media (min-width: 40rem) { .photo-gallery { columns: 2; } }
+@media (min-width: 40rem) { .photo-gallery { grid-template-columns: 1fr 1fr; } }
 .page-num,
 .page-arrow {
   border-radius: 999px;
