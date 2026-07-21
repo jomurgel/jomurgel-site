@@ -14,6 +14,10 @@ export const byNewest = (a: CollectionEntry<'words'>, b: CollectionEntry<'words'
 export const postUrl = (p: CollectionEntry<'words'>) =>
   `/${p.data.type === 'photo' ? 'photos' : 'words'}/${p.id}/`;
 
+// Square WebP thumbnail beside each cover (built by scripts/gen-thumbs.sh), so the
+// /photos wall loads ~1000px webp tiles instead of the full-size cover files.
+export const coverThumb = (src: string) => src.replace(/\.(jpe?g|png|webp)$/i, '.thumb.webp');
+
 // Vivid hand-picked rainbow stops (red → violet → pink). Tags are spread
 // evenly across these so the set always spans the full rainbow.
 const STOPS = [
