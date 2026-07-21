@@ -5,7 +5,7 @@
 import Base from '../layouts/Base.astro';
 import RelatedPosts from './RelatedPosts.astro';
 import { render } from 'astro:content';
-import { getAllTags } from '../lib/words';
+import { getAllTags, coverHero } from '../lib/words';
 
 const { post } = Astro.props;
 const { Content } = await render(post);
@@ -24,7 +24,7 @@ const showUpdated = updated && updated.valueOf() !== post.data.date.valueOf();
 
 // Cover posts get the colored-hero treatment with the photo as the fill.
 const coverStyle = hasCover
-  ? `--hero-bg: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.62)), url(${post.data.coverImage}) center / cover`
+  ? `--hero-bg: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.62)), url(${coverHero(post.data.coverImage)}) center / cover`
   : undefined;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;

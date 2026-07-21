@@ -14,9 +14,12 @@ export const byNewest = (a: CollectionEntry<'words'>, b: CollectionEntry<'words'
 export const postUrl = (p: CollectionEntry<'words'>) =>
   `/${p.data.type === 'photo' ? 'photos' : 'words'}/${p.id}/`;
 
-// Square WebP thumbnail beside each cover (built by scripts/gen-thumbs.sh), so the
-// /photos wall loads ~1000px webp tiles instead of the full-size cover files.
+// Per-cover derivatives built by scripts/gen-covers.sh:
+//   coverThumb — ~1000px square WebP for the /photos wall and the /words + tag listings.
+//   coverHero  — wide, short crop for the full-bleed post hero (a tall portrait cover
+//                would waste most of its height behind the title).
 export const coverThumb = (src: string) => src.replace(/\.(jpe?g|png|webp)$/i, '.thumb.webp');
+export const coverHero = (src: string) => src.replace(/\.(jpe?g|png|webp)$/i, '.hero.jpg');
 
 // Vivid hand-picked rainbow stops (red → violet → pink). Tags are spread
 // evenly across these so the set always spans the full rainbow.
