@@ -1249,9 +1249,7 @@ hr + .post { margin-top: 0; }
 .post-header,
 .post-back,
 .post-footer { padding-inline: var(--space-2); }
-/* Block images: an inline <img> carries line-box descender space beneath it, which
-   made the gap under a full-width image read larger than the gallery grid gap. */
-.post-body :is(img, video) { display: block; border-radius: var(--radius-img); }
+.post-body :is(img, video) { border-radius: var(--radius-img); }
 /* Raw block media (<video>, <iframe>, <figure>) doesn't inherit Acorn's
    paragraph margins, so it crowds adjacent headings/text. Give it its own
    vertical rhythm — margins collapse with neighbors, so no double gaps. */
@@ -1272,6 +1270,10 @@ hr + .post { margin-top: 0; }
   grid-template-columns: 1fr;
   gap: var(--space-2);
   align-items: start;
+  /* Override Acorn's [data-gallery] margin (--space-3 = 2rem) so the space between
+     galleries and neighboring blocks equals the in-gallery gap (--space-2). Only a
+     bottom margin, so adjacent blocks never sum to a double gap. */
+  margin: 0 0 var(--space-2);
 }
 .post-body [data-gallery] img {
   aspect-ratio: auto;
