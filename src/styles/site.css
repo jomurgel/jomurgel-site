@@ -1193,7 +1193,11 @@ button.tags-fab:focus-visible { background: var(--black); border-color: var(--bl
   .photo-item a:hover .photo-img,
   .photo-item a:focus-visible .photo-img { transform: none; }
 }
-@media (min-width: 40rem) { .photo-gallery { grid-template-columns: 1fr 1fr; } }
+/* Tighter 3-col grid while the container is still fluid; drops to 2 wider
+   tiles once the container hits its max width (--container-default: 60rem)
+   so photos have room to breathe on desktop instead of shrinking further. */
+@media (min-width: 40rem) { .photo-gallery { grid-template-columns: 1fr 1fr 1fr; } }
+@media (min-width: 60rem) { .photo-gallery { grid-template-columns: 1fr 1fr; } }
 .page-num,
 .page-arrow {
   border-radius: 999px;
