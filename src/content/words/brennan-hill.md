@@ -3,8 +3,8 @@ type: "photo"
 title: "Brennan Hill"
 description: "A studio boudoir and figure session with Brennan Hill."
 date: "2015-12-14"
-coverImage: "/brennan-hill/photo-9.jpg"
-coverAlt: "Reclining on a pink cushion, back turned, looking back"
+coverImage: "/brennan-hill/photo-11.jpg"
+coverAlt: "Reclining on the floor, an arm draped overhead"
 tags: [
   "photography",
   "art nude",
