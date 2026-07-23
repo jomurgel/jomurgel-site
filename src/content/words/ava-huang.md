@@ -41,12 +41,12 @@ tags: [
   <img loading="lazy" decoding="async" src="/ava-huang/photo-11.jpg" alt="Seated at a metal table by a red-framed window, hands clasped" />
   <img loading="lazy" decoding="async" src="/ava-huang/photo-13.jpg" alt="Close portrait, a hand raised near the neck" />
   <img loading="lazy" decoding="async" src="/ava-huang/photo-14.jpg" alt="Warm close portrait, direct gaze" />
+  <img loading="lazy" decoding="async" src="/ava-huang/photo-16.jpg" alt="Seated at a café table in the slip dress and tights" />
 </div>
 
 <img loading="lazy" decoding="async" src="/ava-huang/photo-15.jpg" alt="Hand to the cheek by a red-framed window" data-align="wide" />
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/ava-huang/photo-16.jpg" alt="Seated at a café table in the slip dress and tights" />
   <img loading="lazy" decoding="async" src="/ava-huang/photo-17.jpg" alt="Seated at a table, hands resting, dried grasses behind" />
   <img loading="lazy" decoding="async" src="/ava-huang/photo-18.jpg" alt="Leaning on a ledge, eyes closed in the sun" />
 </div>
