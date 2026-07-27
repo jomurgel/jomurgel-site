@@ -1021,6 +1021,43 @@ a.post-tag:focus-visible { background: var(--tc); color: var(--tt); }
 button.tags-fab:hover,
 button.tags-fab:focus-visible { background: var(--black); border-color: var(--black); color: var(--white); }
 
+/* Back-to-top: fixed in the bottom-right corner, revealed once the page is scrolled.
+   The arrow echoes the page's hero ink (white on dark photo pages) via --totop-color
+   set by the layout. Transparent fill so it reads on light and dark backgrounds. */
+.to-top {
+  position: fixed;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--totop-color, var(--black));
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.5rem);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease, background-color 0.2s ease;
+}
+.to-top svg { display: block; width: 1.2rem; height: 1.2rem; }
+html.scrolled .to-top { opacity: 1; visibility: visible; transform: none; }
+.to-top:hover,
+.to-top:focus-visible { background: color-mix(in srgb, currentColor 14%, transparent); }
+/* When the tags overlay is open, keep the button out of the way. */
+body:has(.tags-overlay.open) .to-top { opacity: 0; visibility: hidden; }
+/* On words pages the tags fab shares the corner — slide it left when the
+   back-to-top button appears so the arrow sits to its right. */
+.tags-fab { transition: background-color 0.2s ease, color 0.2s ease, right 0.2s ease; }
+html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2)); }
+@media (prefers-reduced-motion: reduce) {
+  .to-top { transform: none; transition: opacity 0.2s ease, visibility 0.2s ease, background-color 0.2s ease; }
+}
+
 /* Full-screen blurred overlay with big hashtag pills on the right. */
 .tags-overlay {
   backdrop-filter: blur(10px);
