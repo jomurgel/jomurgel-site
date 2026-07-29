@@ -10,6 +10,7 @@ tags: [
   "art nude",
   "portrait"
 ]
+featured: true
 nsfw: true
 ---
 
