@@ -9,7 +9,7 @@ const { photos } = Astro.props;
 
 <ul class="photo-gallery">
   {photos.map((p) => (
-    <li class="photo-item">
+    <li class:list={['photo-item', { 'is-featured': p.data.featured }]}>
       <a href={postUrl(p)} aria-label={p.data.nsfw ? `${p.data.title} (NSFW)` : p.data.title}>
         <span class="photo-frame">
           <img class="photo-img" src={coverThumb(p.data.coverImage)} width="1000" height="1000" alt={p.data.coverAlt ?? p.data.title} loading="lazy" decoding="async" />

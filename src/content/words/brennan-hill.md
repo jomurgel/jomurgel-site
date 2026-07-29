@@ -11,6 +11,7 @@ tags: [
   "portrait"
 ]
 nsfw: true
+featured: true
 ---
 
 <!-- Intro paragraph goes here. Add copy above the gallery. -->

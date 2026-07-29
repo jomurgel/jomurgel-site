@@ -1149,6 +1149,7 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-2);
+  grid-auto-flow: dense; /* backfill so a featured 2x2 tile lands cleanly on whichever two columns it flows into, no holes */
 }
 .photo-item {
   min-width: 0;
@@ -1234,7 +1235,11 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
    at desktop once the container has room to comfortably fit three tiles
    (--container-default: 60rem). */
 @media (min-width: 40rem) { .photo-gallery { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 60rem) { .photo-gallery { grid-template-columns: 1fr 1fr 1fr; } }
+@media (min-width: 60rem) {
+  .photo-gallery { grid-template-columns: 1fr 1fr 1fr; }
+  /* Featured sets: twice as wide and twice as tall (four thumbnails' worth). */
+  .photo-item.is-featured { grid-column: span 2; grid-row: span 2; }
+}
 .page-num,
 .page-arrow {
   border-radius: 999px;
