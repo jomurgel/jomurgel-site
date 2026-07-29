@@ -1217,17 +1217,14 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
     opacity: 0;
     transition: opacity 0.3s ease;
   }
-  .photo-item a:hover .photo-frame,
-  .photo-item a:focus-visible .photo-frame { transform: translateY(-6px); }
+  /* Hover: a gentle centered zoom of the image only — the tile itself stays put. */
   .photo-item a:hover .photo-img,
   .photo-item a:focus-visible .photo-img { transform: scale(1.05); }
   .photo-item a:hover .photo-cap,
   .photo-item a:focus-visible .photo-cap { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .photo-frame, .photo-img { transition: none; }
-  .photo-item a:hover .photo-frame,
-  .photo-item a:focus-visible .photo-frame,
+  .photo-img { transition: none; }
   .photo-item a:hover .photo-img,
   .photo-item a:focus-visible .photo-img { transform: none; }
 }
@@ -1237,8 +1234,13 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
 @media (min-width: 40rem) { .photo-gallery { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 60rem) {
   .photo-gallery { grid-template-columns: 1fr 1fr 1fr; }
-  /* Featured sets: twice as wide and twice as tall (four thumbnails' worth). */
+  /* Featured sets: twice as wide and twice as tall (four thumbnails' worth). The
+     regular square tiles set the row height; the featured frame fills its two-row
+     grid cell exactly (rather than self-sizing via aspect-ratio, which can leave a
+     sliver of uneven space inside the tile). */
   .photo-item.is-featured { grid-column: span 2; grid-row: span 2; }
+  .photo-item.is-featured > a { height: 100%; }
+  .photo-item.is-featured .photo-frame { height: 100%; aspect-ratio: auto; }
 }
 .page-num,
 .page-arrow {
