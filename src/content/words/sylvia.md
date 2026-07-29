@@ -3,8 +3,8 @@ type: "photo"
 title: "Sylvia"
 description: "A three-part studio figure session with Sylvia — Floral, Fauna, and Chroma."
 date: "2015-12-19"
-coverImage: "/sylvia/fauna-11.jpg"
-coverAlt: "Close portrait in low light, a hand to the cheek"
+coverImage: "/sylvia/chroma-7.jpg"
+coverAlt: "Glancing aside under pink light"
 tags: [
   "photography",
   "art nude",
