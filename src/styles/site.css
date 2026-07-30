@@ -941,18 +941,21 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
   display: block;
   height: 100%;
   object-fit: cover;
+  /* Constant slight zoom so the skew has cover to spare — only the skew animates. */
+  transform: scale(1.15);
   transition: transform 0.3s ease;
   width: 100%;
 }
-/* Hover: the cover lifts and the image zooms a touch — vertical motion, no tilt. */
-.post-item.has-cover a:hover .post-thumb-wrap { transform: translateY(-6px); }
-.post-item.has-cover a:hover .post-thumb { transform: scale(1.05); }
+/* Hover: the cover skews into a parallelogram; the image counter-skews so it stays
+   undistorted. No translate. */
+.post-item.has-cover a:hover .post-thumb-wrap { transform: skewY(-4deg); }
+.post-item.has-cover a:hover .post-thumb { transform: skewY(4deg) scale(1.15); }
 
 @media (prefers-reduced-motion: reduce) {
   .post-thumb-wrap,
   .post-thumb { transition: none; }
   .post-item.has-cover a:hover .post-thumb-wrap { transform: none; }
-  .post-item.has-cover a:hover .post-thumb { transform: none; }
+  .post-item.has-cover a:hover .post-thumb { transform: scale(1.15); }
 }
 
 .post-meta {
@@ -1265,7 +1268,7 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
 }
 .photo-archive-item a {
   display: grid;
-  grid-template-columns: 4.5rem 1fr;
+  grid-template-columns: 8rem 1fr;
   align-items: center;
   gap: var(--space-3);
   color: inherit;
@@ -1273,7 +1276,7 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
 }
 .photo-archive-thumb {
   display: block;
-  width: 4.5rem;
+  width: 8rem;
   aspect-ratio: 1;
   border-radius: var(--radius-img);
   overflow: hidden;
@@ -1284,27 +1287,33 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Constant slight zoom so the skew has cover to spare — only the skew animates. */
+  transform: scale(1.15);
   transition: transform 0.3s ease;
 }
 .photo-archive-title {
   display: flex;
-  align-items: center;
-  gap: var(--space-2);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
   font-size: var(--text-lg);
   font-weight: 700;
+  line-height: 1;
 }
+/* Hover: the thumb skews into a parallelogram (like the blog cards); the image
+   counter-skews so it stays undistorted, and the title underlines. No translate. */
 @media (hover: hover) {
   .photo-archive-item a:hover .photo-archive-thumb,
-  .photo-archive-item a:focus-visible .photo-archive-thumb { transform: translateY(-4px); }
+  .photo-archive-item a:focus-visible .photo-archive-thumb { transform: skewY(-4deg); }
   .photo-archive-item a:hover .photo-archive-thumb img,
-  .photo-archive-item a:focus-visible .photo-archive-thumb img { transform: scale(1.05); }
+  .photo-archive-item a:focus-visible .photo-archive-thumb img { transform: skewY(4deg) scale(1.15); }
   .photo-archive-item a:hover .photo-archive-name,
   .photo-archive-item a:focus-visible .photo-archive-name { text-decoration: underline; text-underline-offset: 0.12em; }
 }
 @media (prefers-reduced-motion: reduce) {
   .photo-archive-thumb, .photo-archive-thumb img { transition: none; }
-  .photo-archive-item a:hover .photo-archive-thumb,
-  .photo-archive-item a:hover .photo-archive-thumb img { transform: none; }
+  .photo-archive-item a:hover .photo-archive-thumb { transform: none; }
+  .photo-archive-item a:hover .photo-archive-thumb img { transform: scale(1.15); }
 }
 .page-num,
 .page-arrow {
