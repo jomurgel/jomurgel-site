@@ -709,11 +709,13 @@ button.nav-toggle:active { background: none; border: 0; }
 body.has-hero { padding-top: 0; } /* let the hero reach the very top */
 
 .site-header--overlay {
-  left: 0;
+  /* Inset to match the hero panel (which is space-2 in from each viewport edge),
+     so the logo/nav align to the hero content at every width, not just past 62rem. */
+  left: var(--space-2);
   margin: 0 auto;
   padding-top: var(--space-3);
   position: absolute;
-  right: 0;
+  right: var(--space-2);
   z-index: 5;
 }
 /* Overlay nav adapts to the hero ink ("theme"): white on cyan/black,
@@ -856,15 +858,16 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
   /* More breathing room for the brand + hamburger inside the inset hero. */
   .site-header { padding-inline: var(--space-3); }
   /* Colored hero: space-3 inner (clears the rounded corner). Content sits at
-     panel-inset(16)+32 = 48, so the header matches at space-2+space-3 = 48.
-     Paper drops to 0 (panel inset = gutter); its header matches at space-2. */
+     panel-inset(16)+32 = 48, and the header (now inset space-2 too) matches with
+     space-3 padding = 16+32. Paper inner drops to 0 (panel inset = gutter); its
+     header matches with 0 padding = 16. */
   .color-hero:not(.ink-paper) .color-hero-inner { padding-inline: var(--space-3); }
   .color-hero.ink-paper .color-hero-inner { padding-inline: 0; }
   .site-header--overlay[data-hero-ink="c"],
   .site-header--overlay[data-hero-ink="m"],
   .site-header--overlay[data-hero-ink="y"],
-  .site-header--overlay[data-hero-ink="k"] { padding-inline: calc(var(--space-2) + var(--space-3)); }
-  .site-header--overlay[data-hero-ink="paper"] { padding-inline: var(--space-2); }
+  .site-header--overlay[data-hero-ink="k"] { padding-inline: var(--space-3); }
+  .site-header--overlay[data-hero-ink="paper"] { padding-inline: 0; }
 }
 
 /* Each colored hero swaps the ghost matching its bg → white (text is black). */
