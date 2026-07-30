@@ -9,6 +9,7 @@ tags: [
   "photography",
   "portrait"
 ]
+archive: true
 ---
 
 <!-- Intro paragraph goes here. Add copy above the gallery. -->

@@ -17,6 +17,7 @@ const words = defineCollection({
     coverAlt: z.string().optional(),
     nsfw: z.boolean().default(false),
     featured: z.boolean().default(false), // 2x2 tile on the /photos wall (desktop)
+    archive: z.boolean().default(false), // drop out of the wall grid into the archive list on /photos
     draft: z.boolean().default(false),
   }),
 });

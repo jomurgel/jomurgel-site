@@ -10,6 +10,7 @@ tags: [
   "portrait"
 ]
 nsfw: true
+archive: true
 ---
 
 <!-- Intro paragraph goes here. Add copy above the gallery. -->

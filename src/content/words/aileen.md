@@ -11,6 +11,7 @@ tags: [
   "art nude"
 ]
 nsfw: true
+archive: true
 ---
 
 This was show at abandoned [Sleighton Farm School](https://www.sleightonfarmschool.com/) in Glen Mills, PA, *left to be reclaimed by nature in 1931*.

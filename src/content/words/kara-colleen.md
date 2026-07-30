@@ -9,6 +9,7 @@ tags: [
   "photography",
   "portrait"
 ]
+archive: true
 ---
 
 <!-- Intro paragraph goes here — "Cream and Two Sugars," shot at an abandoned

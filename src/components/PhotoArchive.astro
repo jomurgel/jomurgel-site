@@ -1,0 +1,24 @@
+---
+// The archive list below the /photos wall: older / lesser sets shown as compact
+// rows — a small square cover thumb, the title, and an NSFW pill if flagged. Hover
+// matches the blog posts (the thumb lifts, the image zooms, the title underlines).
+import { postUrl, coverThumb } from '../lib/words';
+
+const { photos } = Astro.props;
+---
+
+<ul class="photo-archive">
+  {photos.map((p) => (
+    <li class="photo-archive-item">
+      <a href={postUrl(p)} aria-label={p.data.nsfw ? `${p.data.title} (NSFW)` : p.data.title}>
+        <span class="photo-archive-thumb">
+          <img src={coverThumb(p.data.coverImage)} width="1000" height="1000" alt={p.data.coverAlt ?? p.data.title} loading="lazy" decoding="async" />
+        </span>
+        <span class="photo-archive-title">
+          <span class="photo-archive-name">{p.data.title}</span>
+          {p.data.nsfw && <span class="nsfw-badge" aria-hidden="true">NSFW</span>}
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>

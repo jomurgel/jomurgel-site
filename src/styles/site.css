@@ -1242,6 +1242,70 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
   .photo-item.is-featured > a { height: 100%; }
   .photo-item.is-featured .photo-frame { height: 100%; aspect-ratio: auto; }
 }
+
+/* Archive list — older / lesser sets below the wall, as compact rows: a small
+   square cover thumb (about a third of the blog thumbnail), the title, and an
+   NSFW pill. Hover matches the blog posts (thumb lifts, image zooms, title underlines). */
+.photo-archive-section { margin-top: var(--space-5); }
+.photo-archive-heading {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, currentColor 55%, transparent);
+}
+.photo-archive {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.photo-archive-item a {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: center;
+  gap: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+}
+.photo-archive-thumb {
+  display: block;
+  width: 4.5rem;
+  aspect-ratio: 1;
+  border-radius: var(--radius-img);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.photo-archive-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.photo-archive-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+@media (hover: hover) {
+  .photo-archive-item a:hover .photo-archive-thumb,
+  .photo-archive-item a:focus-visible .photo-archive-thumb { transform: translateY(-4px); }
+  .photo-archive-item a:hover .photo-archive-thumb img,
+  .photo-archive-item a:focus-visible .photo-archive-thumb img { transform: scale(1.05); }
+  .photo-archive-item a:hover .photo-archive-name,
+  .photo-archive-item a:focus-visible .photo-archive-name { text-decoration: underline; text-underline-offset: 0.12em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-archive-thumb, .photo-archive-thumb img { transition: none; }
+  .photo-archive-item a:hover .photo-archive-thumb,
+  .photo-archive-item a:hover .photo-archive-thumb img { transform: none; }
+}
 .page-num,
 .page-arrow {
   border-radius: 999px;

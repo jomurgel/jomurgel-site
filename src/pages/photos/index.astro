@@ -2,10 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import PhotoGallery from '../../components/PhotoGallery.astro';
+import PhotoArchive from '../../components/PhotoArchive.astro';
 import { getCollection } from 'astro:content';
 import { byNewest } from '../../lib/words';
 
-const photos = (await getCollection('words', ({ data }) => !data.draft && data.type === 'photo')).sort(byNewest);
+const all = (await getCollection('words', ({ data }) => !data.draft && data.type === 'photo')).sort(byNewest);
+// Featured/recent sets stay on the wall; archived sets drop into a compact list below.
+const wall = all.filter((p) => !p.data.archive);
+const archive = all.filter((p) => p.data.archive);
 ---
 
 <Base
@@ -21,6 +25,13 @@ const photos = (await getCollection('words', ({ data }) => !data.draft && data.t
   />
 
   <section>
-    <PhotoGallery photos={photos} />
+    <PhotoGallery photos={wall} />
   </section>
+
+  {archive.length > 0 && (
+    <section class="photo-archive-section" aria-labelledby="archive-heading">
+      <h2 id="archive-heading" class="photo-archive-heading">Archive</h2>
+      <PhotoArchive photos={archive} />
+    </section>
+  )}
 </Base>

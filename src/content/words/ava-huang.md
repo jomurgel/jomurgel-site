@@ -9,6 +9,7 @@ tags: [
   "photography",
   "portrait"
 ]
+archive: true
 ---
 
 <!-- Intro paragraph goes here — golden hour with Ava in Old City, Philadelphia.
