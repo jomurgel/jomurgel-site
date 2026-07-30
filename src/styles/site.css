@@ -1315,6 +1315,59 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
   .photo-archive-item a:hover .photo-archive-thumb { transform: none; }
   .photo-archive-item a:hover .photo-archive-thumb img { transform: scale(1.15); }
 }
+/* /photos/all — every frame, shuffled, in a column-major masonry. Each tile is
+   cropped 4:3 (landscape) or 3:4 (portrait) by orientation; click opens the set. */
+.all-grid {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  columns: 2;
+  column-gap: var(--space-2);
+}
+@media (min-width: 60rem) { .all-grid { columns: 3; } }
+.all-item {
+  break-inside: avoid;
+  margin: 0 0 var(--space-2);
+}
+.all-item a { display: block; }
+.all-frame {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-img);
+  overflow: hidden;
+}
+.all-item.is-portrait .all-frame { aspect-ratio: 3 / 4; }
+.all-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+@media (hover: hover) {
+  .all-item a:hover .all-frame img,
+  .all-item a:focus-visible .all-frame img { transform: scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .all-frame img { transition: none; }
+  .all-item a:hover .all-frame img { transform: none; }
+}
+
+/* Centered pill on /photos linking to the full /photos/all view. */
+.all-photos-cta { margin-top: var(--space-5); text-align: center; }
+.all-photos-btn {
+  display: inline-block;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.all-photos-btn:hover,
+.all-photos-btn:focus-visible { background: #fff; color: #000; }
+
 .page-num,
 .page-arrow {
   border-radius: 999px;

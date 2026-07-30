@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCollection } from 'astro:content';
+import { postUrl } from '../../lib/words';
+import { imageSize } from 'image-size';
+import { readFileSync } from 'node:fs';
+
+const posts = await getCollection('words', ({ data }) => !data.draft && data.type === 'photo');
+
+// Flatten every in-post image into one list, each linking back to its post. Each
+// tile is cropped 4:3 (landscape) or 3:4 (portrait) by the source's orientation.
+const items = [];
+for (const p of posts) {
+  const url = postUrl(p);
+  const body = p.body ?? '';
+  const seen = new Set();
+  for (const tag of body.match(/<img[^>]*>/g) ?? []) {
+    const src = (tag.match(/\bsrc="([^"]+)"/) ?? [])[1];
+    if (!src || seen.has(src)) continue;
+    seen.add(src);
+    const alt = (tag.match(/\balt="([^"]*)"/) ?? [])[1] ?? '';
+    let portrait = true;
+    try {
+      const { width = 0, height = 0 } = imageSize(readFileSync(`public${src}`));
+      portrait = height >= width;
+    } catch { /* fall back to portrait if the file can't be measured */ }
+    items.push({ src, alt, url, portrait });
+  }
+}
+
+// Build-time shuffle (Fisher–Yates) so the wall of everything reads as a random mix.
+for (let i = items.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [items[i], items[j]] = [items[j], items[i]];
+}
+---
+
+<Base
+  title="All Photos"
+  description="Every frame across the archive, shuffled — click any to open its set."
+  heroInk="k"
+  forceTheme="dark"
+>
+  <PageHero
+    ink="k"
+    title="All Photos"
+    lede="Every frame across the archive, shuffled. Click any image to open its set."
+  />
+
+  <ul class="all-grid">
+    {items.map((it) => (
+      <li class:list={['all-item', { 'is-portrait': it.portrait }]}>
+        <a href={it.url}>
+          <span class="all-frame">
+            <img src={it.src} alt={it.alt} loading="lazy" decoding="async" />
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Base>
