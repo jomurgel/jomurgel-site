@@ -43,13 +43,15 @@ for (let i = items.length - 1; i > 0; i--) {
     lede="Every frame, shuffled — a contact sheet of the whole archive. Click any image to open its set."
   />
 
-  <ul class="all-grid">
-    {items.map((it) => (
-      <li class="all-item">
-        <a href={it.url}>
-          <img src={it.thumb} alt={it.alt} loading="lazy" decoding="async" />
-        </a>
-      </li>
-    ))}
-  </ul>
+  <section>
+    <ul class="all-grid">
+      {items.map((it) => (
+        <li class="all-item">
+          <a href={it.url}>
+            <img src={it.thumb} alt={it.alt} loading="lazy" decoding="async" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 </Base>

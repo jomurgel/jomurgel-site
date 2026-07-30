@@ -1319,7 +1319,7 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
    6 columns on mobile, 8 on tablet, 12 on desktop. Click any opens its set. */
 .all-grid {
   list-style: none;
-  margin: var(--space-4) 0 0;
+  margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
