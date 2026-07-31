@@ -1208,9 +1208,10 @@ html.scrolled .tags-fab { right: calc(var(--space-3) + 2.75rem + var(--space-2))
 }
 /* On the wall the pill sits centered just above the title inside the caption. */
 .photo-cap-badge { margin-bottom: var(--space-2); }
-/* Hover-capable pointers (desktop): hide the label, then reveal it centered over a
-   translucent overlay as the cover lifts. */
-@media (hover: hover) {
+/* Real mouse pointers only (desktop): hide the label, then reveal it centered over
+   a translucent overlay on hover. Touch devices — including tablets/hybrids that
+   report hover:hover — keep the always-visible bottom-gradient caption above. */
+@media (hover: hover) and (pointer: fine) {
   .photo-cap {
     inset: 0;
     display: flex;
