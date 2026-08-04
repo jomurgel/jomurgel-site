@@ -287,7 +287,12 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
             const io = new IntersectionObserver((entries, obs) => {
               entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); obs.unobserve(e.target); } });
             }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-            document.querySelectorAll(sel).forEach((el) => io.observe(el));
+            document.querySelectorAll(sel).forEach((el) => {
+              // Reveal anything already in view on load — a tall above-the-fold
+              // section may never cross the observer's 5% threshold. Observe the rest.
+              if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in');
+              else io.observe(el);
+            });
           }
           // GA: send a page_view on client-side navigations (config sends the first).
           if (!first && window.gtag && location.hostname === 'jomurgel.com') {
