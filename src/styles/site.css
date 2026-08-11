@@ -1891,8 +1891,9 @@ main > section {
    classic links, and beveled Win95 chrome.
    ============================================================== */
 [data-mode="90s"] {
-  /* Windows-95 silver + pure web-safe process inks. */
-  --white: #c0c0c0;          /* page background */
+  /* Crisp white page so the neon inks + silver chrome pop; silver stays on
+     the buttons/bevels, not the whole background. */
+  --white: #ffffff;          /* page background */
   --black: #000000;          /* text */
   --gray: #3a3a3a;
   --light-gray: #9a9a9a;
@@ -1942,8 +1943,9 @@ main > section {
 }
 /* Sharp corners on the round pills the tokens don't reach. */
 [data-mode="90s"] :is(.to-top, .nsfw-badge) { border-radius: 0; }
-/* Keep the slab a light 90s panel even under the dark theme. */
-[data-mode="90s"] .slab { --slab-bg: #c0c0c0; }
+/* Slab keeps its dark panel so its default background reads against the white
+   page — the CMYK ghost split pops, and the facet hover swaps in the neon ink. */
+[data-mode="90s"] .slab { --slab-bg: #000; }
 
 /* Footer 90s toggle — a quiet pill in the default theme; the bevel rule
    above restyles it in 90s mode. */
