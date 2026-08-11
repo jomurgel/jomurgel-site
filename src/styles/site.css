@@ -875,6 +875,9 @@ body.has-hero { padding-top: 0; } /* let the hero reach the very top */
 .color-hero.ink-m { --hero-bg: var(--plate-m); color: #000; --ghost-m: #fff; }
 .color-hero.ink-y { --hero-bg: var(--plate-y); color: #000; --ghost-y: #fff; }
 .color-hero.ink-k { --hero-bg: #141414; color: #fff; }
+/* The photos pages force dark; their k hero sits a touch darker than the page
+   around it. (Scoped to forceTheme dark so the Contact/404 k heroes are unchanged.) */
+body[data-force-theme="dark"] .color-hero.ink-k { --hero-bg: #0b0b0b; }
 
 .color-hero-inner {
   margin: 0 auto;
