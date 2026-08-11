@@ -5,12 +5,10 @@ import PostList from '../../components/PostList.astro';
 import Pagination from '../../components/Pagination.astro';
 import TagBand from '../../components/TagBand.astro';
 import { getCollection } from 'astro:content';
-import { getAllTags } from '../../lib/words';
+import { getAllTags, byNewest } from '../../lib/words';
 
 const PAGE_SIZE = 6;
-const all = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const all = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(byNewest);
 const posts = all.slice(0, PAGE_SIZE);
 const totalPages = Math.ceil(all.length / PAGE_SIZE);
 const tags = await getAllTags();

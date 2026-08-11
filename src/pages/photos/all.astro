@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCollection } from 'astro:content';
+import { postUrl } from '../../lib/words';
+
+const posts = await getCollection('words', ({ data }) => !data.draft && data.type === 'photo');
+
+// Flatten every in-post image into one list, each linking back to its post. Tiles
+// use tiny square thumbnails (scripts/gen-all-thumbs.sh) so the page stays light
+// and small individual frames aren't dwelt on.
+const items = [];
+for (const p of posts) {
+  const url = postUrl(p);
+  const body = p.body ?? '';
+  const seen = new Set();
+  for (const tag of body.match(/<img[^>]*>/g) ?? []) {
+    const src = (tag.match(/\bsrc="([^"]+)"/) ?? [])[1];
+    if (!src || seen.has(src)) continue;
+    seen.add(src);
+    const alt = (tag.match(/\balt="([^"]*)"/) ?? [])[1] ?? '';
+    const thumb = src.replace(/\.(jpe?g|png|webp)$/i, '.sq.webp');
+    items.push({ thumb, alt, url });
+  }
+}
+
+// Build-time shuffle (Fisher–Yates) so the wall of everything reads as a random mix.
+for (let i = items.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [items[i], items[j]] = [items[j], items[i]];
+}
+---
+
+<Base
+  title="All Photos"
+  description="Every frame across the archive, shuffled — click any to open its set."
+  heroInk="k"
+  forceTheme="dark"
+>
+  <PageHero
+    ink="k"
+    title="All Photos"
+    lede="Every frame, shuffled — a contact sheet of the whole archive. Click any image to open its set."
+  />
+
+  <section>
+    <ul class="all-grid">
+      {items.map((it) => (
+        <li class="all-item">
+          <a href={it.url}>
+            <img src={it.thumb} alt={it.alt} loading="lazy" decoding="async" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

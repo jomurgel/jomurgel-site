@@ -8,6 +8,7 @@ tags: [
   "photography",
   "art study"
 ]
+featured: true
 ---
 
 In the month of March, I will shoot thirty-one days and thirty-one photos. It will start and end my Gems" series. The goal is to take a step back and return to the basics, and if all goes well something I'll return to every March. I never want to forget that a good photo is one made of good composition, intentional lighting, and emotion, regardless of the color.

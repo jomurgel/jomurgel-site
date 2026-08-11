@@ -1,9 +1,11 @@
 ---
 type: "photo"
-title: "Leo Velo (NSFW)"
+title: "Leo Velo"
 description: "A chroma and wilderness photo series. Working with Leo."
 date: "2020-02-22"
+updated: "2026-07-14"
 coverImage: "/leo/cover.jpg"
+nsfw: true
 tags: [
   "photography",
   "art nude",
@@ -27,9 +29,13 @@ Prior to my hiatus from photography, I shot with Leo outdoors. Shortly after I s
 </div>
 
 ## Emote (2019)
-  <img loading="lazy" decoding="async" src="/leo/chroma-9.jpg" alt="chroma series 8" data-align="wide"  />
+
+Update: I started this lighting series, *Chroma* which inteded to capture the alternative beauty via the colors red through violet. As of 2026
+I haven't shot more in this series, but the wheels are in motion. More to come.
+
 
 <div data-gallery data-align="wide">
+  <img loading="lazy" decoding="async" src="/leo/chroma-9.jpg" alt="chroma series 8" data-align="wide"  />
   <img loading="lazy" decoding="async" src="/leo/chroma-2.jpg" alt="woman in red and blue facing away from the camera" />
   <img loading="lazy" decoding="async" src="/leo/chroma-1.jpg" alt="chroma series 1" />
   <img loading="lazy" decoding="async" src="/leo/chroma-3.jpg" alt="bald woman in black and white" />

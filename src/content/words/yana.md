@@ -3,7 +3,7 @@ type: "photo"
 title: "Yana Lupashtian"
 description: "A simple photoshoot with an up-and-coming model."
 date: "2024-09-19"
-coverImage: "/yana/cover.jpg"
+coverImage: "/yana/30.jpg"
 tags: [
   "photography",
   "portrait"

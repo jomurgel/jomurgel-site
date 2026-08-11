@@ -5,7 +5,7 @@
 import Base from '../layouts/Base.astro';
 import RelatedPosts from './RelatedPosts.astro';
 import { render } from 'astro:content';
-import { getAllTags } from '../lib/words';
+import { getAllTags, coverHero } from '../lib/words';
 
 const { post } = Astro.props;
 const { Content } = await render(post);
@@ -13,14 +13,19 @@ const { Content } = await render(post);
 const isPhoto = post.data.type === 'photo';
 const hasCover = !!post.data.coverImage;
 const kind = isPhoto ? 'Photos' : 'Writing';
-const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 
 const tagInfo = new Map((await getAllTags()).map((t) => [t.name, t]));
 const cats = post.data.tags.filter((t) => t !== 'shorty');
 
+// Show an "Updated" stamp only when the post was edited after publishing.
+const updated = post.data.updated;
+// Photo posts don't surface dates on the frontend (kept in frontmatter + schema only).
+const showUpdated = !isPhoto && updated && updated.valueOf() !== post.data.date.valueOf();
+
 // Cover posts get the colored-hero treatment with the photo as the fill.
 const coverStyle = hasCover
-  ? `--hero-bg: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.62)), url(${post.data.coverImage}) center / cover`
+  ? `--hero-bg: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.62)), url(${coverHero(post.data.coverImage)}) center / cover`
   : undefined;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -29,6 +34,7 @@ const blogPosting = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.date.toISOString(),
+  dateModified: (post.data.updated ?? post.data.date).toISOString(),
   author: { '@id': new URL('#person', Astro.site).href },
   image: post.data.coverImage ? new URL(post.data.coverImage, Astro.site).href : undefined,
   mainEntityOfPage: canonical,
@@ -48,7 +54,8 @@ const blogPosting = {
     <header class="color-hero ink-k post-hero" style={coverStyle}>
       <div class="color-hero-inner">
         <span class="post-meta">
-          <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+          {!isPhoto && <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>}
+          {showUpdated && <time class="post-updated" datetime={updated.toISOString()}>Updated {fmt(updated)}</time>}
           <span class="post-kind" data-kind={post.data.type}>{kind}</span>
         </span>
         <h1>{post.data.title}</h1>
@@ -57,7 +64,8 @@ const blogPosting = {
   ) : (
     <header class="post-header">
       <span class="post-meta">
-        <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+        {!isPhoto && <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>}
+        {showUpdated && <time class="post-updated" datetime={updated.toISOString()}>Updated {fmt(updated)}</time>}
         <span class="post-kind" data-kind={post.data.type}>{kind}</span>
       </span>
       <h1>{post.data.title}</h1>
@@ -68,6 +76,7 @@ const blogPosting = {
 
   <article class="post">
     <div class="post-body">
+      {post.data.nsfw && <p class="nsfw-note"><span class="nsfw-badge">NSFW</span> Contains mature content.</p>}
       <Content />
       {cats.length > 0 && (
         <p class="post-tags">

@@ -1,7 +1,7 @@
 ---
 type: "photo"
 title: "Photography and Transparency in My Life"
-description: "A look pack at a series called Flower."
+description: "A look back at a series called Flower."
 date: "2019-01-25"
 coverImage: "/photo-and-transparency-in-life/cover.jpg"
 tags: [
@@ -35,4 +35,13 @@ Against my better judgement, and at the behest of friends and family, I'm sharin
   <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-12.jpg" alt="Flower Series 86" />
   <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-13.jpg" alt="Flower Series 62" />
   <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-8.jpg" alt="Flower Series 02" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-15.jpg" alt="Flower Series 12" data-align="wide" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-14.jpg" alt="Flower Series 07" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-16.jpg" alt="Flower Series 19" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-18.jpg" alt="Flower Series 31" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-19.jpg" alt="Flower Series 40" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-17.jpg" alt="Flower Series 24" data-align="wide" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-20.jpg" alt="Flower Series 55" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-21.jpg" alt="Flower Series 63" />
+  <img loading="lazy" decoding="async" src="/photo-and-transparency-in-life/photo-22.jpg" alt="Flower Series 78" />
 </div>

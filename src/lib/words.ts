@@ -3,9 +3,23 @@ import type { CollectionEntry } from 'astro:content';
 
 export const tagSlug = (t: string) => t.replace(/\s+/g, '-').toLowerCase();
 
+// The date a post sorts by: its last-updated date if set, else when published.
+export const sortDate = (p: CollectionEntry<'words'>) => p.data.updated ?? p.data.date;
+
+// Newest-first comparator, shared by every listing so an edited post floats up.
+export const byNewest = (a: CollectionEntry<'words'>, b: CollectionEntry<'words'>) =>
+  sortDate(b).valueOf() - sortDate(a).valueOf();
+
 // Route a post to its section by type: photos live at /photos, writing at /words.
 export const postUrl = (p: CollectionEntry<'words'>) =>
   `/${p.data.type === 'photo' ? 'photos' : 'words'}/${p.id}/`;
+
+// Per-cover derivatives built by scripts/gen-covers.sh:
+//   coverThumb — ~1000px square WebP for the /photos wall and the /words + tag listings.
+//   coverHero  — wide, short crop for the full-bleed post hero (a tall portrait cover
+//                would waste most of its height behind the title).
+export const coverThumb = (src: string) => src.replace(/\.(jpe?g|png|webp)$/i, '.thumb.webp');
+export const coverHero = (src: string) => src.replace(/\.(jpe?g|png|webp)$/i, '.hero.jpg');
 
 // Vivid hand-picked rainbow stops (red → violet → pink). Tags are spread
 // evenly across these so the set always spans the full rainbow.

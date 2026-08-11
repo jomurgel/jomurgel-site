@@ -9,6 +9,14 @@ import signatureSvg from '../assets/signature.svg?raw';
 const { title, description = "Jo Murgel — software architect and engineering lead. Trained as an artist.", heroInk, forceTheme, image, faceGone, noindex, schema } = Astro.props;
 const pageTitle = title ? `${title} · Jo Murgel` : 'Jo Murgel';
 
+// Back-to-top arrow echoes the page's hero ink; white on dark (photo) pages.
+const totopColor =
+  forceTheme === 'dark' ? '#fff'
+  : heroInk === 'c' ? 'var(--ink-cyan)'
+  : heroInk === 'm' ? 'var(--ink-magenta)'
+  : heroInk === 'y' ? 'var(--ink-yellow)'
+  : 'var(--black)';
+
 // Absolute URLs for canonical + social cards (Astro.site = https://jomurgel.com).
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image ?? '/og.png', Astro.site).href;
@@ -179,6 +187,12 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
       </p>
     </footer>
 
+    <button class="to-top" type="button" aria-label="Back to top" style={`--totop-color:${totopColor}`}>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19V5M6 11l6-6 6 6" />
+      </svg>
+    </button>
+
     <script is:inline>
       (() => {
         // Globals — bound once; they survive client-side (ClientRouter) navigation.
@@ -194,6 +208,17 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
           const d = Math.min(5, Math.hypot(e.clientX - cx, e.clientY - cy) / 30);
           feat.setAttribute('transform', `translate(${Math.cos(a) * d} ${Math.sin(a) * d})`);
         }, { passive: true });
+
+        // Back-to-top: reveal the button once scrolled down, smooth-scroll up on click.
+        const revealToTop = () => document.documentElement.classList.toggle('scrolled', window.scrollY > 400);
+        window.addEventListener('scroll', revealToTop, { passive: true });
+        document.addEventListener('astro:page-load', revealToTop);
+        revealToTop();
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('.to-top')) return;
+          const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+        });
 
         // Per-page wiring — runs on first load and after every navigation.
         let first = true;
@@ -262,7 +287,12 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
             const io = new IntersectionObserver((entries, obs) => {
               entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); obs.unobserve(e.target); } });
             }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-            document.querySelectorAll(sel).forEach((el) => io.observe(el));
+            document.querySelectorAll(sel).forEach((el) => {
+              // Reveal anything already in view on load — a tall above-the-fold
+              // section may never cross the observer's 5% threshold. Observe the rest.
+              if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in');
+              else io.observe(el);
+            });
           }
           // GA: send a page_view on client-side navigations (config sends the first).
           if (!first && window.gtag && location.hostname === 'jomurgel.com') {
