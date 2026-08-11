@@ -1882,3 +1882,83 @@ main > section {
   margin: 0 auto var(--space-5);
   max-width: var(--container-default);
 }
+
+/* ==============================================================
+   90s MODE — opt-in retro skin (data-mode="90s" on <html>).
+   Recolors + restyles only; layout is untouched. Placed last so
+   its token overrides win over [data-theme] without !important.
+   Tier-1 proof of concept: palette, sharp corners, retro type,
+   classic links, and beveled Win95 chrome.
+   ============================================================== */
+[data-mode="90s"] {
+  /* Windows-95 silver + pure web-safe process inks. */
+  --white: #c0c0c0;          /* page background */
+  --black: #000000;          /* text */
+  --gray: #3a3a3a;
+  --light-gray: #9a9a9a;
+  --ink-cyan: #00ffff;
+  --ink-magenta: #ff00ff;
+  --ink-yellow: #ffff00;
+  --ghost-c: #00ffff;
+  --ghost-m: #ff00ff;
+  --ghost-y: #ffff00;
+  --primary: #000080;        /* navy */
+  --primary-light: #0000ee;
+  --primary-dark: #000060;
+  --secondary: #008080;      /* teal */
+  --secondary-light: #00cccc;
+  --secondary-dark: #005f5f;
+  --accent: #ff00ff;         /* hot magenta */
+  --accent-light: #ff66ff;
+  --accent-dark: #cc00cc;
+  --plate-c: #00ffff;
+  --plate-m: #ff00ff;
+  --plate-y: #ffff00;
+  /* Sharp corners everywhere the radius tokens reach. */
+  --radius-img: 0px;
+  --hero-r: 0px;
+}
+/* Retro type: serif body, blocky sans headings. */
+[data-mode="90s"] body { font-family: "Times New Roman", Times, serif; }
+[data-mode="90s"] :is(h1, h2, h3, .brand, .slab-title, .facet-title) {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+/* The classic offset drop-shadow on the big display headings. */
+[data-mode="90s"] .color-hero h1 { text-shadow: 3px 3px 0 var(--accent); }
+/* Blue, underlined, visited-purple links in prose. */
+[data-mode="90s"] .post-body a { color: #0000ee; text-decoration: underline; }
+[data-mode="90s"] .post-body a:visited { color: #551a8b; }
+/* Beveled Win95 chrome on cards + buttons (drop shadows are a scoped
+   exception to the global no-shadow rule — opt-in only). */
+[data-mode="90s"] :is(.ink-card, .tags-fab, .all-photos-btn, .mode-btn, .page-num, .page-arrow) {
+  border-radius: 0;
+  border: 2px outset #e6e6e6;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+}
+/* Plain buttons get the silver button face; ink-cards keep their plate color. */
+[data-mode="90s"] :is(.tags-fab, .all-photos-btn, .mode-btn, .page-num, .page-arrow) {
+  background: #c0c0c0;
+  color: #000;
+}
+/* Sharp corners on the round pills the tokens don't reach. */
+[data-mode="90s"] :is(.to-top, .nsfw-badge) { border-radius: 0; }
+/* Keep the slab a light 90s panel even under the dark theme. */
+[data-mode="90s"] .slab { --slab-bg: #c0c0c0; }
+
+/* Footer 90s toggle — a quiet pill in the default theme; the bevel rule
+   above restyles it in 90s mode. */
+.mode-btn {
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--gray);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--gray);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.mode-btn:hover,
+.mode-btn:focus-visible { background: var(--black); color: var(--white); border-color: var(--black); }

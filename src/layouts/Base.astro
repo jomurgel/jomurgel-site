@@ -106,6 +106,8 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
       // Set theme before paint to avoid a flash. Photo posts force dark.
       const theme = forceTheme || localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', theme);
+      // Opt-in retro skin — recolors + restyles without touching layout.
+      if (localStorage.getItem('mode') === '90s') document.documentElement.setAttribute('data-mode', '90s');
       // Content starts hidden (only when JS is on) so the entrance + scroll-reveal
       // animations can play — on first load and on every client-side navigation.
       document.documentElement.classList.add('entrance', 'reveal-on');
@@ -185,6 +187,8 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
       <p>
         Built with &hearts; by Jo Murgel on <a href="https://github.com/jomurgel/acorn.css">Acorn</a>. © 2026.
       </p>
+
+      <button type="button" class="mode-btn" aria-pressed="false">Enter 90s mode</button>
     </footer>
 
     <button class="to-top" type="button" aria-label="Back to top" style={`--totop-color:${totopColor}`}>
@@ -280,6 +284,22 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
               sync();
             });
           }
+          // Footer: 90s mode toggle (opt-in retro skin).
+          const modeBtn = document.querySelector('.mode-btn');
+          if (modeBtn) {
+            const syncMode = () => {
+              const on = document.documentElement.getAttribute('data-mode') === '90s';
+              modeBtn.setAttribute('aria-pressed', String(on));
+              modeBtn.textContent = on ? 'Exit 90s mode' : 'Enter 90s mode';
+            };
+            syncMode();
+            modeBtn.addEventListener('click', () => {
+              const h = document.documentElement;
+              if (h.getAttribute('data-mode') === '90s') { h.removeAttribute('data-mode'); localStorage.removeItem('mode'); }
+              else { h.setAttribute('data-mode', '90s'); localStorage.setItem('mode', '90s'); }
+              syncMode();
+            });
+          }
           // Scroll reveal — runs on every page (initial load and each navigation).
           if (document.documentElement.classList.contains('reveal-on')
               && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
@@ -309,6 +329,7 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
           // Theme (honors per-page forceTheme).
           const force = document.body.dataset.forceTheme;
           html.setAttribute('data-theme', force || localStorage.getItem('theme') || 'light');
+          if (localStorage.getItem('mode') === '90s') html.setAttribute('data-mode', '90s'); else html.removeAttribute('data-mode');
           // Re-hide content so the scroll-reveal can play again on the new page.
           html.classList.add('reveal-on');
           // Restart the entrance keyframes (a swap doesn't replay them) — toggle + reflow.
