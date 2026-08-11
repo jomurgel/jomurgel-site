@@ -2,13 +2,14 @@
 type: "photo"
 title: "Kali Feline"
 date: "2015-03-29"
-coverImage: "/kali-feline/photo-27.jpg"
+coverImage: "/kali-feline/photo-28.jpg"
 coverAlt: "Portrait of Kali by a rainy loft window, warm string-light bokeh floating across the frame"
 tags: [
   "photography",
   "portrait"
 ]
 nsfw: false
+archive: true
 ---
 
 <img loading="lazy" decoding="async" src="/kali-feline/photo-1.jpg" alt="Portrait of Kali by a rainy loft window, warm string-light bokeh floating across the frame" data-align="wide" />
