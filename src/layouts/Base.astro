@@ -294,6 +294,25 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
               else io.observe(el);
             });
           }
+          // Explicit images (-explicit in the filename): in a post, veil each one
+          // behind a click-to-view overlay so nothing shows until clicked. The blur
+          // itself is pure CSS (works on /photos/all thumbs too); this only adds the
+          // reveal affordance inside posts.
+          document.querySelectorAll('.post-body img[src*="-explicit"]:not([data-veiled])').forEach((img) => {
+            img.setAttribute('data-veiled', '');
+            const wrap = document.createElement('span');
+            wrap.className = 'explicit';
+            const align = img.getAttribute('data-align');
+            if (align) { wrap.setAttribute('data-align', align); img.removeAttribute('data-align'); }
+            img.replaceWith(wrap);
+            wrap.appendChild(img);
+            const veil = document.createElement('button');
+            veil.type = 'button';
+            veil.className = 'explicit-veil';
+            veil.textContent = 'Sensitive — click to view';
+            veil.addEventListener('click', () => { wrap.classList.add('revealed'); veil.remove(); });
+            wrap.appendChild(veil);
+          });
           // GA: send a page_view on client-side navigations (config sends the first).
           if (!first && window.gtag && location.hostname === 'jomurgel.com') {
             gtag('event', 'page_view', { page_path: location.pathname + location.search, page_title: document.title });

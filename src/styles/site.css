@@ -1885,3 +1885,37 @@ main > section {
   margin: 0 auto var(--space-5);
   max-width: var(--container-default);
 }
+
+/* ==============================================================
+   Explicit images — any file with "-explicit" in its name is
+   blurred everywhere it appears (in-post galleries + the
+   /photos/all thumbnails). Inside a post a click-to-view veil
+   reveals just that image; on /photos/all the thumbnail links
+   to the set, so it stays blurred and the click opens the post.
+   ============================================================== */
+img[src*="-explicit"] { filter: blur(2rem); }
+.explicit {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-img);
+}
+.explicit img { display: block; transform: scale(1.06); } /* clip the blur's edge bleed */
+.explicit.revealed img { filter: none; transform: none; }
+.explicit-veil {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--space-2);
+  border: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: center;
+  cursor: pointer;
+}
+.explicit-veil:hover,
+.explicit-veil:focus-visible { background: rgba(0, 0, 0, 0.64); outline: none; }

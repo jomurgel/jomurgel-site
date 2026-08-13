@@ -21,7 +21,7 @@ Prior to my hiatus from photography, I shot with Leo outdoors. Shortly after I s
 
 <div data-gallery data-align="wide">
   <img loading="lazy" decoding="async" src="/leo/wilderness-1.jpg" alt="nude woman laying on sand" />
-  <img loading="lazy" decoding="async" src="/leo/wilderness-4.jpg" alt="nude woman holding themselves up between boulders" />
+  <img loading="lazy" decoding="async" src="/leo/wilderness-4-explicit.jpg" alt="nude woman holding themselves up between boulders" />
   <img loading="lazy" decoding="async" src="/leo/wilderness-2.jpg" alt="nude woman curled up on rocks" />
   <img loading="lazy" decoding="async" src="/leo/wilderness-3.jpg" alt="woman walking away from camera with light in front" />
   <img loading="lazy" decoding="async" src="/leo/wilderness-5.jpg" alt="nude woman posed on rocks in black and white" />
