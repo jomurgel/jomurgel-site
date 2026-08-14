@@ -19,7 +19,7 @@ export const codex: CodexCategory[] = [
       { name: 'Petty Fights — Pretty Pity', url: 'https://open.spotify.com/album/42e4aAtvGRj5CuihPbyBVJ' },
       { name: 'Question Bedtime — MC Frontalot', url: 'https://open.spotify.com/album/2hdF4ENcOo16q4RNIp6EDz' },
       { name: 'Sticks and Stones — New Found Glory', url: 'https://open.spotify.com/album/29rNv6X8yQsCMiIOqkHud8' },
-      { name: 'Wicked — Original Broadway Cast' },
+      { name: 'Wicked — Movie AND Broadway Cast' },
     ],
   },
   {
@@ -35,7 +35,6 @@ export const codex: CodexCategory[] = [
   },
   {
     label: 'Books',
-    intro: "Currently the Lady Janies series, because I'm a teenage girl. They're quite fun.",
     items: [
       { name: 'Dungeon Crawler Carl Series — Matt Dinniman' },
       { name: 'Project Hail Mary — Andy Weir' },
@@ -43,7 +42,6 @@ export const codex: CodexCategory[] = [
       { name: 'Ready Player Two — Ernest Cline' },
       { name: 'Snow Crash — Neal Stephenson' },
       { name: 'The Girl With the Dragon Tattoo Series — Stieg Larsson' },
-      { name: 'The Harry Potter Series', note: 'despite the author' },
       { name: 'The Hell Divers Series — Nicholas Sansbury Smith' },
       { name: 'The Lady Janies Series — Cynthia Hand, Brodi Ashton, Jodi Meadows' },
       { name: 'The Martian — Andy Weir' },
@@ -76,7 +74,7 @@ export const codex: CodexCategory[] = [
     label: 'Television',
     items: plain([
       'Alien: Earth', "Bob's Burgers", 'Bridgerton', 'Brooklyn Nine-Nine', 'Firefly', 'Fringe', 'From',
-      'Ghosts', 'High Potential', 'How I Met Your Mother', 'Loki', 'Love, Death & Robots', 'Mythic Quest',
+      'Ghosts (US)', 'High Potential', 'How I Met Your Mother', 'Loki', 'Love, Death & Robots', 'Mythic Quest',
       'Poker Face', 'Psych', 'Reacher', 'Rooster', 'Scrubs', 'Severance', 'Shrinking', 'Silicon Valley',
       'Silo', 'Star Trek', 'Ted Lasso', 'The Big Bang Theory', 'The Curse of Oak Island', 'The Great North',
       'The Magicians', 'The Rookie', 'Upload', 'Watchmen', 'Westworld', 'Widows Bay',
@@ -90,6 +88,7 @@ export const codex: CodexCategory[] = [
       { name: 'Bao Pham', url: 'https://www.instagram.com/baotpham/' },
       { name: 'Conrad Roset', url: 'https://www.conradroset.com/' },
       { name: 'Dave Kloc', url: 'https://www.davekloc.com/' },
+      { name: 'David Lanham', url: 'https://www.dlanham.com/' },
       { name: 'Jay Ryan', url: 'https://thebirdmachine.com/' },
       { name: 'Lois van Baarle', url: 'https://loish.net/' },
       { name: 'MC Baldassari', url: 'https://www.mcbaldassari.com/' },
@@ -104,7 +103,7 @@ export const codex: CodexCategory[] = [
   },
   {
     label: 'Needleworkers',
-    items: [{ name: 'Clara Raurich (Pussie Toys)', url: 'https://www.instagram.com/pussie_toys/' }],
+    items: [{ name: 'Clara Raurich', url: 'https://www.instagram.com/clara.raurich/' }],
   },
   {
     label: 'Sculptors',
@@ -144,7 +143,6 @@ export const codex: CodexCategory[] = [
       { name: 'Hey Riddle Riddle', url: 'https://www.heyriddleriddle.com/' },
       { name: 'Last Podcast on the Left', url: 'https://www.lastpodcastontheleft.com/' },
       { name: 'Smalltown Murder', url: 'https://shutupandgivememurder.com/' },
-      { name: 'Smashing Security', url: 'https://www.smashingsecurity.com/' },
       { name: 'The Vergecast', url: 'https://www.theverge.com/the-vergecast/' },
       { name: 'Twenty Thousand Hertz', url: 'https://20k.org/' },
       { name: 'Version History', url: 'https://www.theverge.com/version-history-podcast' },

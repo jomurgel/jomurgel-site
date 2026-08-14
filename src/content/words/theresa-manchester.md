@@ -16,7 +16,7 @@ archive: true
 <!-- Intro paragraph goes here. Add copy above the gallery. -->
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/theresa/photo-1.jpg" alt="Leaning against exposed brick in a white tank, tattooed arm raised" />
+  <img loading="lazy" decoding="async" src="/theresa/photo-1-explicit.jpg" alt="Leaning against exposed brick in a white tank, tattooed arm raised" />
   <img loading="lazy" decoding="async" src="/theresa/photo-2.jpg" alt="Profile portrait, red lips, a cat tattoo across the shoulder" />
 </div>
 

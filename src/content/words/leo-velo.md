@@ -21,21 +21,21 @@ Prior to my hiatus from photography, I shot with Leo outdoors. Shortly after I s
 
 <div data-gallery data-align="wide">
   <img loading="lazy" decoding="async" src="/leo/wilderness-1.jpg" alt="nude woman laying on sand" />
-  <img loading="lazy" decoding="async" src="/leo/wilderness-4.jpg" alt="nude woman holding themselves up between boulders" />
+  <img loading="lazy" decoding="async" src="/leo/wilderness-4-explicit.jpg" alt="nude woman holding themselves up between boulders" />
   <img loading="lazy" decoding="async" src="/leo/wilderness-2.jpg" alt="nude woman curled up on rocks" />
-  <img loading="lazy" decoding="async" src="/leo/wilderness-3.jpg" alt="woman walking away from camera with light in front" />
-  <img loading="lazy" decoding="async" src="/leo/wilderness-5.jpg" alt="nude woman posed on rocks in black and white" />
-  <img loading="lazy" decoding="async" src="/leo/wilderness-6.jpg" alt="nude woman posed on rocks in color" />
+  <img loading="lazy" decoding="async" src="/leo/wilderness-3-explicit.jpg" alt="woman walking away from camera with light in front" />
+  <img loading="lazy" decoding="async" src="/leo/wilderness-5-explicit.jpg" alt="nude woman posed on rocks in black and white" />
+  <img loading="lazy" decoding="async" src="/leo/wilderness-6-explicit.jpg" alt="nude woman posed on rocks in color" />
 </div>
+<br/>
 
 ## Emote (2019)
 
 Update: I started this lighting series, *Chroma* which inteded to capture the alternative beauty via the colors red through violet. As of 2026
 I haven't shot more in this series, but the wheels are in motion. More to come.
 
-
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/leo/chroma-9.jpg" alt="chroma series 8" data-align="wide"  />
+  <img loading="lazy" decoding="async" src="/leo/chroma-11.jpg" alt="chroma series 14" />
   <img loading="lazy" decoding="async" src="/leo/chroma-2.jpg" alt="woman in red and blue facing away from the camera" />
   <img loading="lazy" decoding="async" src="/leo/chroma-1.jpg" alt="chroma series 1" />
   <img loading="lazy" decoding="async" src="/leo/chroma-3.jpg" alt="bald woman in black and white" />
@@ -43,11 +43,11 @@ I haven't shot more in this series, but the wheels are in motion. More to come.
   <img loading="lazy" decoding="async" src="/leo/chroma-8.jpg" alt="chroma series 12" />
   <img loading="lazy" decoding="async" src="/leo/chroma-5.jpg" alt="chroma series 14" />
   <img loading="lazy" decoding="async" src="/leo/chroma-6.jpg" alt="chroma series 32" />
+  <img loading="lazy" decoding="async" src="/leo/chroma-9.jpg" alt="chroma series 8" data-align="wide"  />
+  <img loading="lazy" decoding="async" src="/leo/chroma-10-explicit.jpg" alt="chroma series 1" />
   <img loading="lazy" decoding="async" src="/leo/chroma-7.jpg" alt="woman in red and blue looking down to the left" />
-  <img loading="lazy" decoding="async" src="/leo/chroma-10.jpg" alt="chroma series 1" />
-  <img loading="lazy" decoding="async" src="/leo/chroma-12.jpg" alt="chroma series 19" />
-  <img loading="lazy" decoding="async" src="/leo/chroma-11.jpg" alt="chroma series 14" />
   <img loading="lazy" decoding="async" src="/leo/chroma-13.jpg" alt="chroma series 44" />
+  <img loading="lazy" decoding="async" src="/leo/chroma-12.jpg" alt="chroma series 19" />
 </div>
 
 <hr />
