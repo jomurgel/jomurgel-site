@@ -1924,6 +1924,7 @@ img[src*="-explicit"] { filter: blur(2rem); }
   transition: background-color 0.25s ease;
 }
 .explicit-veil svg { width: 2.25rem; height: 2.25rem; display: block; }
-/* Tint the blur red on hover/focus (translucent, so the blur still reads). */
+/* No background change on hover — keep the default tint and override Acorn's
+   global button:hover fill (which otherwise turns the veil solid magenta). */
 .explicit-veil:hover,
-.explicit-veil:focus-visible { background: rgba(200, 0, 0, 0.4); outline: none; }
+.explicit-veil:focus-visible { background: rgba(0, 0, 0, 0.3); outline: none; }
