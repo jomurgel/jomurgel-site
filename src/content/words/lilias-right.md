@@ -16,11 +16,11 @@ nsfw: true
 
 <!-- Intro paragraph goes here. Add copy above the gallery. -->
 
-<img loading="lazy" decoding="async" src="/lilias-right/photo-2.jpg" alt="Reclining prone against a dark backdrop" data-align="wide" />
+<img loading="lazy" decoding="async" src="/lilias-right/photo-2-explicit.jpg" alt="Reclining prone against a dark backdrop" data-align="wide" />
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-1.jpg" alt="Seated nude in low studio light, gaze lowered" />
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-4.jpg" alt="Kneeling, meeting the camera in soft light" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-1-explicit.jpg" alt="Seated nude in low studio light, gaze lowered" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-4-explicit.jpg" alt="Kneeling, meeting the camera in soft light" />
 </div>
 
 <div data-gallery data-align="wide">
@@ -33,10 +33,10 @@ nsfw: true
   <img loading="lazy" decoding="async" src="/lilias-right/photo-8.jpg" alt="Seated with arms crossed over drawn-up knees, gaze lifted" />
 </div>
 
-<img loading="lazy" decoding="async" src="/lilias-right/photo-3.jpg" alt="Reclining on the back in low light" data-align="wide" />
+<img loading="lazy" decoding="async" src="/lilias-right/photo-3-explicit.jpg" alt="Reclining on the back in low light" data-align="wide" />
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-9.jpg" alt="Seated, head bowed, hair falling forward" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-9-explicit.jpg" alt="Seated, head bowed, hair falling forward" />
   <img loading="lazy" decoding="async" src="/lilias-right/photo-12.jpg" alt="Close study, a hand to the neck, eyes closed" />
 </div>
 
@@ -46,26 +46,26 @@ nsfw: true
 </div>
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-10.jpg" alt="Reclining on the back, an arm raised" />
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-11.jpg" alt="Reclining in low light, torso and shoulder" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-10-explicit.jpg" alt="Reclining on the back, an arm raised" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-11-explicit.jpg" alt="Reclining in low light, torso and shoulder" />
 </div>
 
 <div data-gallery data-align="wide">
   <img loading="lazy" decoding="async" src="/lilias-right/photo-15.jpg" alt="Seated with a white sheet, holding the hair" />
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-16.jpg" alt="Reclining on white bedding, an arm across the face" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-16-explicit.jpg" alt="Reclining on white bedding, an arm across the face" />
 </div>
 
-<img loading="lazy" decoding="async" src="/lilias-right/photo-17.jpg" alt="Reclining across white bedding" data-align="wide" />
+<img loading="lazy" decoding="async" src="/lilias-right/photo-17-explicit.jpg" alt="Reclining across white bedding" data-align="wide" />
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-18.jpg" alt="Reclining on white bedding, meeting the camera" />
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-20.jpg" alt="Seated on white bedding, gathering the hair" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-18-explicit.jpg" alt="Reclining on white bedding, meeting the camera" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-20-explicit.jpg" alt="Seated on white bedding, gathering the hair" />
 </div>
 
-<img loading="lazy" decoding="async" src="/lilias-right/photo-19.jpg" alt="Reclining on white bedding, looking back" data-align="wide" />
+<img loading="lazy" decoding="async" src="/lilias-right/photo-19-explicit.jpg" alt="Reclining on white bedding, looking back" data-align="wide" />
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/lilias-right/photo-21.jpg" alt="Seated on white bedding, meeting the camera" />
+  <img loading="lazy" decoding="async" src="/lilias-right/photo-21-explicit.jpg" alt="Seated on white bedding, meeting the camera" />
   <img loading="lazy" decoding="async" src="/lilias-right/photo-22.jpg" alt="Seated in a green sweater, glancing back" />
 </div>
 

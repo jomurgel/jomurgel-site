@@ -11,6 +11,7 @@ tags: [
   "portrait"
 ]
 nsfw: true
+draft: true
 ---
 
 <!-- Intro paragraph goes here — the Chroma lighting series with Leo, capturing
@@ -26,7 +27,7 @@ nsfw: true
   <img loading="lazy" decoding="async" src="/leo/chroma-5.jpg" alt="Low-key portrait, arm raised near the face, bare shoulder" />
   <img loading="lazy" decoding="async" src="/leo/chroma-6.jpg" alt="Black-and-white study, arms crossed at the chest" />
   <img loading="lazy" decoding="async" src="/leo/chroma-7.jpg" alt="Figure in red and teal light, arms crossed, gaze lowered" />
-  <img loading="lazy" decoding="async" src="/leo/chroma-10.jpg" alt="Nude figure side-lit in red and teal" />
+  <img loading="lazy" decoding="async" src="/leo/chroma-10-explicit.jpg" alt="Nude figure side-lit in red and teal" />
   <img loading="lazy" decoding="async" src="/leo/chroma-12.jpg" alt="Figure in red light, an arm arched overhead" />
   <img loading="lazy" decoding="async" src="/leo/chroma-11.jpg" alt="Black-and-white portrait, hands resting against the cheek" />
   <img loading="lazy" decoding="async" src="/leo/chroma-13.jpg" alt="Nude figure from behind, red and teal light, a hand on the hip" />

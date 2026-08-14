@@ -1746,6 +1746,10 @@ button.resume-dl:focus-visible { background: var(--black); border-color: var(--b
 .about-intro p { font-size: 1.125rem; margin-bottom: var(--space-3); }
 .about-intro p:last-child { margin-bottom: 0; }
 
+/* /uses intro — same lead-paragraph size as About. */
+.uses-intro p { font-size: 1.125rem; }
+.uses-intro p:last-child { margin-bottom: 0; }
+
 .codex { margin-top: var(--space-5); }
 .codex-head { margin-bottom: var(--space-4); }
 .codex-head h2 { margin: 0 0 var(--space-1); }

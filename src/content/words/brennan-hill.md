@@ -28,11 +28,11 @@ archive: true
   <img loading="lazy" decoding="async" src="/brennan-hill/photo-6.jpg" alt="Reclining on one elbow on a pink cushion" />
 </div>
 
-<img loading="lazy" decoding="async" src="/brennan-hill/photo-9.jpg" alt="Reclining on a pink cushion, back turned, looking back" data-align="wide" />
+<img loading="lazy" decoding="async" src="/brennan-hill/photo-9-explicit.jpg" alt="Reclining on a pink cushion, back turned, looking back" data-align="wide" />
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/brennan-hill/photo-7.jpg" alt="Reclining on the back across a pink cushion" />
-  <img loading="lazy" decoding="async" src="/brennan-hill/photo-8.jpg" alt="Reclining on a pink cushion, hip and shoulder in soft light" />
+  <img loading="lazy" decoding="async" src="/brennan-hill/photo-7-explicit.jpg" alt="Reclining on the back across a pink cushion" />
+  <img loading="lazy" decoding="async" src="/brennan-hill/photo-8-explicit.jpg" alt="Reclining on a pink cushion, hip and shoulder in soft light" />
 </div>
 
 <div data-gallery data-align="wide">
@@ -56,6 +56,6 @@ archive: true
 
 <div data-gallery data-align="wide">
   <img loading="lazy" decoding="async" src="/brennan-hill/photo-17.jpg" alt="Standing against a wall in a lace top, arm raised" />
-  <img loading="lazy" decoding="async" src="/brennan-hill/photo-18.jpg" alt="Standing in a lace top, a hand in the hair" />
-  <img loading="lazy" decoding="async" src="/brennan-hill/photo-19.jpg" alt="Standing in a lace top, arm raised, in profile" />
+  <img loading="lazy" decoding="async" src="/brennan-hill/photo-18-explicit.jpg" alt="Standing in a lace top, a hand in the hair" />
+  <img loading="lazy" decoding="async" src="/brennan-hill/photo-19-explicit.jpg" alt="Standing in a lace top, arm raised, in profile" />
 </div>

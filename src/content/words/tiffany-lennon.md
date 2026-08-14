@@ -37,17 +37,17 @@ featured: false
 
 <div data-gallery data-align="wide">
   <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-9.jpg" alt="A dark-haired figure turned away in black lingerie" />
-  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-10.jpg" alt="A dark-haired figure standing, a hand at the hip" />
+  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-10-explicit.jpg" alt="A dark-haired figure standing, a hand at the hip" />
 </div>
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-11.jpg" alt="A dark-haired figure by the curtain, arms raised" />
-  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-12.jpg" alt="A dark-haired figure standing by the curtain" />
+  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-11-explicit.jpg" alt="A dark-haired figure by the curtain, arms raised" />
+  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-12-explicit.jpg" alt="A dark-haired figure standing by the curtain" />
 </div>
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-13.jpg" alt="A dark-haired figure, a hand to the mouth" />
-  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-14.jpg" alt="A dark-haired figure, arms lifted overhead" />
+  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-13-explicit.jpg" alt="A dark-haired figure, a hand to the mouth" />
+  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-14-explicit.jpg" alt="A dark-haired figure, arms lifted overhead" />
   <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-15.jpg" alt="A dark-haired figure turned away, arms raised" />
 </div>
 
@@ -64,7 +64,7 @@ featured: false
 </div>
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-21.jpg" alt="A red-haired figure, a hand to the hair, black lace" />
+  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-21-explicit.jpg" alt="A red-haired figure, a hand to the hair, black lace" />
   <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-22.jpg" alt="A red-haired figure seated, a hand to the face" />
 </div>
 
@@ -79,6 +79,6 @@ featured: false
 </div>
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-27.jpg" alt="A dark-haired figure kneeling" />
+  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-27-explicit.jpg" alt="A dark-haired figure kneeling" />
   <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-28.jpg" alt="A figure in sheer black, kneeling" />
 </div>

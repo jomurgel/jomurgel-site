@@ -8,7 +8,6 @@ tags: [
   "photography",
   "art study"
 ]
-archive: true
 ---
 
 Back in 2007 I shot these for my thesis project. My final act as a college student was to capture these photos on film with analog tech in my bedroom having draped the walls in cheap velvet. It was the first time I shot people and the last time I would take a look photo with a DSLR camera in almost seven years.

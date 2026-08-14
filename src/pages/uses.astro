@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { uses } from '../data/uses';
+
+const inks = ['c', 'm', 'y'];
+---
+
+<Base
+  title="Uses"
+  description="The tools, gear, and software Jo Murgel actually uses — for development, photography, and everything in between."
+  heroInk="y"
+>
+  <PageHero
+    ink="y"
+    title="What I Use"
+    lede="The tools, gear, and software behind the dev and the photography. Inspired by every /uses page I've ever nosed through."
+  />
+
+  <section class="uses-intro">
+    <p>
+      I get asked what I shoot with, or what I build with, often enough that a page beats
+      repeating myself. Nothing here is sponsored — it's just what earned a spot by being
+      the thing I reach for. This list changes when it needs to.
+    </p>
+
+    <p>
+      A shoutout to <a href="https://wesbos.com/">Wes Bos</a> for
+      creating <a href="https://uses.tech/">/uses</a> to help green engineers,
+      and in my case artists, learn more about how people work and with what.
+    </p>
+  </section>
+
+  <hr />
+
+  <section class="codex" aria-labelledby="uses-heading">
+    <div class="codex-head">
+      <h2 id="uses-heading">The Kit</h2>
+      <p class="section-lede">Grouped by what it's for. Links point at where you'll actually find each thing — no affiliate codes.</p>
+    </div>
+    <div class="codex-grid">
+      {uses.map((cat, i) => (
+        <div class="codex-cat" data-ink={inks[i % 3]}>
+          <h3>{cat.label}</h3>
+          {cat.intro && <p class="codex-intro">{cat.intro}</p>}
+          <ul>
+            {cat.items.map((it) => (
+              <li>
+                {it.url ? <a href={it.url} target="_blank" rel="noopener noreferrer">{it.name}</a> : it.name}
+                {it.note && <span class="codex-note"> — {it.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
