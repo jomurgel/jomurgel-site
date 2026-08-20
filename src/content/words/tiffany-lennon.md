@@ -80,5 +80,5 @@ featured: false
 
 <div data-gallery data-align="wide">
   <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-27-explicit.jpg" alt="A dark-haired figure kneeling" />
-  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-28.jpg" alt="A figure in sheer black, kneeling" />
+  <img loading="lazy" decoding="async" src="/tiffany-lennon/photo-28-explicit.jpg" alt="A figure in sheer black, kneeling" />
 </div>
