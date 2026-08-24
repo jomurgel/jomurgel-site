@@ -48,7 +48,7 @@ Full-stack engineer and architect with 18 years building for the web — fronten
 
 - Senior developer at a WordPress agency serving ecommerce, enterprise, and general web clients in a speed-first environment.
 - Pushed semantic HTML5, accessibility, and WCAG into a codebase where speed usually won; ran learning sessions on mobile-first and user-centered practices for the team.
-- Contributed to early Block Editor (Gutenberg) standards in 2018 that stayed in use for years.
+- Contributed to early Block Editor (Gutenberg) standards.
 - **Results:** brought a speed-first codebase up to consistent accessibility and semantic standards across client projects.
 
 ### Independent Consultant & Freelance
