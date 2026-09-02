@@ -13,6 +13,6 @@
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "acorn.css": "^3.0.0",
-    "astro": "^7.1.2"
+    "astro": "^7.2.9"
   }
 }
