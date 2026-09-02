@@ -20,6 +20,18 @@ const studies = (await getCollection('work', ({ data }) => !data.draft)).sort(
     lede="The work I can show, and the work I can talk about. Most of the rest is behind logins and NDAs — which is the nature of building things that matter."
   />
 
+  <a class="acorn-banner" data-ink="c" href="/project-acorn" aria-label="Project Acorn — the lab">
+    <div class="acorn-banner-media">
+      <img src="/work/project-acorn.jpg" alt="The Project Acorn acorn mark" width="800" height="600" loading="lazy" decoding="async" />
+    </div>
+    <div class="acorn-banner-cap">
+      <span class="work-meta">The lab</span>
+      <h2>Project Acorn</h2>
+      <p>My long-running testing ground — Acorn CSS, budgeting, scheduling, and whatever's next.</p>
+      <span class="related-go" aria-hidden="true">→</span>
+    </div>
+  </a>
+
   {studies.length > 0 && (
     <section class="work-cases" aria-labelledby="cases-heading">
       <h2 id="cases-heading">Case studies</h2>
@@ -34,6 +46,13 @@ const studies = (await getCollection('work', ({ data }) => !data.draft)).sort(
             </a>
           </li>
         ))}
+        <li data-span="1">
+          <a class="work-cta" href="https://darkfound.com" target="_blank" rel="noopener noreferrer">
+            <span class="work-cta-label">Available for work</span>
+            <h3>Work with me</h3>
+            <span class="work-cta-go" aria-hidden="true">→</span>
+          </a>
+        </li>
       </ul>
     </section>
   )}

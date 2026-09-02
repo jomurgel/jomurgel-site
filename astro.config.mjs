@@ -8,6 +8,8 @@ export default defineConfig({
   // the leo/sylvia photo sets are consolidated.
   redirects: {
     '/photos/chroma': '/photos/leo-velo',
+    // The Acorn CSS case study moved to the Words post; keep the old live URL alive.
+    '/work/acorn': '/words/acorn-css',
   },
   integrations: [
     sitemap({
