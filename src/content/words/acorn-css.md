@@ -4,6 +4,7 @@ description: "Talking about the why for my classless framework, acorn.css."
 coverImage: "/acorn-css/cover.jpg"
 coverAlt: "acorn framework icon"
 date: "2023-09-11"
+updated: "2026-09-02"
 tags: [
   "css"
 ]
@@ -16,6 +17,23 @@ The idea arose while working on a new production site (who shall remain nameless
 I should not toot my own horn (toot, toot), but I should mention that I've always stressed the importance of understanding all the requirements of a project. I'm also a proponent of working smart, not hard. The basic structures and elements of the web are known. Before ever considering website customizations and after a styleguide has been built, you should have a framework available for rapid prototyping without needing presentational classes or frameworks like [Tailwind](https://tailwindcss.com/).
 
 Enter acorn.css. It is a minimal and opinionated classless CSS framework, designed with simplicity in mind. Its straightforward approach makes it easy to use, even for those new to web development.
+
+## The problem
+
+The idea showed up on the last leg of a production build, close to launch. The custom design looked great — and then we started migrating older content in and watched the standard HTML elements fall through the cracks. Headings, tables, forms, `<video>`, blockquotes: all of it unstyled or stuck on browser defaults, quietly undoing an otherwise nice-looking site. Every project hit the same wall, and every team patched it a little differently.
+
+## The approach
+
+I didn't want another utility framework or a pile of presentational classes. I wanted the opposite — a stylesheet you *start* with, where the bare HTML already looks intentional and you only reach for a class when you genuinely need one.
+
+So Acorn styles the elements, not your markup: fluid type that scales with the viewport, an accessible color system with WCAG AA contrast baked in rather than bolted on, sensible defaults for every tag the browser forgets about, and a small set of `data-` attributes (modeled on the Block Editor's alignment model) for the few layout cases that actually warrant them.
+
+For v3 I rebuilt the whole thing — dropped Sass and the build complexity for plain CSS on a tiny esbuild step, added footnotes, print styles, and task lists, and repositioned it from "framework" to what it really is: the stylesheet you start with.
+
+## Where it is
+
+Acorn 3.0 is published to npm and runs its own docs site on GitHub Pages. It's also the foundation under *this* site — the print-shop layer you're looking at sits on top of Acorn doing the element-level work. It's the clearest example of how I like to operate: find the problem everyone keeps re-solving, build the general tool once, and make the default state the good one.
+
 
 Let's work backward. What is a classless CSS framework? It's a set of styles attached directly to the default HTML tags that overwrite what browsers supply by default. Effectively, you should have a fully functional (albeit simple) website framework without ever adding any customizations. This website has minimal customization on top of the framework.
 

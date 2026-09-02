@@ -5,6 +5,7 @@ role: "Identity & brand design"
 year: "2014 – present"
 stack: ["Affinity Designer", "Figma"]
 ink: "y"
+span: 2
 order: 2
 ---
 

@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+
+// Project Acorn — the umbrella for Jo's experiments. Retrofit of the
+// projectacorn.space splash into this site's aesthetic. The apps
+// (scheduler, finance, site-manager) stay hosted on projectacorn.space;
+// only the splash redirects here, so those links point outward on purpose.
+// links = action links (Demo / GitHub / Try it). tags = non-link notes
+// (invite only, dependencies). A card with no links renders as a "seed".
+const projects = [
+  {
+    ink: 'c',
+    name: 'Acorn CSS',
+    status: 'Shipped · v3',
+    body: 'A classless CSS baseline — the stylesheet you start with. It styles semantic HTML out of the box, and it\'s what this site runs on.',
+    links: [
+      { label: 'Demo', href: 'https://jomurgel.github.io/acorn.css/' },
+      { label: 'GitHub', href: 'https://github.com/jomurgel/acorn.css' },
+    ],
+  },
+  {
+    ink: 'm',
+    name: 'Native Scroll Slider',
+    status: 'Public',
+    span: 2,
+    body: 'A dependency-free slider built on native CSS scroll snap — no library, no JavaScript carousel, just the platform doing the work.',
+    links: [
+      { label: 'Demo', href: 'https://jomurgel.github.io/native-scroll-slider/' },
+      { label: 'GitHub', href: 'https://github.com/jomurgel/native-scroll-slider' },
+    ],
+  },
+  {
+    ink: 'y',
+    name: 'LVNG Budget',
+    status: 'Beta',
+    span: 2,
+    body: 'A 50/20/30 budget that measures all four: needs, wants, savings, and the rainy-day money most tools quietly fold into savings.',
+    creds: { user: 'demo', pass: 'correct-horse-battery-staple' },
+    links: [{ label: 'Try the demo', href: 'https://projectacorn.space/finance' }],
+  },
+  {
+    ink: 'c',
+    name: 'Acorn Scheduler',
+    status: 'Beta',
+    body: 'Task and cohort scheduling with calendar views, drag-and-drop, and reminders.',
+    links: [{ label: 'Take a look', href: 'https://projectacorn.space/scheduler' }],
+    tags: ['Invite only'],
+  },
+  {
+    ink: 'm',
+    name: 'Acorn Site Manager',
+    status: 'Alpha',
+    body: 'A WordPress monitoring dashboard — remote plugin updates and health checks across every site from one place.',
+    links: [{ label: 'Take a look', href: 'https://projectacorn.space/site-manager' }],
+    tags: ['Invite only', 'Requires Acorn Bridge'],
+  },
+  {
+    ink: 'c',
+    name: 'Acorn Bridge',
+    status: 'Coming soon',
+    body: 'The WordPress companion plugin for Acorn Site Manager — the bridge the dashboard talks to.',
+    tags: ['Requires Acorn Site Manager'],
+  },
+  {
+    ink: 'y',
+    name: 'Seedling CMS',
+    status: 'Coming soon',
+    body: 'A modern take on the flat-file CMS, powered by PHP, markdown, and JSON. No database, no admin bloat.',
+  },
+];
+---
+
+<Base
+  title="Project Acorn"
+  description="Project Acorn — Jo Murgel's long-running testing ground for new concepts, ideas, and implementations. The umbrella over the experiments."
+  heroInk="c"
+>
+  <PageHero
+    ink="c"
+    title="Project Acorn"
+    lede="A testing ground for new concepts, ideas, and implementations — the umbrella I nurture experiments under."
+  />
+
+  <section aria-labelledby="acorn-projects-heading">
+    <div class="building-head">
+      <h2 id="acorn-projects-heading">The Acorns</h2>
+      <p class="section-lede">Some shipped, some in beta, some still a seed. Each one started as a little notion.</p>
+    </div>
+
+    <div class="projects">
+      {projects.map((p) => (
+        <article class:list={['ink-card', 'project', { 'is-seed': !p.links }]} data-ink={p.ink} data-span={p.span}>
+          <span class="project-status">{p.status}</span>
+          <h3>{p.name}</h3>
+          <p>{p.body}</p>
+          {p.creds && (
+            <span class="project-creds">
+              <span class="project-creds-label">Demo login</span>
+              <code>{p.creds.user}</code> <span class="project-creds-sep">/</span> <code>{p.creds.pass}</code>
+            </span>
+          )}
+          {(p.links || p.tags) && (
+            <div class="project-foot">
+              {p.links?.map((l) => (
+                <a class="project-link" href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
+              ))}
+              {p.tags?.map((t) => <span class="project-tag">{t}</span>)}
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <hr />
+
+  <section class="acorn-about" aria-labelledby="acorn-about-heading">
+    <h2 id="acorn-about-heading">Why "acorn"</h2>
+    <p>
+      Project Acorn has existed since 2007. It's where I play with ideas that fall outside the
+      usual way of building for the web — alternative approaches to the same old problems. I called
+      them acorns: the building blocks for something bigger, a seedling on its way to a full-grown tree.
+    </p>
+    <p>
+      Some have died on the vine or never grew into what I hoped. Others rooted and became real, stable
+      things I still use. Project Acorn is the umbrella I keep them under — the place I get to nurture an
+      idea, make the mistakes, and hunt down the right approach to whatever problem's in front of me.
+    </p>
+  </section>
+</Base>

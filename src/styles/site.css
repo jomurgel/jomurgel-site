@@ -601,7 +601,9 @@ button.nav-toggle:active { background: none; border: 0; }
   margin: 0;
 }
 @media (min-width: 48rem) {
-  .projects { grid-template-columns: repeat(3, 1fr); }
+  .projects { grid-auto-flow: dense; grid-template-columns: repeat(3, 1fr); }
+  /* Opt-in wide card (e.g. a demo that needs room for login details). */
+  .projects .project[data-span="2"] { grid-column: span 2; }
 }
 
 /* Shared CMYK card — bordered, per-ink, floods to its plate color on hover.
@@ -642,6 +644,49 @@ button.nav-toggle:active { background: none; border: 0; }
 }
 .project-cta { font-weight: 600; }
 .project-cta::after { content: " \2192"; }
+
+/* Demo login line inside a project card — monospace creds, readable on the
+   plate flood too (inherits the card's hover color). */
+.project-creds {
+  color: var(--gray);
+  font-size: var(--text-xs);
+  margin-bottom: var(--space-2);
+}
+.project-creds-label {
+  display: block;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35em;
+  text-transform: uppercase;
+}
+.project-creds code {
+  background: transparent;
+  font-weight: 600;
+  padding: 0;
+  word-break: break-all;
+}
+.project-creds-sep { opacity: 0.5; }
+.ink-card:hover .project-creds { color: inherit; }
+
+/* Project card footer — action links (Demo / GitHub / Try it) beside non-link
+   note tags (invite only, dependencies). */
+.project-foot {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-3);
+}
+.project-link { font-weight: 600; }
+.project-tag {
+  color: var(--gray);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.ink-card:hover :is(.project-link, .project-tag) { color: inherit; }
 
 .building-foot { margin-top: var(--space-3); }
 
@@ -1544,6 +1589,80 @@ hr + .post { margin-top: 0; }
 .work-grid li { margin: 0; }
 .work-card h3 { font-size: var(--text-xl); margin: var(--space-1) 0; }
 .work-card p { color: var(--gray); flex: 1; margin: 0; }
+
+/* Project Acorn banner — above the case studies on /work, links to
+   /project-acorn. Swap .acorn-banner-ph for an <img src="/work/project-acorn.jpg">
+   when the real banner image lands. */
+.acorn-banner {
+  border: 2px solid var(--ink, var(--plate-c));
+  border-radius: var(--radius-img);
+  color: var(--black);
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 0 var(--space-4);
+  overflow: hidden;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+@media (min-width: 40rem) {
+  .acorn-banner { grid-template-columns: 1.4fr 1fr; }
+}
+.acorn-banner:hover { background: var(--ink, var(--plate-c)); color: #000; }
+.acorn-banner:hover :is(p, .work-meta, .related-go) { color: inherit; }
+/* Acorn mark shown whole on its own pink field (matches the image bg so the
+   contained letterbox is seamless), so the logo never crops at any shape. */
+.acorn-banner-media {
+  aspect-ratio: 21 / 9;
+  background: #ee2d6c;
+  border-bottom: 2px solid var(--ink, var(--plate-c));
+}
+@media (min-width: 40rem) {
+  .acorn-banner-media { aspect-ratio: auto; border-bottom: 0; border-right: 2px solid var(--ink, var(--plate-c)); }
+}
+.acorn-banner-media img { display: block; height: 100%; object-fit: contain; width: 100%; }
+.acorn-banner-cap {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+}
+.acorn-banner-cap h2 { margin: 0; }
+.acorn-banner-cap p { color: var(--gray); flex: 1; margin: 0; }
+
+/* Project Acorn "coming soon" cards — non-interactive, no hover flood. */
+.project.is-seed { cursor: default; }
+.project.is-seed:hover { background: transparent; color: var(--black); }
+.project.is-seed .project-status { color: var(--gray); }
+
+/* Project Acorn origin-story block. */
+.acorn-about { margin: 0 auto; max-width: var(--container-narrow); }
+.acorn-about h2 { margin-bottom: var(--space-2); }
+.acorn-about p { font-size: 1.125rem; margin-bottom: var(--space-3); }
+.acorn-about p:last-child { margin-bottom: 0; }
+
+/* Work-grid CTA — solid black card that pops among the case studies and
+   inverts on hover. Fixed dark (not the theme --black token) so it stays a
+   black box in both light and dark. */
+.work-cta {
+  align-items: flex-start;
+  background: #141414;
+  border: 2px solid #141414;
+  border-radius: var(--radius-img);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  height: 100%;
+  padding: var(--space-3);
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.work-cta::after { content: none !important; } /* suppress Acorn's external ↗ */
+.work-cta:hover { background: #fff; color: #141414; }
+.work-cta-label { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.08em; opacity: 0.7; text-transform: uppercase; }
+.work-cta h3 { color: inherit; font-size: var(--text-xl); margin: var(--space-1) 0 0; }
+.work-cta-go { font-weight: 700; margin-top: auto; padding-top: var(--space-2); }
 
 /* macOS-style browser frame for showing web work in the body (no shadow). */
 .browser {

@@ -9,7 +9,7 @@ linkLabel: "Visit HXC Comms"
 stack: ["WordPress"]
 ink: "y"
 span: 2
-order: 4
+order: 5
 ---
 
 Hardcore Comms exists to make radio communication approachable, practical, and honest — to cut through the noise, the intimidation, and the "tactical" hype around radios, licensing, and getting on the air. Good mission. Hard to act on when nobody can find you.
