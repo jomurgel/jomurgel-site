@@ -314,6 +314,149 @@ const isCurrent = (href) => (href === '/' ? path === '/' : path === href || path
             veil.addEventListener('click', () => { wrap.classList.add('revealed'); veil.remove(); });
             wrap.appendChild(veil);
           });
+          // About photo easter egg: move the cursor (or drag on touch) across the
+          // photo to paint it away in soft blobs and reveal a hidden one underneath;
+          // leave and it heals back. Keyboard: focus + Enter reveals it fully.
+          // Progressive enhancement — the base <img> stands alone with no JS.
+          // Paint-reveal technique based on Olivier Larose's tutorial:
+          // https://blog.olivierlarose.com/tutorials/paint-reveal
+          const egg = document.querySelector('.about-photo[data-scratch]:not([data-scratch-ready])');
+          if (egg) {
+            egg.setAttribute('data-scratch-ready', '');
+            egg.classList.add('scratch');
+            const base = egg.querySelector('img');
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            const under = document.createElement('img');
+            under.className = 'scratch-under';
+            under.src = egg.dataset.egg;
+            under.alt = egg.dataset.eggAlt || '';
+            under.setAttribute('aria-hidden', 'true');
+            egg.appendChild(under);
+
+            const canvas = document.createElement('canvas');
+            canvas.className = 'scratch-top';
+            egg.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+            const coverCv = document.createElement('canvas');
+            const cctx = coverCv.getContext('2d');
+
+            egg.setAttribute('role', 'button');
+            egg.setAttribute('tabindex', '0');
+            egg.setAttribute('aria-label', 'A photo — move across it (or press Enter) to reveal a hidden one');
+            egg.title = 'Paint across me';
+
+            const cover = new Image();
+            let ready = false, painted = false, healing = false, W = 0, H = 0, R = 0, last = null, healTimer = 0;
+
+            function setup() {
+              const rect = base.getBoundingClientRect();
+              if (!rect.width || !cover.naturalWidth) return;
+              const dpr = Math.min(window.devicePixelRatio || 1, 2);
+              W = Math.round(rect.width * dpr);
+              H = Math.round(rect.height * dpr);
+              canvas.width = coverCv.width = W;
+              canvas.height = coverCv.height = H;
+              canvas.style.width = rect.width + 'px';
+              canvas.style.height = rect.height + 'px';
+              const ir = cover.naturalWidth / cover.naturalHeight, br = W / H;
+              let sw, sh, sx, sy;
+              if (ir > br) { sh = cover.naturalHeight; sw = sh * br; sx = (cover.naturalWidth - sw) / 2; sy = 0; }
+              else { sw = cover.naturalWidth; sh = sw / br; sx = 0; sy = (cover.naturalHeight - sh) / 2; }
+              cctx.clearRect(0, 0, W, H);
+              cctx.drawImage(cover, sx, sy, sw, sh, 0, 0, W, H);
+              R = Math.min(W, H) * 0.16; // blob radius
+              ready = true;
+            }
+
+            function coverAll() {
+              ctx.globalCompositeOperation = 'source-over';
+              ctx.globalAlpha = 1;
+              ctx.clearRect(0, 0, W, H);
+              ctx.drawImage(coverCv, 0, 0);
+              painted = false;
+            }
+
+            // Soft-edged blob erased from the cover, revealing the photo beneath.
+            function stamp(x, y, r) {
+              const g = ctx.createRadialGradient(x, y, r * 0.55, x, y, r);
+              g.addColorStop(0, 'rgba(0,0,0,1)');
+              g.addColorStop(0.78, 'rgba(0,0,0,1)');
+              g.addColorStop(1, 'rgba(0,0,0,0)');
+              ctx.globalCompositeOperation = 'destination-out';
+              ctx.globalAlpha = 1;
+              ctx.fillStyle = g;
+              ctx.beginPath();
+              ctx.arc(x, y, r, 0, Math.PI * 2);
+              ctx.fill();
+            }
+
+            // Stamp blobs from the last point to this one so fast moves stay continuous.
+            function paintTo(x, y) {
+              painted = true;
+              if (last) {
+                const dx = x - last.x, dy = y - last.y, dist = Math.hypot(dx, dy);
+                const n = Math.max(1, Math.round(dist / (R * 0.3)));
+                for (let i = 1; i <= n; i++) {
+                  const t = i / n;
+                  stamp(last.x + dx * t, last.y + dy * t, R * (0.85 + Math.random() * 0.3));
+                }
+              } else {
+                stamp(x, y, R);
+              }
+              last = { x, y };
+            }
+
+            function fromEvent(e) {
+              const rect = canvas.getBoundingClientRect();
+              paintTo((e.clientX - rect.left) * (W / rect.width), (e.clientY - rect.top) * (H / rect.height));
+            }
+
+            function heal() {
+              if (!painted) return;
+              if (reduce) { coverAll(); return; }
+              healing = true;
+              let f = 0;
+              (function frame() {
+                if (!healing) return; // interrupted by new painting
+                f++;
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.globalAlpha = 0.16;
+                ctx.drawImage(coverCv, 0, 0);
+                if (f < 18) requestAnimationFrame(frame);
+                else { healing = false; coverAll(); }
+              })();
+            }
+
+            function onMove(e) {
+              if (!ready) return;
+              clearTimeout(healTimer);
+              healing = false;
+              fromEvent(e);
+            }
+            function scheduleHeal() { last = null; clearTimeout(healTimer); healTimer = setTimeout(heal, 900); }
+
+            cover.onload = () => { setup(); coverAll(); };
+            cover.src = base.currentSrc || base.src;
+            if (cover.complete && cover.naturalWidth) { setup(); coverAll(); }
+
+            egg.addEventListener('pointerdown', onMove);
+            egg.addEventListener('pointermove', onMove);
+            egg.addEventListener('pointerup', scheduleHeal);
+            egg.addEventListener('pointercancel', scheduleHeal);
+            egg.addEventListener('pointerleave', scheduleHeal);
+            egg.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (!ready) return;
+                healing = false; painted = true;
+                ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1; ctx.clearRect(0, 0, W, H);
+                scheduleHeal();
+              }
+            });
+            let rt;
+            window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (painted || healing) return; setup(); coverAll(); }, 150); });
+          }
           // GA: send a page_view on client-side navigations (config sends the first).
           if (!first && window.gtag && location.hostname === 'jomurgel.com') {
             gtag('event', 'page_view', { page_path: location.pathname + location.search, page_title: document.title });

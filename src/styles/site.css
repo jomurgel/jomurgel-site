@@ -1843,6 +1843,32 @@ button.resume-dl:focus-visible { background: var(--black); border-color: var(--b
   object-fit: cover;
   width: 100%;
 }
+
+/* Scratch-off easter egg — JS stacks the hidden photo (.scratch-under) and a
+   canvas of the current photo (.scratch-top) over the base <img>; clicking
+   scratches the canvas away to reveal the photo underneath. Overflow clips the
+   absolutely-positioned layers to the rounded frame. */
+.about-photo.scratch {
+  border-radius: var(--radius-img);
+  cursor: crosshair;
+  overflow: hidden;
+  position: relative;
+}
+.about-photo.scratch:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.scratch-under,
+.scratch-top {
+  display: block;
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+.scratch-under { object-fit: cover; }
+/* touch-action: none so dragging a finger paints instead of scrolling the page. */
+.scratch-top { touch-action: none; }
 /* Kept for any future "coming soon" image slot. */
 .photo-placeholder {
   align-items: center;
