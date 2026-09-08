@@ -16,20 +16,14 @@ archive: true
 <!-- Intro paragraph goes here. Add copy above the gallery. -->
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/theresa/photo-1-explicit.jpg" alt="Leaning against exposed brick in a white tank, tattooed arm raised" />
-  <img loading="lazy" decoding="async" src="/theresa/photo-2.jpg" alt="Profile portrait, red lips, a cat tattoo across the shoulder" />
 </div>
 
 <img loading="lazy" decoding="async" src="/theresa/photo-5.jpg" alt="Reclining against a wall, hand to the chin" data-align="wide" />
 
 <div data-gallery data-align="wide">
+  <img loading="lazy" decoding="async" src="/theresa/photo-1-explicit.jpg" alt="Leaning against exposed brick in a white tank, tattooed arm raised" />
   <img loading="lazy" decoding="async" src="/theresa/photo-3.jpg" alt="Close-up portrait, red lips and stretched ear plugs" />
   <img loading="lazy" decoding="async" src="/theresa/photo-4.jpg" alt="Seated on the floor, knees drawn up against a bare wall" />
-</div>
-
-<img loading="lazy" decoding="async" src="/theresa/photo-6.jpg" alt="Seated in a white tank, tattooed arm across the knee" data-align="wide" />
-
-<div data-gallery data-align="wide">
   <img loading="lazy" decoding="async" src="/theresa/photo-7.jpg" alt="Curled on the floor, head bowed over drawn-up knees" />
   <img loading="lazy" decoding="async" src="/theresa/photo-8.jpg" alt="Upturned profile in dramatic side light, red lips" />
   <img loading="lazy" decoding="async" src="/theresa/photo-9.jpg" alt="Arm raised overhead, eyes closed, in a white tank" />

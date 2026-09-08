@@ -4,6 +4,7 @@ title: "Nature Series — Hyper Real September Challenge"
 description: "A personal challenge series revolving around nature."
 date: "2021-10-01"
 coverImage: "/nature-series/30.jpg"
+coverAlt: "A cluster of orange rudbeckia blooms in warm light"
 tags: [
   "photography",
   "art study"

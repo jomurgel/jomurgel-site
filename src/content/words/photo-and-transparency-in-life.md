@@ -4,6 +4,7 @@ title: "Photography and Transparency in My Life"
 description: "A look back at a series called Flower."
 date: "2019-01-25"
 coverImage: "/photo-and-transparency-in-life/cover.jpg"
+coverAlt: "A pale hosta bloom against a dark background with golden bokeh"
 tags: [
   "photography",
   "reflections",

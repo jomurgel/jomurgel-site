@@ -3,6 +3,7 @@ type: "photo"
 title: "Temporal: Thesis Set"
 description: "A look back at the work done for my Bachelor's thesis project."
 coverImage: "/temporal/cover.jpg"
+coverAlt: "A figure study in profile under dramatic low light"
 date: "2007-12-01"
 tags: [
   "photography",

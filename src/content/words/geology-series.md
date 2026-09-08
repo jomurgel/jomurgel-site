@@ -4,6 +4,7 @@ title: "Geology Series — Monochrome March Challenge"
 description: "A personal challenge series revolving around rocks."
 date: "2020-03-01"
 coverImage: "/geology/cover.jpg"
+coverAlt: "A glowing selenite crystal tower lit against black"
 tags: [
   "photography",
   "art study"

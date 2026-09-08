@@ -4,6 +4,7 @@ title: "In·ar·gu·a·ble"
 description: "A portrait project with Missy Rene."
 date: "2019-08-22"
 coverImage: "/inarguable/cover.jpg"
+coverAlt: "Portrait in an off-shoulder pink dress against a dark studio backdrop"
 tags: [
   "photography",
   "portrait"
