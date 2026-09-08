@@ -9,7 +9,7 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    role: 'Senior Lead Full-Stack Engineer · Architect',
+    role: 'Senior Lead Full-Stack Engineer · Tech Lead',
     company: 'Rehab Media Group',
     period: 'Jul 2025 – Present',
     impact:
