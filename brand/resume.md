@@ -15,7 +15,7 @@ Full-stack engineer and architect with 18 years building for the web — fronten
 
 ## Experience
 
-### Rehab Media Group — Senior Lead Full-Stack Engineer
+### Rehab Media Group — Senior Lead Full-Stack Engineer, Tech Lead
 *July 2025 – Present*
 
 - Sole engineer and technical owner of Rehab.com's partner dashboard (React, MongoDB, Redis, Firebase), where rehab centers manage and monitor their listings.
