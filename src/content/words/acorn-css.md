@@ -4,7 +4,7 @@ description: "Talking about the why for my classless framework, acorn.css."
 coverImage: "/acorn-css/cover.jpg"
 coverAlt: "acorn framework icon"
 date: "2023-09-11"
-updated: "2026-07-11"
+updated: "2026-09-02"
 tags: [
   "css"
 ]
