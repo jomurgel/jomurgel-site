@@ -7,7 +7,7 @@ import TagBand from '../../components/TagBand.astro';
 import { getCollection } from 'astro:content';
 import { getAllTags, byNewest } from '../../lib/words';
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 13;
 const all = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(byNewest);
 const posts = all.slice(0, PAGE_SIZE);
 const totalPages = Math.ceil(all.length / PAGE_SIZE);
