@@ -8,7 +8,7 @@ import { getCollection } from 'astro:content';
 import { getAllTags, byNewest } from '../../../lib/words';
 
 export async function getStaticPaths() {
-  const PAGE_SIZE = 6;
+  const PAGE_SIZE = 13;
   const all = (await getCollection('words', ({ data }) => !data.draft && data.type !== 'photo')).sort(byNewest);
   const totalPages = Math.ceil(all.length / PAGE_SIZE);
   const paths = [];

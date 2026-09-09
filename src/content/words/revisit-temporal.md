@@ -27,10 +27,8 @@ As I started to revisit older photography to rebuild my online photo portfolio f
 <img loading="lazy" decoding="async" src="/revisit-temporal/photo-9.jpg" alt="Reclining figure in dramatic side light" data-align="wide" />
 
 <div data-gallery data-align="wide">
-  <img loading="lazy" decoding="async" src="/revisit-temporal/photo-1.jpg" alt="Figure study with blue fabric in low light" />
   <img loading="lazy" decoding="async" src="/revisit-temporal/photo-7.jpg" alt="Figure wrapped in flowing sheer fabric" />
   <img loading="lazy" decoding="async" src="/revisit-temporal/photo-8.jpg" alt="A shoulder and neck in shadow" />
-  <img loading="lazy" decoding="async" src="/revisit-temporal/photo-10.jpg" alt="Reclining figure with teal fabric" />
 </div>
 
 <img loading="lazy" decoding="async" src="/revisit-temporal/photo-13.jpg" alt="Reclining figure draped in white, looking up" data-align="wide" />

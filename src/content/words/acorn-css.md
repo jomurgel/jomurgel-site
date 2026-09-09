@@ -1,5 +1,5 @@
 ---
-title: "A new classless CSS framework"
+title: "A new classless CSS framework (v3)"
 description: "Talking about the why for my classless framework, acorn.css."
 coverImage: "/acorn-css/cover.jpg"
 coverAlt: "acorn framework icon"
