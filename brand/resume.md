@@ -9,7 +9,7 @@ hello@jomurgel.com · <span class="phone-print">208-867-4554 · </span>jomurgel.
 
 ## Summary
 
-Full-stack engineer and architect with 18 years building for the web — frontend to principal to leading teams. I do my best work on the ambiguous stuff: finding the real problem, designing the system, setting the standards, and getting a team pointed the same direction. I make things faster, both the sites I build and the teams that build them, and I bring people along while I do it — mentoring engineers and raising the bar without crushing morale. I trained as an artist before I wrote a line of code, which is why I care about design and developer experience as much as what ships. There's no one-size-fits-all solution to anything, so I can't help but to build the custom one.
+I'm a full-stack engineer and architect with over 18 years experience building for the web—UX design to frontend developer to principal and now leading teams. I do my best work on the ambiguous stuff, finding the real problem, designing the system, setting stadnards, and getting a team pointed in the same direction. I work holistically building up the teams that build them, and bring people along while I do it mentoring engineers as I go. I trained as an artist before I wrote a single line of code, which is why I care about design and developer experience as much as what ships. There's no one-size-fits-all solution to anything, so I can't help but to build the custom one.
 
 ---
 
@@ -24,6 +24,12 @@ Full-stack engineer and architect with 18 years building for the web — fronten
 - Established organization-wide coding standards and a full documentation suite where none existed, cutting onboarding friction and improving consistency across agency and owned-brand work.
 - Leading a replatforming effort using Claude, n8n, and automation workflows to improve adoption and retention and take operational load off sales and support.
 - **Results:** +39% application performance, +500% search performance, backlog to a sparse maintenance queue in under three months.
+
+### Independent Consultant & Freelance
+*2007 – Present*
+
+- Digital experience audits, accessibility and Section 508 compliance reviews, and process work for 65+ organizations; site builds on WordPress, Next.js, and custom stacks plus brand identity and SEO/performance audits.
+- Built a functional-prototype-first workflow that earns far higher client acceptance than traditional static design rounds.
 
 ### PMC (Penske Media) — Principal Software Engineer, Tech Lead
 *March 2022 – August 2024*
@@ -50,12 +56,6 @@ Full-stack engineer and architect with 18 years building for the web — fronten
 - Pushed semantic HTML5, accessibility, and WCAG into a codebase where speed usually won; ran learning sessions on mobile-first and user-centered practices for the team.
 - Contributed to early Block Editor (Gutenberg) standards.
 - **Results:** brought a speed-first codebase up to consistent accessibility and semantic standards across client projects.
-
-### Independent Consultant & Freelance
-*2007 – Present*
-
-- Digital experience audits, accessibility and Section 508 compliance reviews, and process work for 65+ organizations; site builds on WordPress, Next.js, and custom stacks plus brand identity and SEO/performance audits.
-- Built a functional-prototype-first workflow that earns far higher client acceptance than traditional static design rounds.
 
 ### Earlier
 Mighty Engine — Chief Web Developer & Designer, then contractor (2014–2019): led the company's rebranding and set its development standards. Full history available on request.
