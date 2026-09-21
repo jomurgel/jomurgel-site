@@ -72,6 +72,14 @@ const blogPosting = {
     </header>
   )}
 
+  {hasCover && post.data.coverCredit && (
+    <p class="cover-credit">
+      {post.data.coverCreditHref ? (
+        <a href={post.data.coverCreditHref} target="_blank" rel="noopener">{post.data.coverCredit}</a>
+      ) : post.data.coverCredit}
+    </p>
+  )}
+
   {!hasCover && <hr />}
 
   <article class="post">

@@ -7,9 +7,9 @@ coverImage: "/tarot-for-productivity/cover.webp"
 coverAlt: "A flat-lay of eight tarot deck boxes, including White Numen and Modern Witch"
 ---
 
-Every morning I pull a tarot card to help me both set intention for the day. They're not telling you quantitative truths, but illuminating areas of your life to pay attention to. I largely credit [The Creative Tarot](https://www.simonandschuster.com/books/The-Creative-Tarot/Jessa-Crispin/9781501120244) by Jessa Crispin for getting me into this routine. I hightly recommend it as both a lighthearted intro to tarot and a solid explaination of each of the standard cards.
+Every morning I pull a tarot card to help me both set intention for the day. They're not telling you quantitative truths, but illuminating areas of your life to pay attention to. I largely credit [The Creative Tarot](https://www.simonandschuster.com/books/The-Creative-Tarot/Jessa-Crispin/9781501120244) by Jessa Crispin for getting me into this routine. I hightly recommend it as both a lighthearted intro to tarot and a solid explanation of each of the standard cards.
 
-In tarot, there's no such thing as good or bad unless you read the cards that way — change can be good or bad. While I could debate the merits of energy and resonance en infinitum, I think we can all agree that everyone has a gut feeling that can help make important (or unimportant) decisions. Tarot is a tool I use to tune into those gut feelings, maybe give some explaination to how I'm feeling or help me get out of my head on those days where my morning coffee just isn't hitting like it should.
+In tarot, there's no such thing as good or bad unless you read the cards that way — change can be good or bad. While I could debate the merits of energy and resonance en infinitum, I think we can all agree that everyone has a gut feeling that can help make important (or unimportant) decisions. Tarot is a tool I use to tune into those gut feelings, maybe give some explanation to how I'm feeling or help me get out of my head on those days where my morning coffee just isn't hitting like it should.
 
 <figure>
   <img loading="lazy" decoding="async" src="/tarot-for-productivity/queen-of-coins.webp" alt="The Queen of Pentacles card beside the White Numen tarot deck on a pink desk mat" />

@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import rehypeExternalLinks from 'rehype-external-links';
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,5 +22,17 @@ export default defineConfig({
     // GitHub-flavored markdown: footnotes + task lists, which Acorn styles.
     gfm: true,
     smartypants: true,
+    // Any https:// link opens in a new tab (and picks up Acorn's ↗, which keys
+    // off target="_blank"). Scoped to https so internal + relative links stay put.
+    rehypePlugins: [
+      [
+        rehypeExternalLinks,
+        {
+          target: '_blank',
+          rel: ['noopener', 'noreferrer'],
+          test: (el) => typeof el.properties?.href === 'string' && el.properties.href.startsWith('https://'),
+        },
+      ],
+    ],
   },
 });
