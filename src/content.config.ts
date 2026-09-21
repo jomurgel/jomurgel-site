@@ -15,6 +15,8 @@ const words = defineCollection({
     type: z.enum(['writing', 'photo']).default('writing'),
     coverImage: z.string().optional(),
     coverAlt: z.string().optional(),
+    coverCredit: z.string().optional(), // small credit line under the hero (e.g. photo source)
+    coverCreditHref: z.string().optional(), // optional link the credit points to
     nsfw: z.boolean().default(false),
     featured: z.boolean().default(false), // 2x2 tile on the /photos wall (desktop)
     archive: z.boolean().default(false), // drop out of the wall grid into the archive list on /photos

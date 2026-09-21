@@ -1476,6 +1476,18 @@ hr + .post { margin-top: 0; }
 .post-hero .post-kind[data-kind="writing"] { color: var(--plate-m); }
 .post-hero .post-kind[data-kind="work"] { color: inherit; }
 
+/* Cover credit — a small, muted line tucked under the hero, aligned to the
+   content column. Credits the cover source (linked when coverCreditHref is set). */
+.cover-credit {
+  color: var(--gray);
+  font-size: var(--text-sm);
+  margin: calc(-1 * var(--space-2)) auto var(--space-3);
+  max-width: var(--container-narrow);
+  padding-inline: var(--space-2);
+  text-align: left;
+}
+.cover-credit a { color: inherit; }
+
 /* Body — larger reading size, centered column. */
 .post-body {
   font-size: 1.125rem; /* 18px */
