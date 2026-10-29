@@ -15,7 +15,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Keep the hidden pages out of the sitemap (they're also noindex/nofollow).
-      filter: (page) => !/\/(resume|style-guide)\/?$/.test(page),
+      filter: (page) => !/\/(resume|style-guide|privacy)\/?$/.test(page),
     }),
   ],
   markdown: {

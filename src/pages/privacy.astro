@@ -1,0 +1,47 @@
+---
+// Privacy policy for escapepod, the personal app that reads Google calendars.
+// Google's OAuth consent screen needs a public policy URL to publish the app.
+// Hidden like the style guide: noindex, nofollow, out of the sitemap, and
+// linked from nowhere.
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Privacy"
+  description="Privacy policy for escapepod, a personal app."
+  noindex={true}
+>
+  <header class="post-header">
+    <h1>Privacy</h1>
+    <p class="section-lede">For escapepod, a personal app I run for myself.</p>
+  </header>
+
+  <section>
+    <p>
+      escapepod is a planner I built and host for my own use. When a Google account is
+      connected, it reads that account's calendar list and events, read-only, so they
+      can show up next to my tasks. It never creates, changes or deletes anything in
+      Google Calendar.
+    </p>
+
+    <p>
+      Events and the access token are stored on my own server. The token is encrypted
+      at rest. Nothing is shared, sold, used for advertising, or used to train anything,
+      and the data isn't used for any purpose besides showing the calendar in the app.
+    </p>
+
+    <p>
+      escapepod's use of information received from Google APIs adheres to the
+      <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
+      including the Limited Use requirements.
+    </p>
+
+    <p>
+      Disconnecting an account in the app's settings deletes its stored events and token.
+      Access can also be revoked at any time from
+      <a href="https://myaccount.google.com/permissions">your Google account's permissions page</a>.
+    </p>
+
+    <p>Questions go through the <a href="/contact">contact page</a>.</p>
+  </section>
+</Base>
